@@ -6,26 +6,33 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ARPlacement : MonoBehaviour
 {
-    public GameObject ObjectToSpawn;
+    public GameObject[] ObjectsToSpawn;
     public GameObject placementIndicator;
     private GameObject spawnedObject;
     private Pose placementPose;
     private bool placementPoseIsValid = false;
     private ARRaycastManager raycastManager;
+    [SerializeField] private ObjectSelection obj;
+    
+
     // Start is called before the first frame update
     void Start()
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
+        obj = new ObjectSelection();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (spawnedObject == null && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             //new function called for placing objects
             PlaceObject();
         }
+     
         UpdatePlacementPose();
         UpdatePlacementIndicator();
 
@@ -57,6 +64,14 @@ public class ARPlacement : MonoBehaviour
     }
     void PlaceObject()
     {
-        spawnedObject = Instantiate(ObjectToSpawn, placementPose.position, placementPose.rotation);
+        if(obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
+
+        if(obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
+        
     }
+
+    //void RemoveObject()
+    //{
+    //    Destroy(spawnedObject);
+    //}
 }
