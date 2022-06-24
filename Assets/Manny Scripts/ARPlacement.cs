@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using UnityEngine.UI;
 
 public class ARPlacement : MonoBehaviour
 {
@@ -13,13 +14,19 @@ public class ARPlacement : MonoBehaviour
     private bool placementPoseIsValid = false;
     private ARRaycastManager raycastManager;
     [SerializeField] private ObjectSelection obj;
+    [SerializeField] private Button Cube;
+    [SerializeField] private Button Capsule;
+      
     
 
     // Start is called before the first frame update
     void Start()
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
-        obj = new ObjectSelection();
+        
+        Cube.onClick.AddListener(() => obj.CubeSelect());
+        Capsule.onClick.AddListener(() => obj.CapsuleSelect());
+
        
     }
 
@@ -27,14 +34,16 @@ public class ARPlacement : MonoBehaviour
     void Update()
     {
         
-        if (spawnedObject == null && placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (/*spawnedObject == null && */ placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
+            //the line above section of "spawnedObject == null" makes so that only one object can be placed. removing it allows multiple objects to be placed.
             //new function called for placing objects
             PlaceObject();
         }
      
         UpdatePlacementPose();
         UpdatePlacementIndicator();
+        //Debug.Log(obj.currentObj);
 
     }
     void UpdatePlacementIndicator()
@@ -60,6 +69,10 @@ public class ARPlacement : MonoBehaviour
         if (placementPoseIsValid)
         {
             placementPose = hits[0].pose;
+
+            var cameraForward = Camera.current.transform.forward;
+            var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
+            placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
     }
     void PlaceObject()

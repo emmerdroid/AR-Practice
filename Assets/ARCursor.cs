@@ -7,7 +7,6 @@ public class ARCursor : MonoBehaviour
 {
 
     public GameObject cursorChild;
-    public GameObject objectToPlace;
     public ARRaycastManager raycastManager;
 
     public bool useCursor = true;
