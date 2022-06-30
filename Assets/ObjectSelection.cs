@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectSelection : MonoBehaviour
 {
-    public enum Objects { Cube, Capsule}
+    public enum Objects { Cube, Capsule, None}
     public Objects currentObj;
     
 

@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 5866023949735636339}
   - component: {fileID: 8998798183971914177}
   - component: {fileID: 5334293542623183438}
-  - component: {fileID: -7066846022881841687}
+  - component: {fileID: 7888876487373146808}
+  - component: {fileID: -2587072263738235236}
+  - component: {fileID: -7460311701823889551}
   m_Layer: 0
   m_Name: CubeObject
   m_TagString: Untagged
@@ -102,7 +104,7 @@ MonoBehaviour:
     IgnoreStartedOverGui: 1
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
-    RequiredSelectable: {fileID: -7066846022881841687}
+    RequiredSelectable: {fileID: -7460311701823889551}
   _camera: {fileID: 0}
   relative: 0
   sensitivity: 1
@@ -125,7 +127,7 @@ MonoBehaviour:
     IgnoreStartedOverGui: 1
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
-    RequiredSelectable: {fileID: -7066846022881841687}
+    RequiredSelectable: {fileID: -7460311701823889551}
   _camera: {fileID: 0}
   sensitivity: 1
   damping: -1
@@ -148,11 +150,38 @@ MonoBehaviour:
     IgnoreStartedOverGui: 1
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
-    RequiredSelectable: {fileID: -7066846022881841687}
+    RequiredSelectable: {fileID: -7460311701823889551}
   axis: {x: 0, y: -1, z: 0}
   space: 1
   sensitivity: 1
---- !u!114 &-7066846022881841687
+--- !u!114 &7888876487373146808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414126791596113512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2baa936f016a9a14e86ac8ea42211f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.088109665, g: 0.5660378, b: 0.088109665, a: 0.5019608}
+--- !u!65 &-2587072263738235236
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414126791596113512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7460311701823889551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
