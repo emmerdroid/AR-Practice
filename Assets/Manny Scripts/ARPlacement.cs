@@ -28,20 +28,33 @@ public class ARPlacement : MonoBehaviour
         Cube.onClick.AddListener(() => obj.CubeSelect());
         Capsule.onClick.AddListener(() => obj.CapsuleSelect());
 
+
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (/*spawnedObject == null &&*/ placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (toolM.currentTool == ToolManagement.Tool.Place)
         {
-            //the line above section of "spawnedObject == null" makes so that only one object can be placed. removing it allows multiple objects to be placed.
-            //new function called for placing objects
-            PlaceObject();
+            if (/*spawnedObject == null &&*/ placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                //the line above section of "spawnedObject == null" makes so that only one object can be placed. removing it allows multiple objects to be placed.
+                //new function called for placing objects
+                PlaceObject();
+            }
         }
-     
+
+        //Part above meant to only place objects when place tool is active but does not work as of 7/6/2022
+
+        //if (/*spawnedObject == null &&*/ placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        //{
+        //    //the line above section of "spawnedObject == null" makes so that only one object can be placed. removing it allows multiple objects to be placed.
+        //    //new function called for placing objects
+        //    PlaceObject();
+        //}
+
+
         UpdatePlacementPose();
         UpdatePlacementIndicator();
         //Debug.Log(obj.currentObj);

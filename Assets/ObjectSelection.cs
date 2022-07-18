@@ -6,8 +6,12 @@ public class ObjectSelection : MonoBehaviour
 {
     public enum Objects { Cube, Capsule, None}
     public Objects currentObj;
-    
 
+
+    private void Start()
+    {
+        currentObj = Objects.None;
+    }
     public void CubeSelect()
     {
         currentObj = Objects.Cube;
