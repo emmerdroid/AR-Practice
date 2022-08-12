@@ -12,6 +12,7 @@ public class LineSettings : MonoBehaviour
     public float distanceFromCamera = 0.3f;
     
     public Material defaultColorMaterial;
+    public Material[] materialOptions;
     public int cornerVertices = 5;
     
     public int endCapVertices = 5;
@@ -30,4 +31,11 @@ public class LineSettings : MonoBehaviour
     public float tolerance = 0.001f;
     
     public float applySimplifyAfterPoints = 20.0f;
+
+
+
+    public void SelectColor(int c)
+    {
+        defaultColorMaterial = materialOptions[c];
+    }
 }
