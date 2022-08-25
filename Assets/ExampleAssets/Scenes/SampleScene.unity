@@ -1379,7 +1379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMessages: 25
   chatPanel: {fileID: 1303509024}
-  textObject: {fileID: 7185014745962202671, guid: b3b362e9160947344bc5c10e5dcc6689, type: 3}
+  textObject: {fileID: 7185014745962202671, guid: b3b362e9160947344bc5c10e5dcc6689,
+    type: 3}
   chatBox: {fileID: 149443189}
   chatButton: {fileID: 1298138990}
   messageList: []
@@ -1709,7 +1710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 4776765576899091622, guid: 3738bd65ede154463b2c35064b9e5fdb, type: 3}
+  m_PlanePrefab: {fileID: 4776765576899091622, guid: 3738bd65ede154463b2c35064b9e5fdb,
+    type: 3}
   m_DetectionMode: -1
 --- !u!114 &388525033
 MonoBehaviour:
@@ -1753,7 +1755,8 @@ MonoBehaviour:
   startColor: {r: 1, g: 1, b: 1, a: 1}
   endColor: {r: 1, g: 1, b: 1, a: 1}
   distanceFromCamera: 0.3
-  defaultColorMaterial: {fileID: 2100000, guid: c4dab12b6ad08384ba8a3ce2f7eba5f7, type: 2}
+  defaultColorMaterial: {fileID: 2100000, guid: c4dab12b6ad08384ba8a3ce2f7eba5f7,
+    type: 2}
   materialOptions:
   - {fileID: 2100000, guid: 738f118aa214360489366338953cfd32, type: 2}
   - {fileID: 2100000, guid: 69c3c648559bfd34eaae3ff327107596, type: 2}
@@ -4458,7 +4461,8 @@ MonoBehaviour:
   Session: {fileID: 5472436117178709916}
   SessionOrigin: {fileID: 388525030}
   CameraManager: {fileID: 22732922}
-  ARCoreExtensionsConfig: {fileID: 11400000, guid: 07ff367a4fe5b9842b29d3b13c9b7e6f, type: 2}
+  ARCoreExtensionsConfig: {fileID: 11400000, guid: 07ff367a4fe5b9842b29d3b13c9b7e6f,
+    type: 2}
   CameraConfigFilter: {fileID: 11400000, guid: 6650894197abed242ae2ac4453aead53, type: 2}
 --- !u!4 &1564089186
 Transform:
