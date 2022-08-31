@@ -93,7 +93,32 @@ ModelImporter:
   - first:
       43: 4300008
     second: EarthQuarter
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Core
+    second: {fileID: 2100000, guid: 01650243fa9656a4ea05225733728612, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CrustIn
+    second: {fileID: 2100000, guid: 1d39ef77977aa16479e46c373f88674b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CrustOut
+    second: {fileID: 2100000, guid: 656aab68fcf1474418c1b7852724c251, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Inner Core
+    second: {fileID: 2100000, guid: d44258a38ecbbef499d69511ca35116e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mantle
+    second: {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
