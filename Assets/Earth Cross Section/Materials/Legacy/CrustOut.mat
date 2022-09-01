@@ -126,3 +126,4 @@ Material:
     - _SkyblendA: {r: 0.55294114, g: 0.6845676, b: 0.7843137, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WaterColor: {r: 0.0695625, g: 0.108937524, b: 0.126, a: 0}
+  m_BuildTextureStacks: []
