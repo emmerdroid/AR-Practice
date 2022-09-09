@@ -7,8 +7,8 @@ using UnityEngine;
 /*
  * Each layer prefab will have a collider
  * The colliders will check to see if they are touching with another prefab that follows along in correct order
- * If so then create a prefab that will have both materials, viewing it in a cross section faction
- *      Will have to make prefab for 2 layer, 3 layer, 4 layer 
+ * Have a prefab of all layers, with the all but one layer disabled, ass users add on
+ *     the layers fill on properly 
  * If not then indicate that the user has done it wrong. 
  * Order of layers will be Outer Crust -> Inner crust -> Mantle -> Core -> Inner Core
  */
@@ -32,7 +32,7 @@ public class PlanetLayerDetection : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == )
+        if (collision.gameObject.name == "")
         {
 
         }
