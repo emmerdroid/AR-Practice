@@ -18,10 +18,22 @@ public class PlanetLayerDetection : MonoBehaviour
     //get what THIS game object name is/ what layer it is
     //What comes before/after
 
+    [SerializeField] GameObject priorLayer;
+    [SerializeField] GameObject nextLayer;
+
+    //Create a list of all the layers
 
     void Start()
     {
-        
+        if (this.gameObject.name == "Crust")
+        {
+            priorLayer = null;
+        }
+
+        if (this.gameObject.name == "InnerCore")
+        { 
+            nextLayer = null;
+        }
     }
 
     // Update is called once per frame
