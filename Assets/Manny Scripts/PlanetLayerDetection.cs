@@ -44,9 +44,13 @@ public class PlanetLayerDetection : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "")
+        if (collision.gameObject == priorLayer)
         {
-
+            Debug.Log("Connected to the previous layer");
+        }
+        else if(collision.gameObject == nextLayer)
+        {
+            Debug.Log("Connected to Next Layer");
         }
     }
 }

@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EarthMantle
       objectReference: {fileID: 0}
+    - target: {fileID: 2131010389069690163, guid: 750e0f630d6b54042b79ed5d55d9b005,
+        type: 3}
+      propertyPath: m_Name
+      value: MantleSphere
+      objectReference: {fileID: 0}
     - target: {fileID: 2474070047408661745, guid: 750e0f630d6b54042b79ed5d55d9b005,
         type: 3}
       propertyPath: m_RootOrder
