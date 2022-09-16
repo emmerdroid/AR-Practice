@@ -20,11 +20,15 @@ public class PlanetLayerDetection : MonoBehaviour
 
     [SerializeField] GameObject priorLayer;
     [SerializeField] GameObject nextLayer;
+    [SerializeField] GameObject fullPlanet;
 
     //Create a list of all the layers
 
     void Start()
     {
+        fullPlanet = GameObject.Find("Full");
+
+
         if (this.gameObject.name == "Crust")
         {
             priorLayer = null;
@@ -47,10 +51,22 @@ public class PlanetLayerDetection : MonoBehaviour
         if (collision.gameObject == priorLayer)
         {
             Debug.Log("Connected to the previous layer");
+            WorldChecker();
+
+                
         }
         else if(collision.gameObject == nextLayer)
         {
             Debug.Log("Connected to Next Layer");
+            WorldChecker();
+        }
+    }
+
+    private void WorldChecker()
+    {
+        if (!GameObject.Find("Full").activeSelf)  /*check to see if the Full display is active, if not make it active.*/
+        {
+            GameObject.Find("Full").SetActive(true);
         }
     }
 }

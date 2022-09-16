@@ -19,6 +19,8 @@ public class MaterialChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        Debug.Log("Start");
         for (int i = 0; i < this.transform.childCount; i++)
         {
             layerObj[i] = this.transform.GetChild(i).gameObject;
@@ -27,7 +29,7 @@ public class MaterialChanger : MonoBehaviour
 
         for(int i = 0; i < layerObj.Length; i++)
         {
-            layerObj[i].gameObject.GetComponent<Renderer>().material = layers[i];
+            layerObj[i].gameObject.GetComponent<Renderer>().material = layers[0];
             //in complete, crust layer has 2 materials so will need to check to see 
             //if this works with that or if needs adjustment
 
