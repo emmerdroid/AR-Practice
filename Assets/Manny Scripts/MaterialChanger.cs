@@ -20,7 +20,7 @@ public class MaterialChanger : MonoBehaviour
     void Start()
     {
 
-        Debug.Log("Start");
+        
         for (int i = 0; i < this.transform.childCount; i++)
         {
             layerObj[i] = this.transform.GetChild(i).gameObject;
@@ -39,7 +39,17 @@ public class MaterialChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Check to see what objects connected then change the material to it
+
+
+
+    }
+
+    void ChangeMaterial(Material materialObj)
+    {
+
+        //Fin
+        //layerObj[].gameObject.GetComponent<Renderer>().material = materialObj;
     }
 
 

@@ -19,6 +19,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 656aab68fcf1474418c1b7852724c251, type: 2}
   - {fileID: 2100000, guid: d44258a38ecbbef499d69511ca35116e, type: 2}
   - {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
+  layerObj:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &3899153891741291385
 GameObject:
   m_ObjectHideFlags: 0
