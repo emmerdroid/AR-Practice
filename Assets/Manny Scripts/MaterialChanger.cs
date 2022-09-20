@@ -47,6 +47,10 @@ public class MaterialChanger : MonoBehaviour
 
     void ChangeMaterial(Material materialObj)
     {
+        /*
+         * 
+         */
+
 
         //Fin
         //layerObj[].gameObject.GetComponent<Renderer>().material = materialObj;
