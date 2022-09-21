@@ -445,6 +445,7 @@ MonoBehaviour:
   priorLayer: {fileID: 0}
   nextLayer: {fileID: 1308566826}
   fullPlanet: {fileID: 1597479497}
+  layernum: 0
 --- !u!1 &99961877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3718,6 +3719,7 @@ MonoBehaviour:
   priorLayer: {fileID: 84944578}
   nextLayer: {fileID: 2002782383}
   fullPlanet: {fileID: 1597479497}
+  layernum: 0
 --- !u!1 &1360144568
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,6 +4500,7 @@ MonoBehaviour:
   priorLayer: {fileID: 672004913}
   nextLayer: {fileID: 0}
   fullPlanet: {fileID: 1597479497}
+  layernum: 0
 --- !u!1001 &1800940057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4831,7 +4834,47 @@ PrefabInstance:
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
       propertyPath: layerObj.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ec55717ded675c64a841c954f7e9a302, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01650243fa9656a4ea05225733728612, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1d39ef77977aa16479e46c373f88674b, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 656aab68fcf1474418c1b7852724c251, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: d44258a38ecbbef499d69511ca35116e, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: layersMaterials.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
+    - target: {fileID: 1870690604637776755, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3899153891741291385, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
@@ -5066,6 +5109,7 @@ MonoBehaviour:
   priorLayer: {fileID: 1308566826}
   nextLayer: {fileID: 1798280543}
   fullPlanet: {fileID: 1597479497}
+  layernum: 0
 --- !u!1 &2051210643
 GameObject:
   m_ObjectHideFlags: 0

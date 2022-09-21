@@ -21,8 +21,9 @@ public class PlanetLayerDetection : MonoBehaviour
     [SerializeField] GameObject priorLayer;
     [SerializeField] GameObject nextLayer;
     [SerializeField] GameObject fullPlanet; //Gonna  have to manual put reference in the editor
-    //[SerializeField] int layernum;
-    [SerializeField] Material currentMat;
+    [SerializeField] int layernum;
+    //[SerializeField] Material currentMat;
+
 
     
 
@@ -30,7 +31,7 @@ public class PlanetLayerDetection : MonoBehaviour
 
     void Start()
     {
-        currentMat = GetComponent<Renderer>().material;
+        //currentMat = GetComponent<Renderer>().material;
 
         if (this.gameObject.name == "Crust")
         {
@@ -56,8 +57,7 @@ public class PlanetLayerDetection : MonoBehaviour
             Debug.Log("Connected to the previous layer");
             WorldChecker();
             this.gameObject.SetActive(false);
-            gameObject.SendMessage("ChangeMaterial", currentMat);
-
+            
 
 
         }
