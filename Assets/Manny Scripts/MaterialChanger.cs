@@ -16,10 +16,14 @@ public class MaterialChanger : MonoBehaviour
 
     [SerializeField] Material[] layersMaterials; //materials to use
     [SerializeField] GameObject[] layerObj; // actual layer objects in the prefab
+    [SerializeField] GameObject[] planets;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
 
+        planets = GameObject.FindGameObjectsWithTag("PlanetLayer");
 
         for (int i = 0; i < this.transform.childCount; i++)
         {
@@ -54,8 +58,7 @@ public class MaterialChanger : MonoBehaviour
      */
     void ChangeMaterial()
     {
-        GameObject[] planets; 
-        planets = GameObject.FindGameObjectsWithTag("PlanetLayer");
+        
         for(int i = 0; i <= planets.Length; i++)
         {
             //Check for all these orbs to see that they are active
@@ -65,6 +68,8 @@ public class MaterialChanger : MonoBehaviour
                 //the layer is not active meaning we show it 
                 // check the object with the layer name in the array above
                 //match the names then change materials
+
+                Debug.Log(planets[i].gameObject.name);
 
             }
         }
