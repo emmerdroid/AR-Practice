@@ -23,7 +23,7 @@ public class MaterialChanger : MonoBehaviour
     void Start()
     {
 
-        planets = GameObject.FindGameObjectsWithTag("PlanetLayer");
+       
 
         for (int i = 0; i < this.transform.childCount; i++)
         {
@@ -59,7 +59,7 @@ public class MaterialChanger : MonoBehaviour
     void ChangeMaterial()
     {
         
-        for(int i = 0; i <= planets.Length; i++)
+        for(int i = 0; i < planets.Length; i++)
         {
             //Check for all these orbs to see that they are active
             //
@@ -70,6 +70,29 @@ public class MaterialChanger : MonoBehaviour
                 //match the names then change materials
 
                 Debug.Log(planets[i].gameObject.name);
+                Debug.Log("IT IS GONE");
+
+                //eventually change to switch cases
+                if (planets[i].gameObject.name == "CoreSphere")
+                {
+                    layerObj[0].gameObject.GetComponent<Renderer>().material = layersMaterials[1];
+                }
+                else if (planets[i].gameObject.name == "CrustSphere")
+                {
+                    layerObj[1].gameObject.GetComponent<Renderer>().material = layersMaterials[2];
+                }
+                else if (planets[i].gameObject.name == "InnerCoreSphere")
+                {
+                    layerObj[2].gameObject.GetComponent<Renderer>().material = layersMaterials[4];
+                }
+                else if (planets[i].gameObject.name == "MantleSphere")
+                {
+                    layerObj[3].gameObject.GetComponent<Renderer>().material = layersMaterials[5];
+                }
+                else if (planets[i].gameObject.name == "OuterCrustSphere")
+                {
+                    //lol don't need to do anything
+                }
 
             }
         }

@@ -4833,9 +4833,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
+      propertyPath: planets.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
       propertyPath: layerObj.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: planets.Array.data[0]
+      value: 
+      objectReference: {fileID: 672004913}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: planets.Array.data[1]
+      value: 
+      objectReference: {fileID: 1308566826}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: planets.Array.data[2]
+      value: 
+      objectReference: {fileID: 1798280543}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: planets.Array.data[3]
+      value: 
+      objectReference: {fileID: 84944578}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: planets.Array.data[4]
+      value: 
+      objectReference: {fileID: 2002782383}
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
       propertyPath: layersMaterials.Array.size
