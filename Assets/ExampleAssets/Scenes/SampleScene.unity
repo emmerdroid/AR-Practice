@@ -6768,7 +6768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c51b866088e5b64797ae9a84135cabe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentObj: 2
+  currentLayer: 0
 --- !u!1 &1219658146
 GameObject:
   m_ObjectHideFlags: 0
@@ -9103,8 +9103,6 @@ MonoBehaviour:
   placementIndicator: {fileID: 262055674}
   obj: {fileID: 0}
   toolM: {fileID: 0}
-  Cube: {fileID: 0}
-  Capsule: {fileID: 0}
 --- !u!1 &1552738731
 GameObject:
   m_ObjectHideFlags: 0
