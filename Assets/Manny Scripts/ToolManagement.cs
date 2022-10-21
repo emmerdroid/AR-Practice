@@ -22,20 +22,13 @@ public class ToolManagement : MonoBehaviour
     }
     public void ClearTool()
     {
-        Debug.Log("DELETING");
-        //obj.currentObj = ObjectSelection.Objects.None;
+        obj.currentObj = ObjectSelection.Objects.None;
         currentTool= Tool.Clear;
         GameObject[] ARObjects = GameObject.FindGameObjectsWithTag("AR Object");
         foreach(GameObject obj in ARObjects)
         {
             GameObject.Destroy(obj);
         }
-        Debug.Log("Deleted?");
-    }
-
-    public void Debugging()
-    {
-        Debug.Log("I have been pressed");
     }
 }
 
