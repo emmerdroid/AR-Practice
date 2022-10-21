@@ -50,8 +50,12 @@ public class ARDrawManager : Singleton<ARDrawManager>
         CanDraw = isAllow;
     }
 
-   
-    void DrawOnTouch()
+    private void DrawOnTouch()
+    {
+        DrawOnTouch(anchorManager);
+    }
+
+    void DrawOnTouch(ARAnchorManager anchorManager)
     {
         if(!CanDraw) return;
 
@@ -63,6 +67,7 @@ public class ARDrawManager : Singleton<ARDrawManager>
             OnDraw?.Invoke();
 
             ARAnchor anchor = anchorManager.AddAnchor(new Pose(touchPosition, Quaternion.identity));
+
             if (anchor == null)
                 Debug.LogError("Error creating reference point");
             else
