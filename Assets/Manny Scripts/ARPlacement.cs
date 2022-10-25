@@ -91,6 +91,8 @@ public class ARPlacement : MonoBehaviour
     }
     void PlaceObject()
     {
+
+        
         //if(obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
 
         //if(obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
@@ -101,4 +103,25 @@ public class ARPlacement : MonoBehaviour
     //{
     //    Destroy(spawnedObject);
     //}
+
+    bool DoesObjAlreadyExist()
+    {
+        GameObject exisitngLayer;
+        exisitngLayer = GameObject.Find("Core");
+        if(exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.Core)
+        {
+            return true;
+        }
+        exisitngLayer = GameObject.Find("Mantle");
+        if (exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.Mantle)
+        {
+            return true;
+        }
+        exisitngLayer = GameObject.Find("Outer Core");
+        if (exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.OuterCore)
+        {
+            return true;
+        }
+        return false;
+    }
 }
