@@ -17,6 +17,11 @@ public class MaterialChanger : MonoBehaviour
     [SerializeField] Material[] layersMaterials; //materials to use
     [SerializeField] GameObject[] layerObj; // actual layer objects in the full sized Prefab
     [SerializeField] GameObject[] placedLayers; // actual individual layer objects
+
+    //need ti change placed layers to auto add newly placed items that are spawnned in.
+    //or find other alternative
+    //POSSIBLE ALTERNATIVES
+    //use bools for each layer to see if spawned and trigger events based on bools
     
     
     // Start is called before the first frame update
