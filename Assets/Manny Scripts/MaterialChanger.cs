@@ -45,7 +45,7 @@ public class MaterialChanger : MonoBehaviour
     {
 
 
-        ChangeMaterial();
+        
 
 
     }
@@ -63,7 +63,7 @@ public class MaterialChanger : MonoBehaviour
         {
             //Check for all these orbs to see that they are active
             //
-            if (!placedLayers[i].gameObject.activeSelf)
+            if (!placedLayers[i].gameObject.activeSelf) //condition is for a layer has gone inactive
             {
                 //the layer is not active meaning we show it 
                 // check the object with the layer name in the array above
