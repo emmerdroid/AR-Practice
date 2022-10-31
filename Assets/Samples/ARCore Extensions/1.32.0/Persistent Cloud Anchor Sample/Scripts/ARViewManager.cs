@@ -558,6 +558,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                             cloudAnchor.cloudAnchorId);
                         OnAnchorResolvedFinished(true, cloudAnchor.cloudAnchorId);
                         Instantiate(CloudAnchorPrefab, cloudAnchor.transform);
+                        Debug.Log(cloudAnchor.transform);
                     }
 
                     _cachedCloudAnchors.Add(cloudAnchor);
