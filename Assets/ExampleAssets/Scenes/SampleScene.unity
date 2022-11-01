@@ -10609,8 +10609,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
+      propertyPath: placedLayers.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
       propertyPath: layersMaterials.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
@@ -10642,6 +10652,36 @@ PrefabInstance:
       propertyPath: layersMaterials.Array.data[5]
       value: 
       objectReference: {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[0]
+      value: 
+      objectReference: {fileID: 7959125916050421730, guid: 8b5811528bcc7a94693f07280d62ceb8,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1877967543754791584, guid: 750e0f630d6b54042b79ed5d55d9b005,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[2]
+      value: 
+      objectReference: {fileID: 7942792943616289678, guid: 83d566f76be43b74cbfa388bc773bf70,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[3]
+      value: 
+      objectReference: {fileID: 5590916522741641834, guid: c1893b4f00ed03e4f8dced9e9107f549,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[4]
+      value: 
+      objectReference: {fileID: 5693053349371685735, guid: 22a8b01881481e74b94497f8add7230f,
+        type: 3}
     - target: {fileID: 1870690604637776755, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
       propertyPath: m_IsActive
