@@ -104,7 +104,14 @@ public class MaterialChanger : MonoBehaviour
 
     }
 
+<<<<<<< Updated upstream
 
+=======
+    void FindSpawned()
+    {
+        //Add spawned objects and add them to spanwedObj
+    }
+>>>>>>> Stashed changes
 
 
 }
