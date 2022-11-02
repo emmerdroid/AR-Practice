@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Arturo Assets/Scenes/Tuffy login.unity
     guid: 9ce7267b6e843c44a9e0267f118a67ed
-  - enabled: 1
+  - enabled: 0
     path: Assets/Arturo Assets/Scenes/Sign up.unity
     guid: 99ffb0bd570cc9b4a9518e12a2d6cc4d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Arturo Assets/Scenes/Profile.unity
     guid: ad20c1d55c7f4f945b46afcdd5ec2f86
-  - enabled: 1
+  - enabled: 0
     path: Assets/Arturo Assets/Scenes/Lobby.unity
     guid: 45faa05511d6a174a94988b6d6ad38a6
   - enabled: 1

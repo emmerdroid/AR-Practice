@@ -1546,6 +1546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 230688686}
   - component: {fileID: 230688685}
+  - component: {fileID: 230688687}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1586,6 +1587,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230688687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230688684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70ff91d5da2d48aeac8559ac4287500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SessionOrigin: {fileID: 388525030}
+  SessionCore: {fileID: 5472436117178709916}
+  Extensions: {fileID: 1564089185}
+  AnchorManager: {fileID: 388525034}
+  PlaneManager: {fileID: 388525032}
+  RaycastManager: {fileID: 388525033}
+  HomePage: {fileID: 0}
+  ResolveMenu: {fileID: 0}
+  PrivacyPrompt: {fileID: 0}
+  ARView: {fileID: 0}
+  Mode: 0
 --- !u!1 &239063645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,6 +2336,7 @@ GameObject:
   - component: {fileID: 388525037}
   - component: {fileID: 388525035}
   - component: {fileID: 388525036}
+  - component: {fileID: 388525038}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -2453,6 +2478,19 @@ MonoBehaviour:
       m_Calls: []
   anchorManager: {fileID: 388525034}
   arCamera: {fileID: 22732920}
+--- !u!114 &388525038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388525029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab0e80cee9cc1d44928bfe488dd1e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PointCloudPrefab: {fileID: 0}
 --- !u!1 &410290852
 GameObject:
   m_ObjectHideFlags: 0
@@ -8556,7 +8594,7 @@ MonoBehaviour:
   Session: {fileID: 5472436117178709916}
   SessionOrigin: {fileID: 388525030}
   CameraManager: {fileID: 22732922}
-  ARCoreExtensionsConfig: {fileID: 11400000, guid: 07ff367a4fe5b9842b29d3b13c9b7e6f,
+  ARCoreExtensionsConfig: {fileID: 11400000, guid: 7955d6cb6cc1e4e29a16edf098cb0560,
     type: 2}
   CameraConfigFilter: {fileID: 11400000, guid: 6650894197abed242ae2ac4453aead53, type: 2}
 --- !u!4 &1564089186
@@ -10392,6 +10430,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
+      propertyPath: placeableLayers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
       propertyPath: layersMaterials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ec55717ded675c64a841c954f7e9a302, type: 2}
@@ -10420,6 +10463,30 @@ PrefabInstance:
       propertyPath: layersMaterials.Array.data[5]
       value: 
       objectReference: {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[0]
+      value: 
+      objectReference: {fileID: 7959125916050421730, guid: 8b5811528bcc7a94693f07280d62ceb8,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1877967543754791584, guid: 750e0f630d6b54042b79ed5d55d9b005,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[2]
+      value: 
+      objectReference: {fileID: 7942792943616289678, guid: 83d566f76be43b74cbfa388bc773bf70,
+        type: 3}
+    - target: {fileID: 609411464823817506, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: placeableLayers.Array.data[3]
+      value: 
+      objectReference: {fileID: 5693053349371685735, guid: 22a8b01881481e74b94497f8add7230f,
+        type: 3}
     - target: {fileID: 1870690604637776755, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
       propertyPath: m_IsActive
