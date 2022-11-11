@@ -106,5 +106,7 @@ public class ARButtonObjectPlace : MonoBehaviour
         outcorecounter = 0;
         mantlecounter = 0;
         placedPrefabCount = 0;
+
+
     }
 }
