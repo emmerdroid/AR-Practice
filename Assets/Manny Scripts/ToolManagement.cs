@@ -17,18 +17,25 @@ public class ToolManagement : MonoBehaviour
     public void DrawTool()
     {
         currentTool = Tool.Draw;
-        obj.currentObj = ObjectSelection.Objects.None;
-
+        //obj.currentObj = ObjectSelection.Objects.None;
+        obj.currentLayer = ObjectSelection.Layers.None;
     }
     public void ClearTool()
     {
-        obj.currentObj = ObjectSelection.Objects.None;
+        Debug.Log("DELETING");
+        //obj.currentObj = ObjectSelection.Objects.None;
         currentTool= Tool.Clear;
         GameObject[] ARObjects = GameObject.FindGameObjectsWithTag("AR Object");
         foreach(GameObject obj in ARObjects)
         {
             GameObject.Destroy(obj);
         }
+        Debug.Log("Deleted?");
+    }
+
+    public void Debugging()
+    {
+        Debug.Log("I have been pressed");
     }
 }
 
