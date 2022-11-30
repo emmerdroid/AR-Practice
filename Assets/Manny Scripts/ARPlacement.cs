@@ -15,9 +15,9 @@ public class ARPlacement : MonoBehaviour
     private ARRaycastManager raycastManager;
     [SerializeField] private ObjectSelection obj;
     [SerializeField] private ToolManagement toolM;
-    [SerializeField] private Button Cube;
-    [SerializeField] private Button Capsule;
-      
+    //[SerializeField] private Button Cube;
+    //[SerializeField] private Button Capsule;
+      //The buttons for above were for test items, can be swicthed to use the planet layer buttons with the UI
     
 
     // Start is called before the first frame update
@@ -25,10 +25,10 @@ public class ARPlacement : MonoBehaviour
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
         
-        Cube.onClick.AddListener(() => obj.CubeSelect());
-        Capsule.onClick.AddListener(() => obj.CapsuleSelect());
+        //Cube.onClick.AddListener(() => obj.CubeSelect());
+        //Capsule.onClick.AddListener(() => obj.CapsuleSelect());
 
-
+        //above uses buttons listeners that then call on the object selector and associates the functions with them.
        
     }
 
@@ -91,9 +91,11 @@ public class ARPlacement : MonoBehaviour
     }
     void PlaceObject()
     {
-        if(obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
 
-        if(obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
+        
+        //if(obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
+
+        //if(obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
         
     }
 
@@ -101,4 +103,25 @@ public class ARPlacement : MonoBehaviour
     //{
     //    Destroy(spawnedObject);
     //}
+
+    bool DoesObjAlreadyExist()
+    {
+        GameObject exisitngLayer;
+        exisitngLayer = GameObject.Find("Core");
+        if(exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.Core)
+        {
+            return true;
+        }
+        exisitngLayer = GameObject.Find("Mantle");
+        if (exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.Mantle)
+        {
+            return true;
+        }
+        exisitngLayer = GameObject.Find("Outer Core");
+        if (exisitngLayer != null && obj.currentLayer == ObjectSelection.Layers.OuterCore)
+        {
+            return true;
+        }
+        return false;
+    }
 }

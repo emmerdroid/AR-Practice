@@ -15,8 +15,13 @@ public class MaterialChanger : MonoBehaviour
      */
 
     [SerializeField] Material[] layersMaterials; //materials to use
-    [SerializeField] GameObject[] layerObj; // actual layer objects in the prefab
-    [SerializeField] GameObject[] planets;
+    [SerializeField] GameObject[] layerObj; // actual layer objects in the full sized Prefab
+    [SerializeField] GameObject[] placedLayers; // actual individual layer objects
+    public GameObject[] spawnedObj;
+    //need ti change placed layers to auto add newly placed items that are spawnned in.
+    //or find other alternative
+    //POSSIBLE ALTERNATIVES
+    //use bools for each layer to see if spawned and trigger events based on bools
     
     
     // Start is called before the first frame update
@@ -45,7 +50,7 @@ public class MaterialChanger : MonoBehaviour
     {
 
 
-        ChangeMaterial();
+        
 
 
     }
@@ -56,50 +61,61 @@ public class MaterialChanger : MonoBehaviour
      First see if the sphere layer has SetAvtive to false
     If it is false, then show the layer proper
      */
+    //void ChangeMaterial()
+    //{
+        
+    //    for(int i = 0; i < placedLayers.Length; i++)
+    //    {
+    //        //Check for all these orbs to see that they are active
+    //        //
+    //        if (!placedLayers[i].gameObject.activeSelf) //condition is for a layer has gone inactive
+    //        {
+    //            //the layer is not active meaning we show it 
+    //            // check the object with the layer name in the array above
+    //            //match the names then change materials
+
+    //            Debug.Log(placedLayers[i].gameObject.name);
+    //            Debug.Log("IT IS GONE");
+
+    //            //eventually change to switch cases
+    //            if (placedLayers[i].gameObject.name == "CoreSphere")
+    //            {
+    //                layerObj[0].gameObject.GetComponent<Renderer>().material = layersMaterials[1];
+    //            }
+    //            else if (placedLayers[i].gameObject.name == "CrustSphere")
+    //            {
+    //                layerObj[1].gameObject.GetComponent<Renderer>().material = layersMaterials[2];
+    //            }
+    //            else if (placedLayers[i].gameObject.name == "InnerCoreSphere")
+    //            {
+    //                layerObj[2].gameObject.GetComponent<Renderer>().material = layersMaterials[4];
+    //            }
+    //            else if (placedLayers[i].gameObject.name == "MantleSphere")
+    //            {
+    //                layerObj[3].gameObject.GetComponent<Renderer>().material = layersMaterials[5];
+    //            }
+    //            else if (placedLayers[i].gameObject.name == "OuterCrustSphere")
+    //            {
+    //                //lol don't need to do anything
+    //            }
+
+    //        }
+    //    }
+
+    //}
+
     void ChangeMaterial()
     {
-        
-        for(int i = 0; i < planets.Length; i++)
+        for (int i = 0; i < placedLayers.Length; i++)
         {
-            //Check for all these orbs to see that they are active
-            //
-            if (!planets[i].gameObject.activeSelf)
-            {
-                //the layer is not active meaning we show it 
-                // check the object with the layer name in the array above
-                //match the names then change materials
-
-                Debug.Log(planets[i].gameObject.name);
-                Debug.Log("IT IS GONE");
-
-                //eventually change to switch cases
-                if (planets[i].gameObject.name == "CoreSphere")
-                {
-                    layerObj[0].gameObject.GetComponent<Renderer>().material = layersMaterials[1];
-                }
-                else if (planets[i].gameObject.name == "CrustSphere")
-                {
-                    layerObj[1].gameObject.GetComponent<Renderer>().material = layersMaterials[2];
-                }
-                else if (planets[i].gameObject.name == "InnerCoreSphere")
-                {
-                    layerObj[2].gameObject.GetComponent<Renderer>().material = layersMaterials[4];
-                }
-                else if (planets[i].gameObject.name == "MantleSphere")
-                {
-                    layerObj[3].gameObject.GetComponent<Renderer>().material = layersMaterials[5];
-                }
-                else if (planets[i].gameObject.name == "OuterCrustSphere")
-                {
-                    //lol don't need to do anything
-                }
-
-            }
+            //use the layers in the list as reference, check for spawned in objects.
         }
-
     }
 
+    void FindSpawned()
+    {
 
+    }
 
 
 }

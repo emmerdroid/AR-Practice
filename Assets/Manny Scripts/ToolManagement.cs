@@ -17,8 +17,8 @@ public class ToolManagement : MonoBehaviour
     public void DrawTool()
     {
         currentTool = Tool.Draw;
-        obj.currentObj = ObjectSelection.Objects.None;
-
+        //obj.currentObj = ObjectSelection.Objects.None;
+        obj.currentLayer = ObjectSelection.Layers.None;
     }
     public void ClearTool()
     {
