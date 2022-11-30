@@ -28,7 +28,7 @@ public class Login2Lobby : MonoBehaviour
 
     public void SgnUp2Lbby()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Tuffy login");
     }
 
     public void Lgn2SgnUp()
