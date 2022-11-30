@@ -1481,8 +1481,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 892.81006}
-  m_SizeDelta: {x: 0, y: -1767.8398}
+  m_AnchoredPosition: {x: 0, y: 1303.3279}
+  m_SizeDelta: {x: 0, y: -2588.8755}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239063647
 MonoBehaviour:
@@ -2012,7 +2012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 468, y: 1.3471}
+  m_AnchoredPosition: {x: 468, y: 1.3471069}
   m_SizeDelta: {x: 98.9517, y: 93.6688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347814099
@@ -4599,8 +4599,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1139669664}
-  - {fileID: 1418425416}
+  - {fileID: 1913343964964525996}
+  - {fileID: 7653899785718711261}
   - {fileID: 506299058}
   - {fileID: 25584881}
   - {fileID: 615800730}
@@ -5742,12 +5742,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123290654}
   m_CullTransparentMesh: 1
---- !u!4 &1139669664 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5522441140898715099, guid: 1497eeba4c982bb47ad1151a58a0ac6f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1913343964964525995}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1155049604
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObj: 2
+  currentLayer: 0
 --- !u!1 &1219658146
 GameObject:
   m_ObjectHideFlags: 0
@@ -7427,8 +7422,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.3605957, y: -895.4319}
-  m_SizeDelta: {x: 0.69995, y: -1790.8684}
+  m_AnchoredPosition: {x: 0.3605957, y: -1273.3689}
+  m_SizeDelta: {x: 0.7, y: -2546.7424}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1385913080
 MonoBehaviour:
@@ -7724,12 +7719,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407182827}
   m_CullTransparentMesh: 1
---- !u!4 &1418425416 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5219026366444296311, guid: bbf719f178486f449969b968be562225,
-    type: 3}
-  m_PrefabInstance: {fileID: 7653899785718711260}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1425567027
 GameObject:
   m_ObjectHideFlags: 0
@@ -8518,8 +8507,6 @@ MonoBehaviour:
   placementIndicator: {fileID: 262055674}
   obj: {fileID: 0}
   toolM: {fileID: 0}
-  Cube: {fileID: 0}
-  Capsule: {fileID: 0}
 --- !u!1 &1552738731
 GameObject:
   m_ObjectHideFlags: 0
@@ -9854,7 +9841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -262, y: 1.347}
+  m_AnchoredPosition: {x: -262, y: 1.3469849}
   m_SizeDelta: {x: 119.5983, y: 111.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1752001216
@@ -11994,7 +11981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -91, y: 1.347}
+  m_AnchoredPosition: {x: -91, y: 1.3469849}
   m_SizeDelta: {x: 120.2628, y: 111.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110884097
@@ -12496,6 +12483,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1497eeba4c982bb47ad1151a58a0ac6f, type: 3}
+--- !u!4 &1913343964964525996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1913343964964525995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5434462552450501220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12650,3 +12642,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbf719f178486f449969b968be562225, type: 3}
+--- !u!4 &7653899785718711261 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7653899785718711260}
+  m_PrefabAsset: {fileID: 0}
