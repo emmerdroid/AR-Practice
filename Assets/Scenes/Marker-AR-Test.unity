@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 134402513}
   - component: {fileID: 134402512}
   - component: {fileID: 134402514}
+  - component: {fileID: 134402515}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -181,10 +182,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: d00f5b1e38f3ed84bb1c0a0f102dcd83,
+  m_SerializedLibrary: {fileID: 11400000, guid: abca1c445ec2b704c927f3994d7465e5,
     type: 2}
-  m_MaxNumberOfMovingImages: 1
-  m_TrackedImagePrefab: {fileID: 1286484565}
+  m_MaxNumberOfMovingImages: 0
+  m_TrackedImagePrefab: {fileID: 7489742936188615880, guid: 2a2cef5b5eece304f8beccb4a4286be6,
+    type: 3}
+--- !u!114 &134402515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134402511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6002455278cb1674ab22f50d68047345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1239988784
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,8 +442,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_FocusMode: -1
+  m_LightEstimationMode: -1
   m_AutoFocus: 1
   m_LightEstimation: 0
   m_FacingDirection: 1

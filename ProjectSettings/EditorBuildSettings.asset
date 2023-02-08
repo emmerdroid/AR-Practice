@@ -9,6 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Marker-AR-Test.unity
     guid: 52377dbc86294cc4e9e3620b2b51d0dc
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 89855e772135f0c4f8aa3e5b716aec4b,
+      type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 54c0d89a79ba33c47ab6ea1464214881,
@@ -16,4 +18,6 @@ EditorBuildSettings:
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: de8a8e4f987434338a4b1062feb8d069,
       type: 2}
     com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 1eb95d77acb39444e8cf44313496a874,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 58f40b12bbc864f3c96c6505a9a1e1e3,
       type: 2}

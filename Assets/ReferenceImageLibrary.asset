@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
   m_Name: ReferenceImageLibrary
   m_EditorClassIdentifier: 
-  m_GuidLow: 4635305319620846560
-  m_GuidHigh: 10146442986516404365
+  m_GuidLow: 5251568272128812308
+  m_GuidHigh: 534580052915669181
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 5508817686868954922
-      m_GuidHigh: 13315897838897813409
+      m_GuidLow: 4655966995823022207
+      m_GuidHigh: 1554281194184679094
     m_SerializedTextureGuid:
-      m_GuidLow: 8004185576044485112
-      m_GuidHigh: 12361201121670358363
-    m_Size: {x: 0, y: 0}
-    m_SpecifySize: 0
-    m_Name: Marker
+      m_GuidLow: 1023708553325267398
+      m_GuidHigh: 3770455899722893435
+    m_Size: {x: 0.3, y: 0.3}
+    m_SpecifySize: 1
+    m_Name: pexels-pixabay-87651
     m_Texture: {fileID: 0}
