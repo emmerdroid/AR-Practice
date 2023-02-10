@@ -25,3 +25,13 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: pexels-pixabay-87651
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5398140449433090698
+      m_GuidHigh: 15334980928713515191
+    m_SerializedTextureGuid:
+      m_GuidLow: 15349516744322318423
+      m_GuidHigh: 14957823853433807561
+    m_Size: {x: 0.5, y: 0.5}
+    m_SpecifySize: 1
+    m_Name: Picture2
+    m_Texture: {fileID: 0}
