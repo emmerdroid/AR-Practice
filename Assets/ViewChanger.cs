@@ -9,7 +9,7 @@ public class ViewChanger : MonoBehaviour
     public GameObject OuterView;
     public GameObject InnerView;
 
-    Button viewButton;
+    [SerializeField] Button viewButton;
     // Start is called before the first frame update
     void Start()
     {
