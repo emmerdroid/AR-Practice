@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.UI;
 
 public class ARPlacement : MonoBehaviour
 {
@@ -17,23 +16,18 @@ public class ARPlacement : MonoBehaviour
     [SerializeField] private ToolManagement toolM;
     [SerializeField] private Button Cube;
     [SerializeField] private Button Capsule;
-      
-    
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
-        
+
         Cube.onClick.AddListener(() => obj.CubeSelect());
         Capsule.onClick.AddListener(() => obj.CapsuleSelect());
-
-
-       
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (toolM.currentTool == ToolManagement.Tool.Place)
         {
@@ -54,13 +48,12 @@ public class ARPlacement : MonoBehaviour
         //    PlaceObject();
         //}
 
-
         UpdatePlacementPose();
         UpdatePlacementIndicator();
         //Debug.Log(obj.currentObj);
-
     }
-    void UpdatePlacementIndicator()
+
+    private void UpdatePlacementIndicator()
     {
         if (spawnedObject == null && placementPoseIsValid)
         {
@@ -73,7 +66,7 @@ public class ARPlacement : MonoBehaviour
         }
     }
 
-    void UpdatePlacementPose()
+    private void UpdatePlacementPose()
     {
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
@@ -89,12 +82,12 @@ public class ARPlacement : MonoBehaviour
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
     }
-    void PlaceObject()
-    {
-        if(obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
 
-        if(obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
-        
+    private void PlaceObject()
+    {
+        if (obj.currentObj == ObjectSelection.Objects.Cube) { spawnedObject = Instantiate(ObjectsToSpawn[0], placementPose.position, placementPose.rotation); }
+
+        if (obj.currentObj == ObjectSelection.Objects.Capsule) { spawnedObject = Instantiate(ObjectsToSpawn[1], placementPose.position, placementPose.rotation); }
     }
 
     //void RemoveObject()
