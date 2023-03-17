@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Clickable : MonoBehaviour
 {
+    public string NameAndType;
     // Start is called before the first frame update
     void Start()
     {

@@ -322,7 +322,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: 15
-  moles: {fileID: 5590916522741641834, guid: c1893b4f00ed03e4f8dced9e9107f549, type: 3}
+  moles:
+  - {fileID: 7432272482357876321, guid: bf872194bdfde0c4981f27efde1181c0, type: 3}
+  - {fileID: 2085587375226140822, guid: a07246c797d3162489d105838315282e, type: 3}
+  - {fileID: 2729487443207622906, guid: cc3d71909e96b5745904e4229cf18676, type: 3}
+  - {fileID: 1213256753182713654, guid: b1050d5ea51fbde42b1debf993615b59, type: 3}
   gameRunning: 0
   timeSlide: {fileID: 1396646642}
 --- !u!1 &585732320

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +13,14 @@ public class WhackAMole : MonoBehaviour
     ///
     /// The timer per question should be 10 or 15 seconds? depends on the intervals
     /// </summary>
-
     // Start is called before the first frame update
-
     private Transform[] answer_postions;
     public float gameTime;
     private float timeRemaining;
     public GameObject[] moles;
     [SerializeField] private bool gameRunning;
+
+    public Dictionary<string, string> questions_answers;
 
     //public Text timeText;
 
@@ -28,6 +29,14 @@ public class WhackAMole : MonoBehaviour
     private void Start()
     {
         answer_postions = GetComponentsInChildren<Transform>();
+        questions_answers = new Dictionary<string, string>()
+        {
+            {"Pick the Crust", "Crust" },
+            {"Pick the Mantle" , "Mantle"},
+            {"Pick the Inner Core" ,"Inner Core"},
+            { "Pick the Outer Core", "Outer Core"}
+
+        };
         timeRemaining = gameTime;
         timeSlide.maxValue = gameTime;
         gameRunning = true;
@@ -59,9 +68,10 @@ public class WhackAMole : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(0.5f, 2.5f));
             int index = Random.Range(0, answer_postions.Length);
-            GameObject correct = Instantiate(moles, answer_postions[index].position, Quaternion.identity);
+            int mole_index = Random.Range(0, moles.Length);
+            GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
 
-            if (moles.CompareTag("Correct"))
+            if (correct.CompareTag("Correct"))
             {
                 Debug.Log("This is the correct answer");
             }
