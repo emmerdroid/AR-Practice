@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Clickable : MonoBehaviour
 {
     public string NameAndType;
+    [SerializeField] WhackAMole mainGame;
     // Start is called before the first frame update
     void Start()
     {
+        mainGame = FindObjectOfType<WhackAMole>();
         
     }
 
@@ -20,6 +23,20 @@ public class Clickable : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("Clicked ON");
-        Destroy(transform.parent.gameObject);
+        if (NameAndType == mainGame.questions_answers.ElementAt(mainGame.question_index).Value )
+        {
+            int index = Random.Range(0, mainGame.questions_answers.Count);
+            mainGame.question.text = mainGame.questions_answers.ElementAt(index).Key;
+            Destroy(transform.parent.gameObject);
+            Debug.Log("CORRECT");
+
+        }
+        else 
+        {
+            Destroy(transform.parent.gameObject);
+            Debug.Log("WRONG!"); 
+        }
     }
+
+    //IEnumerator 
 }

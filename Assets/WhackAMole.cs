@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class WhackAMole : MonoBehaviour
     private Transform[] answer_postions;
     public float gameTime;
     private float timeRemaining;
+    bool occupied;
     public GameObject[] moles;
     [SerializeField] private bool gameRunning;
 
@@ -25,6 +27,8 @@ public class WhackAMole : MonoBehaviour
     //public Text timeText;
 
     public Slider timeSlide;
+    public Text question;
+    public int question_index;
 
     private void Start()
     {
@@ -34,7 +38,7 @@ public class WhackAMole : MonoBehaviour
             {"Pick the Crust", "Crust" },
             {"Pick the Mantle" , "Mantle"},
             {"Pick the Inner Core" ,"Inner Core"},
-            { "Pick the Outer Core", "Outer Core"}
+            {"Pick the Outer Core", "Outer Core"}
 
         };
         timeRemaining = gameTime;
@@ -42,6 +46,9 @@ public class WhackAMole : MonoBehaviour
         gameRunning = true;
         SliderUpdate();
         StartCoroutine(Spawn());
+        //Have one of the questions as the text question
+        question_index = Random.Range(0, questions_answers.Count);
+        question.text = questions_answers.ElementAt(question_index).Key;
     }
 
     // Update is called once per frame
@@ -54,6 +61,7 @@ public class WhackAMole : MonoBehaviour
             StopAllCoroutines();
             gameRunning = false;
         }
+        
         SliderUpdate();
     }
 
@@ -71,14 +79,14 @@ public class WhackAMole : MonoBehaviour
             int mole_index = Random.Range(0, moles.Length);
             GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
 
-            if (correct.CompareTag("Correct"))
-            {
-                Debug.Log("This is the correct answer");
-            }
-            else
-            {
-                Debug.Log("Wrong");
-            }
+            //if (correct.CompareTag("Correct"))
+            //{
+            //    Debug.Log("This is the correct answer");
+            //}
+            //else
+            //{
+            //    Debug.Log("Wrong");
+            //}
         }
     }
 }
