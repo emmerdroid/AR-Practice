@@ -1,23 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
 public class ARCursor : MonoBehaviour
 {
-
     public GameObject cursorChild;
     public ARRaycastManager raycastManager;
 
     public bool useCursor = true;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         cursorChild.SetActive(useCursor);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (useCursor)
         {
@@ -25,7 +24,7 @@ public class ARCursor : MonoBehaviour
         }
     }
 
-    void UpdateCursor()
+    private void UpdateCursor()
     {
         Vector2 screenPosition = Camera.main.ViewportToScreenPoint(new Vector2(0.5f, 0.5f));
         List<ARRaycastHit> hits = new List<ARRaycastHit>();

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,19 +8,19 @@ public class GameManager : MonoBehaviour
     public GameObject chatPanel, textObject;
     public InputField chatBox;
     public Button chatButton;
-    bool Click;
+    private bool Click;
 
-    [SerializeField] 
-    List<Message> messageList = new List<Message>();
+    [SerializeField]
+    private List<Message> messageList = new List<Message>();
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Click = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (chatBox.text != "")
         {
@@ -32,19 +31,18 @@ public class GameManager : MonoBehaviour
                 Click = false;
             }
         }
-        if(!chatBox.isFocused)
+        if (!chatBox.isFocused)
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 SendMessageToChat("Space was Pressed");
             }
-
         }
     }
 
     public void SendMessageToChat(string text)
     {
-        if(messageList.Count >= maxMessages)
+        if (messageList.Count >= maxMessages)
         {
             Destroy(messageList[0].textObject.gameObject);
             messageList.Remove(messageList[0]);
@@ -58,7 +56,7 @@ public class GameManager : MonoBehaviour
         messageList.Add(newMessage);
     }
 
-   public void OnClick()
+    public void OnClick()
     {
         Click = true;
     }

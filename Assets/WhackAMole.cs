@@ -11,23 +11,23 @@ public class WhackAMole : MonoBehaviour
     /// to get their postions
     /// the answers will then continuosly be randomized in 2.5 intervals?
     /// only 1 will be correct
-    ///
     /// The timer per question should be 10 or 15 seconds? depends on the intervals
     /// </summary>
     // Start is called before the first frame update
     private Transform[] answer_postions;
+
     public float gameTime;
     private float timeRemaining;
-    bool occupied;
+
     public GameObject[] moles;
     [SerializeField] private bool gameRunning;
 
     public Dictionary<string, string> questions_answers;
 
-    //public Text timeText;
-
     public Slider timeSlide;
     public Text question;
+    public Text scoreText;
+    public int scoreNum;
     public int question_index;
 
     private void Start()
@@ -39,7 +39,6 @@ public class WhackAMole : MonoBehaviour
             {"Pick the Mantle" , "Mantle"},
             {"Pick the Inner Core" ,"Inner Core"},
             {"Pick the Outer Core", "Outer Core"}
-
         };
         timeRemaining = gameTime;
         timeSlide.maxValue = gameTime;
@@ -49,6 +48,10 @@ public class WhackAMole : MonoBehaviour
         //Have one of the questions as the text question
         question_index = Random.Range(0, questions_answers.Count);
         question.text = questions_answers.ElementAt(question_index).Key;
+
+        //keeping track of the score
+        scoreNum = 0;
+        scoreText.text = "Score: " + scoreNum;
     }
 
     // Update is called once per frame
@@ -61,8 +64,9 @@ public class WhackAMole : MonoBehaviour
             StopAllCoroutines();
             gameRunning = false;
         }
-        
+
         SliderUpdate();
+        scoreText.text = "Score: " + scoreNum;
     }
 
     private void SliderUpdate()
@@ -75,9 +79,12 @@ public class WhackAMole : MonoBehaviour
         while (gameRunning)
         {
             yield return new WaitForSeconds(Random.Range(0.5f, 2.5f));
-            int index = Random.Range(0, answer_postions.Length);
+            int index = Random.Range(1, answer_postions.Length);
             int mole_index = Random.Range(0, moles.Length);
-            GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
+            if (!CheckSpot(answer_postions[index]))
+            {
+                GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
+            }
 
             //if (correct.CompareTag("Correct"))
             //{
@@ -88,5 +95,14 @@ public class WhackAMole : MonoBehaviour
             //    Debug.Log("Wrong");
             //}
         }
+    }
+
+    private bool CheckSpot(Transform location)
+    {
+        if (Physics.CheckSphere(location.position, 1f))
+        {
+            return true;
+        }
+        return false;
     }
 }

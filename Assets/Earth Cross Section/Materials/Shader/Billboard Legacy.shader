@@ -1,141 +1,141 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "Billboard Legacy"
 {
 	Properties
 	{
 		_Texture("Texture", 2D) = "white" {}
 		_ColorInfos("Color ", Color) = (1,1,1,0)
-		_Size("Size", Range( -1 , 1)) = 0
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
-		[HideInInspector] __dirty( "", Int ) = 1
+		_Size("Size", Range(-1 , 1)) = 0
+		[HideInInspector] _texcoord("", 2D) = "white" {}
+		[HideInInspector] __dirty("", Int) = 1
 	}
 
-	SubShader
-	{
-		Tags{ "RenderType" = "Transparent"  "Queue" = "Transparent+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
-		Cull Off
-		CGINCLUDE
-		#include "UnityPBSLighting.cginc"
-		#include "Lighting.cginc"
-		#pragma target 3.0
-		struct Input
+		SubShader
 		{
-			float2 uv_texcoord;
-		};
-
-		uniform float _Size;
-		uniform float4 _ColorInfos;
-		uniform sampler2D _Texture;
-		uniform float4 _Texture_ST;
-
-		void vertexDataFunc( inout appdata_full v, out Input o )
-		{
-			UNITY_INITIALIZE_OUTPUT( Input, o );
-			//Calculate new billboard vertex position and normal;
-			float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-			float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-			float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-			float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-			v.normal = normalize( mul( float4( v.normal , 0 ), rotationCamMatrix )).xyz;
-			v.vertex.x *= length( unity_ObjectToWorld._m00_m10_m20 );
-			v.vertex.y *= length( unity_ObjectToWorld._m01_m11_m21 );
-			v.vertex.z *= length( unity_ObjectToWorld._m02_m12_m22 );
-			v.vertex = mul( v.vertex, rotationCamMatrix );
-			v.vertex.xyz += unity_ObjectToWorld._m03_m13_m23;
-			//Need to nullify rotation inserted by generated surface shader;
-			v.vertex = mul( unity_WorldToObject, v.vertex );
-			float3 ase_vertex3Pos = v.vertex.xyz;
-			v.vertex.xyz += ( ( ( ase_vertex3Pos + 0 ) * _Size ) + float3(0,0.3,0) );
-		}
-
-		void surf( Input i , inout SurfaceOutputStandard o )
-		{
-			float2 uv_Texture = i.uv_texcoord * _Texture_ST.xy + _Texture_ST.zw;
-			float4 tex2DNode3 = tex2D( _Texture, uv_Texture );
-			float4 blendOpSrc7 = _ColorInfos;
-			float4 blendOpDest7 = tex2DNode3;
-			o.Emission = ( saturate( (( blendOpDest7 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest7 ) * ( 1.0 - blendOpSrc7 ) ) : ( 2.0 * blendOpDest7 * blendOpSrc7 ) ) )).rgb;
-			o.Alpha = tex2DNode3.a;
-		}
-
-		ENDCG
-		CGPROGRAM
-		#pragma surface surf Standard alpha:fade keepalpha fullforwardshadows vertex:vertexDataFunc 
-
-		ENDCG
-		Pass
-		{
-			Name "ShadowCaster"
-			Tags{ "LightMode" = "ShadowCaster" }
-			ZWrite On
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma target 3.0
-			#pragma multi_compile_shadowcaster
-			#pragma multi_compile UNITY_PASS_SHADOWCASTER
-			#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
-			#include "HLSLSupport.cginc"
-			#if ( SHADER_API_D3D11 || SHADER_API_GLCORE || SHADER_API_GLES || SHADER_API_GLES3 || SHADER_API_METAL || SHADER_API_VULKAN )
-				#define CAN_SKIP_VPOS
-			#endif
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
+			Tags{ "RenderType" = "Transparent"  "Queue" = "Transparent+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
+			Cull Off
+			CGINCLUDE
 			#include "UnityPBSLighting.cginc"
-			sampler3D _DitherMaskLOD;
-			struct v2f
+			#include "Lighting.cginc"
+			#pragma target 3.0
+			struct Input
 			{
-				V2F_SHADOW_CASTER;
-				float2 customPack1 : TEXCOORD1;
-				float3 worldPos : TEXCOORD2;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
+				float2 uv_texcoord;
 			};
-			v2f vert( appdata_full v )
+
+			uniform float _Size;
+			uniform float4 _ColorInfos;
+			uniform sampler2D _Texture;
+			uniform float4 _Texture_ST;
+
+			void vertexDataFunc(inout appdata_full v, out Input o)
 			{
-				v2f o;
-				UNITY_SETUP_INSTANCE_ID( v );
-				UNITY_INITIALIZE_OUTPUT( v2f, o );
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				UNITY_TRANSFER_INSTANCE_ID( v, o );
-				Input customInputData;
-				vertexDataFunc( v, customInputData );
-				float3 worldPos = mul( unity_ObjectToWorld, v.vertex ).xyz;
-				half3 worldNormal = UnityObjectToWorldNormal( v.normal );
-				o.customPack1.xy = customInputData.uv_texcoord;
-				o.customPack1.xy = v.texcoord;
-				o.worldPos = worldPos;
-				TRANSFER_SHADOW_CASTER_NORMALOFFSET( o )
-				return o;
+				UNITY_INITIALIZE_OUTPUT(Input, o);
+				//Calculate new billboard vertex position and normal;
+				float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+				float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+				float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+				float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+				v.normal = normalize(mul(float4(v.normal , 0), rotationCamMatrix)).xyz;
+				v.vertex.x *= length(unity_ObjectToWorld._m00_m10_m20);
+				v.vertex.y *= length(unity_ObjectToWorld._m01_m11_m21);
+				v.vertex.z *= length(unity_ObjectToWorld._m02_m12_m22);
+				v.vertex = mul(v.vertex, rotationCamMatrix);
+				v.vertex.xyz += unity_ObjectToWorld._m03_m13_m23;
+				//Need to nullify rotation inserted by generated surface shader;
+				v.vertex = mul(unity_WorldToObject, v.vertex);
+				float3 ase_vertex3Pos = v.vertex.xyz;
+				v.vertex.xyz += (((ase_vertex3Pos + 0) * _Size) + float3(0,0.3,0));
 			}
-			half4 frag( v2f IN
-			#if !defined( CAN_SKIP_VPOS )
-			, UNITY_VPOS_TYPE vpos : VPOS
-			#endif
-			) : SV_Target
+
+			void surf(Input i , inout SurfaceOutputStandard o)
 			{
-				UNITY_SETUP_INSTANCE_ID( IN );
-				Input surfIN;
-				UNITY_INITIALIZE_OUTPUT( Input, surfIN );
-				surfIN.uv_texcoord = IN.customPack1.xy;
-				float3 worldPos = IN.worldPos;
-				half3 worldViewDir = normalize( UnityWorldSpaceViewDir( worldPos ) );
-				SurfaceOutputStandard o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandard, o )
-				surf( surfIN, o );
-				#if defined( CAN_SKIP_VPOS )
-				float2 vpos = IN.pos;
-				#endif
-				half alphaRef = tex3D( _DitherMaskLOD, float3( vpos.xy * 0.25, o.Alpha * 0.9375 ) ).a;
-				clip( alphaRef - 0.01 );
-				SHADOW_CASTER_FRAGMENT( IN )
+				float2 uv_Texture = i.uv_texcoord * _Texture_ST.xy + _Texture_ST.zw;
+				float4 tex2DNode3 = tex2D(_Texture, uv_Texture);
+				float4 blendOpSrc7 = _ColorInfos;
+				float4 blendOpDest7 = tex2DNode3;
+				o.Emission = (saturate(((blendOpDest7 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest7) * (1.0 - blendOpSrc7)) : (2.0 * blendOpDest7 * blendOpSrc7)))).rgb;
+				o.Alpha = tex2DNode3.a;
 			}
+
 			ENDCG
+			CGPROGRAM
+			#pragma surface surf Standard alpha:fade keepalpha fullforwardshadows vertex:vertexDataFunc
+
+			ENDCG
+			Pass
+			{
+				Name "ShadowCaster"
+				Tags{ "LightMode" = "ShadowCaster" }
+				ZWrite On
+				CGPROGRAM
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma target 3.0
+				#pragma multi_compile_shadowcaster
+				#pragma multi_compile UNITY_PASS_SHADOWCASTER
+				#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
+				#include "HLSLSupport.cginc"
+				#if ( SHADER_API_D3D11 || SHADER_API_GLCORE || SHADER_API_GLES || SHADER_API_GLES3 || SHADER_API_METAL || SHADER_API_VULKAN )
+					#define CAN_SKIP_VPOS
+				#endif
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				sampler3D _DitherMaskLOD;
+				struct v2f
+				{
+					V2F_SHADOW_CASTER;
+					float2 customPack1 : TEXCOORD1;
+					float3 worldPos : TEXCOORD2;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+				v2f vert(appdata_full v)
+				{
+					v2f o;
+					UNITY_SETUP_INSTANCE_ID(v);
+					UNITY_INITIALIZE_OUTPUT(v2f, o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+					UNITY_TRANSFER_INSTANCE_ID(v, o);
+					Input customInputData;
+					vertexDataFunc(v, customInputData);
+					float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+					half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+					o.customPack1.xy = customInputData.uv_texcoord;
+					o.customPack1.xy = v.texcoord;
+					o.worldPos = worldPos;
+					TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+					return o;
+				}
+				half4 frag(v2f IN
+				#if !defined( CAN_SKIP_VPOS )
+				, UNITY_VPOS_TYPE vpos : VPOS
+				#endif
+				) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					Input surfIN;
+					UNITY_INITIALIZE_OUTPUT(Input, surfIN);
+					surfIN.uv_texcoord = IN.customPack1.xy;
+					float3 worldPos = IN.worldPos;
+					half3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+					SurfaceOutputStandard o;
+					UNITY_INITIALIZE_OUTPUT(SurfaceOutputStandard, o)
+					surf(surfIN, o);
+					#if defined( CAN_SKIP_VPOS )
+					float2 vpos = IN.pos;
+					#endif
+					half alphaRef = tex3D(_DitherMaskLOD, float3(vpos.xy * 0.25, o.Alpha * 0.9375)).a;
+					clip(alphaRef - 0.01);
+					SHADOW_CASTER_FRAGMENT(IN)
+				}
+				ENDCG
+			}
 		}
-	}
-	Fallback "Diffuse"
-	CustomEditor "ASEMaterialInspector"
+			Fallback "Diffuse"
+						CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=17700

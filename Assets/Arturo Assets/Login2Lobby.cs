@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,6 +38,7 @@ public class Login2Lobby : MonoBehaviour
     {
         SceneManager.LoadScene("Tuffy login");
     }
+
     //Code Added 8/11/2022 from Emmanuel, to go to AR scene
     public void JoinScene()
     {

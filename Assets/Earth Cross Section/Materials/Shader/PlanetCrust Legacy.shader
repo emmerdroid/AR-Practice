@@ -1,10 +1,10 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "PlanetCrust"
 {
 	Properties
 	{
-		[NoScaleOffset]_ColorTexture("Color Texture", 2D) = "gray" {}
+		[NoScaleOffset] _ColorTexture("Color Texture", 2D) = "gray" {}
 		[Toggle]_EnableClouds("Enable Clouds", Float) = 1
 		_PolarMask("Polar Mask", 2D) = "white" {}
 		[NoScaleOffset]_NecessaryWaterMask("Necessary Water Mask", 2D) = "black" {}
@@ -12,41 +12,38 @@ Shader "PlanetCrust"
 		_CitiesTexture("Cities Texture", 2D) = "black" {}
 		[HDR]_ColorA("Color + A", Color) = (4.541205,4.541205,4.541205,0.3607843)
 		_CloudSpeed("Cloud Speed", Float) = 1
-		_ShadowsYOffset("Shadows Y Offset", Range( -0.02 , 0.02)) = -0.005
-		_ShadowsXOffset("Shadows X Offset", Range( -0.02 , 0.02)) = -0.005
-		_ShadowsSharpness("Shadows Sharpness", Range( 0 , 10)) = 2.5
+		_ShadowsYOffset("Shadows Y Offset", Range(-0.02 , 0.02)) = -0.005
+		_ShadowsXOffset("Shadows X Offset", Range(-0.02 , 0.02)) = -0.005
+		_ShadowsSharpness("Shadows Sharpness", Range(0 , 10)) = 2.5
 		[Toggle]_EnableCities("Enable Cities", Float) = 1
 		[HDR]_Citiescolor("Cities color", Color) = (7.906699,2.649365,1.200494,0)
 		[HDR]_AtmosphereColor("Atmosphere Color", Color) = (0.3764706,1.027451,1.498039,0)
-		_InteriorSize("Interior Size", Range( -2 , 10)) = 0.3
+		_InteriorSize("Interior Size", Range(-2 , 10)) = 0.3
 		_IlluminationSmoothness("Illumination Smoothness", Float) = 4
-		_InteriorIntensity("Interior Intensity", Range( 0 , 1)) = 0.65
+		_InteriorIntensity("Interior Intensity", Range(0 , 1)) = 0.65
 		_IlluminationAmbient("Illumination Ambient", Color) = (0.09019608,0.06666667,0.1490196,0)
 		_LightSource("_LightSource", Vector) = (1,0,0,0)
 		[Toggle]_EnableAtmosphere("Enable Atmosphere", Float) = 1
-		_CitiesDetail("Cities Detail", Range( 1 , 20)) = 4
+		_CitiesDetail("Cities Detail", Range(1 , 20)) = 4
 		_EnumFloat("_EnumFloat", Float) = 0
 		_WaterColor("Water Color", Color) = (0.282353,0.4431373,0.5176471,0)
-		_SpecularIntensity("Specular Intensity", Range( 0 , 1)) = 1
+		_SpecularIntensity("Specular Intensity", Range(0 , 1)) = 1
 		_Normals("Normals", 2D) = "bump" {}
-		_NormalsIntensity("Normals Intensity", Range( 0 , 2)) = 1
+		_NormalsIntensity("Normals Intensity", Range(0 , 2)) = 1
 		[Toggle]_EnableWater("Enable Water", Float) = 1
 		_CloudsNormals("Clouds Normals", 2D) = "bump" {}
 		_BaseColormodifier("Base Color modifier", Color) = (1,1,1,0)
 		_ShadowColorA("Shadow Color + A", Color) = (0.09803922,0.2313726,0.4117647,1)
 		_ReliefIntensity("ReliefIntensity", Float) = 2
-		_ReliefSmoothness("Relief Smoothness", Range( 0 , 5)) = 2
+		_ReliefSmoothness("Relief Smoothness", Range(0 , 5)) = 2
 		_IlluminationBoost("Illumination Boost", Float) = 1
 		_SkyblendA("Sky blend (A)", Color) = (0.5529412,0.6845676,0.7843137,0)
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
-
+		[HideInInspector] _texcoord("", 2D) = "white" {}
 	}
-	
-	SubShader
+
+		SubShader
 	{
-		
-		
-		Tags { "RenderType"="Opaque" }
+		Tags { "RenderType" = "Opaque" }
 	LOD 100
 
 		CGINCLUDE
@@ -58,265 +55,256 @@ Shader "PlanetCrust"
 		ZWrite On
 		ZTest LEqual
 		Offset 0 , 0
-		
-		
-		
+
 		Pass
 		{
 			Name "Unlit"
-			Tags { "LightMode"="ForwardBase" }
+			Tags { "LightMode" = "ForwardBase" }
 			CGPROGRAM
 
-			
-
 			#ifndef UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX
-			//only defining to not throw compilation error over Unity 5.5
-			#define UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input)
+		//only defining to not throw compilation error over Unity 5.5
+		#define UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input)
+		#endif
+		#pragma vertex vert
+		#pragma fragment frag
+		#pragma multi_compile_instancing
+		#include "UnityCG.cginc"
+		#include "UnityShaderVariables.cginc"
+		#include "UnityStandardUtils.cginc"
+		#include "UnityStandardBRDF.cginc"
+
+		struct appdata
+		{
+			float4 vertex : POSITION;
+			float4 color : COLOR;
+			UNITY_VERTEX_INPUT_INSTANCE_ID
+			float4 ase_texcoord : TEXCOORD0;
+			float4 ase_tangent : TANGENT;
+			float3 ase_normal : NORMAL;
+		};
+
+		struct v2f
+		{
+			float4 vertex : SV_POSITION;
+			UNITY_VERTEX_INPUT_INSTANCE_ID
+			UNITY_VERTEX_OUTPUT_STEREO
+			float4 ase_texcoord : TEXCOORD0;
+			float4 ase_texcoord1 : TEXCOORD1;
+			float4 ase_texcoord2 : TEXCOORD2;
+			float4 ase_texcoord3 : TEXCOORD3;
+			float4 ase_texcoord4 : TEXCOORD4;
+		};
+
+		uniform sampler2D _ColorTexture;
+		uniform float4 _BaseColormodifier;
+		uniform float4 _WaterColor;
+		uniform float _EnableWater;
+		uniform sampler2D _NecessaryWaterMask;
+		uniform float4 _ShadowColorA;
+		uniform float _EnableClouds;
+		uniform sampler2D _CloudsTexture;
+		uniform float _ShadowsXOffset;
+		uniform float _ShadowsYOffset;
+		uniform float _CloudSpeed;
+		uniform float _ShadowsSharpness;
+		uniform float4 _ColorA;
+		uniform sampler2D _PolarMask;
+		uniform float4 _PolarMask_ST;
+		uniform float _EnumFloat;
+		uniform float4 _IlluminationAmbient;
+		uniform float _ReliefIntensity;
+		uniform sampler2D _CloudsNormals;
+		uniform float _ReliefSmoothness;
+		uniform float _NormalsIntensity;
+		uniform sampler2D _Normals;
+		uniform float3 _LightSource;
+		uniform float _IlluminationSmoothness;
+		uniform float _EnableCities;
+		uniform sampler2D _CitiesTexture;
+		uniform float _CitiesDetail;
+		uniform float4 _Citiescolor;
+		uniform float _EnableAtmosphere;
+		uniform float _InteriorSize;
+		uniform float _InteriorIntensity;
+		uniform float4 _AtmosphereColor;
+		uniform float _SpecularIntensity;
+		uniform float4 _SkyblendA;
+		uniform float _IlluminationBoost;
+
+		v2f vert(appdata v)
+		{
+			v2f o;
+			UNITY_SETUP_INSTANCE_ID(v);
+			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+			UNITY_TRANSFER_INSTANCE_ID(v, o);
+
+			float3 ase_worldTangent = UnityObjectToWorldDir(v.ase_tangent);
+			o.ase_texcoord1.xyz = ase_worldTangent;
+			float3 ase_worldNormal = UnityObjectToWorldNormal(v.ase_normal);
+			o.ase_texcoord2.xyz = ase_worldNormal;
+			float ase_vertexTangentSign = v.ase_tangent.w * unity_WorldTransformParams.w;
+			float3 ase_worldBitangent = cross(ase_worldNormal, ase_worldTangent) * ase_vertexTangentSign;
+			o.ase_texcoord3.xyz = ase_worldBitangent;
+			float3 ase_worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+			o.ase_texcoord4.xyz = ase_worldPos;
+
+			o.ase_texcoord.xy = v.ase_texcoord.xy;
+
+			//setting value to unused interpolator channels and avoid initialization warnings
+			o.ase_texcoord.zw = 0;
+			o.ase_texcoord1.w = 0;
+			o.ase_texcoord2.w = 0;
+			o.ase_texcoord3.w = 0;
+			o.ase_texcoord4.w = 0;
+			float3 vertexValue = float3(0, 0, 0);
+			#if ASE_ABSOLUTE_VERTEX_POS
+			vertexValue = v.vertex.xyz;
 			#endif
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma multi_compile_instancing
-			#include "UnityCG.cginc"
-			#include "UnityShaderVariables.cginc"
-			#include "UnityStandardUtils.cginc"
-			#include "UnityStandardBRDF.cginc"
-
-
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float4 color : COLOR;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-				float3 ase_normal : NORMAL;
-			};
-			
-			struct v2f
-			{
-				float4 vertex : SV_POSITION;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
-				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
-			};
-
-			uniform sampler2D _ColorTexture;
-			uniform float4 _BaseColormodifier;
-			uniform float4 _WaterColor;
-			uniform float _EnableWater;
-			uniform sampler2D _NecessaryWaterMask;
-			uniform float4 _ShadowColorA;
-			uniform float _EnableClouds;
-			uniform sampler2D _CloudsTexture;
-			uniform float _ShadowsXOffset;
-			uniform float _ShadowsYOffset;
-			uniform float _CloudSpeed;
-			uniform float _ShadowsSharpness;
-			uniform float4 _ColorA;
-			uniform sampler2D _PolarMask;
-			uniform float4 _PolarMask_ST;
-			uniform float _EnumFloat;
-			uniform float4 _IlluminationAmbient;
-			uniform float _ReliefIntensity;
-			uniform sampler2D _CloudsNormals;
-			uniform float _ReliefSmoothness;
-			uniform float _NormalsIntensity;
-			uniform sampler2D _Normals;
-			uniform float3 _LightSource;
-			uniform float _IlluminationSmoothness;
-			uniform float _EnableCities;
-			uniform sampler2D _CitiesTexture;
-			uniform float _CitiesDetail;
-			uniform float4 _Citiescolor;
-			uniform float _EnableAtmosphere;
-			uniform float _InteriorSize;
-			uniform float _InteriorIntensity;
-			uniform float4 _AtmosphereColor;
-			uniform float _SpecularIntensity;
-			uniform float4 _SkyblendA;
-			uniform float _IlluminationBoost;
-
-			
-			v2f vert ( appdata v )
-			{
-				v2f o;
-				UNITY_SETUP_INSTANCE_ID(v);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-				UNITY_TRANSFER_INSTANCE_ID(v, o);
-
-				float3 ase_worldTangent = UnityObjectToWorldDir(v.ase_tangent);
-				o.ase_texcoord1.xyz = ase_worldTangent;
-				float3 ase_worldNormal = UnityObjectToWorldNormal(v.ase_normal);
-				o.ase_texcoord2.xyz = ase_worldNormal;
-				float ase_vertexTangentSign = v.ase_tangent.w * unity_WorldTransformParams.w;
-				float3 ase_worldBitangent = cross( ase_worldNormal, ase_worldTangent ) * ase_vertexTangentSign;
-				o.ase_texcoord3.xyz = ase_worldBitangent;
-				float3 ase_worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-				o.ase_texcoord4.xyz = ase_worldPos;
-				
-				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
-				o.ase_texcoord1.w = 0;
-				o.ase_texcoord2.w = 0;
-				o.ase_texcoord3.w = 0;
-				o.ase_texcoord4.w = 0;
-				float3 vertexValue = float3(0, 0, 0);
-				#if ASE_ABSOLUTE_VERTEX_POS
-				vertexValue = v.vertex.xyz;
-				#endif
-				vertexValue = vertexValue;
-				#if ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue;
-				#else
-				v.vertex.xyz += vertexValue;
-				#endif
-				o.vertex = UnityObjectToClipPos(v.vertex);
-				return o;
-			}
-			
-			fixed4 frag (v2f i ) : SV_Target
-			{
-				UNITY_SETUP_INSTANCE_ID(i);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-				fixed4 finalColor;
-				float2 uv_ColorTexture61 = i.ase_texcoord.xy;
-				float4 BaseColor2300 = ( tex2D( _ColorTexture, uv_ColorTexture61 ) * _BaseColormodifier );
-				float4 WaterColor2302 = _WaterColor;
-				float4 blendOpSrc2099 = BaseColor2300;
-				float4 blendOpDest2099 = WaterColor2302;
-				float WaterTransparency2306 = _WaterColor.a;
-				float4 lerpResult2121 = lerp( BaseColor2300 , ( saturate( (( blendOpDest2099 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest2099 ) * ( 1.0 - blendOpSrc2099 ) ) : ( 2.0 * blendOpDest2099 * blendOpSrc2099 ) ) )) , WaterTransparency2306);
-				float4 lerpResult2120 = lerp( lerpResult2121 , WaterColor2302 , WaterTransparency2306);
-				float4 BaseAndWater2266 = lerpResult2120;
-				float2 uv_NecessaryWaterMask82 = i.ase_texcoord.xy;
-				float clampResult2089 = clamp( ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * 10.0 ) , 0.0 , 1.0 );
-				float ContinentalMasks2284 = clampResult2089;
-				float4 lerpResult1895 = lerp( BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
-				float3 desaturateInitialColor2417 = lerpResult1895.rgb;
-				float desaturateDot2417 = dot( desaturateInitialColor2417, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2417 = lerp( desaturateInitialColor2417, desaturateDot2417.xxx, 0.3 );
-				float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
-				float2 uv0455 = i.ase_texcoord.xy * float2( 1,1 ) + appendResult2178;
-				float temp_output_161_0 = ( _CloudSpeed / 80.0 );
-				float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVcloudShadows2246 = ( float4( uv0455, 0.0 , 0.0 ) + ( appendResult453 * _Time.x ) );
-				float4 tex2DNode442 = tex2Dlod( _CloudsTexture, float4( UVcloudShadows2246.xy, 0, _ShadowsSharpness) );
-				float temp_output_2422_0 = ( ( tex2DNode442.b + tex2DNode442.b ) * 5.0 );
-				float CloudsAlpha2253 = _ColorA.a;
-				float clampResult2147 = clamp( ( (( _EnableClouds )?( 1.0 ):( 0.0 )) * temp_output_2422_0 * CloudsAlpha2253 ) , 0.0 , 1.0 );
-				float CloudsShadows2248 = clampResult2147;
-				float2 uv_PolarMask = i.ase_texcoord.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
-				float4 PolarMask2271 = tex2D( _PolarMask, uv_PolarMask );
-				float4 lerpResult1816 = lerp( float4( desaturateVar2417 , 0.0 ) , _ShadowColorA , ( ( CloudsShadows2248 * PolarMask2271 ) * _ShadowColorA.a ));
-				float4 CloudsColor2252 = _ColorA;
-				float2 uv032 = i.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVClouds2243 = ( float4( uv032, 0.0 , 0.0 ) + ( appendResult41 * _Time.x ) );
-				float lerpResult1886 = lerp( tex2D( _CloudsTexture, UVClouds2243.xy ).g , _EnumFloat , 0.0);
-				float saferPower2060 = max( lerpResult1886 , 0.0001 );
-				float Clouds2262 = ( (0.0 + (pow( saferPower2060 , 0.5 ) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * (( _EnableClouds )?( 1.0 ):( 0.0 )) );
-				float4 lerpResult66 = lerp( lerpResult1816 , ( 0.5 * CloudsColor2252 ) , ( PolarMask2271 * Clouds2262 ));
-				float4 AmbientColor2337 = _IlluminationAmbient;
-				float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
-				float2 uv02073 = i.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float3 FlatNormal2287 = float3(0,0,1);
-				float3 lerpResult2094 = lerp( UnpackScaleNormal( tex2D( _Normals, uv02073 ), ( (0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25 ) ) , FlatNormal2287 , ContinentalMasks2284);
-				float clampResult535 = clamp( ( 3.0 * Clouds2262 ) , 0.0 , 1.0 );
-				float CloudsOcclusion2258 = ( 1.0 - clampResult535 );
-				float3 lerpResult2093 = lerp( UnpackScaleNormal( tex2Dlod( _CloudsNormals, float4( UVClouds2243.xy, 0, _ReliefSmoothness) ), ( _ReliefIntensity * CloudsAlpha2253 ) ) , lerpResult2094 , CloudsOcclusion2258);
-				float3 Normals2236 = lerpResult2093;
-				float3 ase_worldTangent = i.ase_texcoord1.xyz;
-				float3 ase_worldNormal = i.ase_texcoord2.xyz;
-				float3 ase_worldBitangent = i.ase_texcoord3.xyz;
-				float3 tanToWorld0 = float3( ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x );
-				float3 tanToWorld1 = float3( ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y );
-				float3 tanToWorld2 = float3( ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z );
-				float3 tanNormal246 = Normals2236;
-				float3 worldNormal246 = normalize( float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)) );
-				float3 normalizeResult1073 = normalize( _LightSource );
-				float3 LightSourceVector2314 = ( normalizeResult1073 / 1.0 );
-				float dotResult247 = dot( worldNormal246 , LightSourceVector2314 );
-				float smoothstepResult2359 = smoothstep( 0.0 , 1.0 , ( dotResult247 + 0.5 ));
-				float BaselLightMask2332 = smoothstepResult2359;
-				float temp_output_380_0 = pow( BaselLightMask2332 , _IlluminationSmoothness );
-				float clampResult2452 = clamp( ( ( ( temp_output_380_0 + -0.5 ) * ( 1.0 - BaselLightMask2332 ) ) * 10.0 ) , 0.0 , 1.0 );
-				float4 lerpResult2450 = lerp( AmbientColor2337 , color2445 , clampResult2452);
-				float4 temp_cast_7 = (temp_output_380_0).xxxx;
-				float4 lerpResult2409 = lerp( lerpResult2450 , temp_cast_7 , temp_output_380_0);
-				float4 NightDayMask2292 = lerpResult2409;
-				float4 temp_cast_8 = (0.0).xxxx;
-				float2 temp_cast_9 = (_CitiesDetail).xx;
-				float2 uv0175 = i.ase_texcoord.xy * temp_cast_9 + float2( 0,0 );
-				float2 uv02431 = i.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float clampResult1926 = clamp( ContinentalMasks2284 , 0.0 , 1.0 );
-				float3 desaturateInitialColor2410 = ( 1.0 - ( NightDayMask2292 * 5.0 ) ).rgb;
-				float desaturateDot2410 = dot( desaturateInitialColor2410, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2410 = lerp( desaturateInitialColor2410, desaturateDot2410.xxx, 1.0 );
-				float3 clampResult1716 = clamp( desaturateVar2410 , float3( 0,0,0 ) , float3( 1,1,1 ) );
-				float3 ase_worldPos = i.ase_texcoord4.xyz;
-				float3 ase_worldViewDir = UnityWorldSpaceViewDir(ase_worldPos);
-				ase_worldViewDir = normalize(ase_worldViewDir);
-				float dotResult1665 = dot( ase_worldViewDir , ase_worldNormal );
-				float FresnelMask2228 = dotResult1665;
-				float saferPower2161 = max( FresnelMask2228 , 0.0001 );
-				float4 Cities2297 = (( _EnableCities )?( ( ( float4( ( ( ( ( ( tex2D( _CitiesTexture, uv0175 ).r * ( 1.0 - tex2D( _CitiesTexture, uv02431 ).a ) ) * ( 1.0 - clampResult1926 ) ) * clampResult1716 ) * pow( saferPower2161 , 4.0 ) ) * CloudsOcclusion2258 ) , 0.0 ) * _Citiescolor ) * 1.0 ) ):( temp_cast_8 ));
-				float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float3 normalizeResult2313 = normalize( ( ase_worldViewDir + LightSourceVector2314 ) );
-				float3 SpecularDir2317 = normalizeResult2313;
-				float3 saferPower2411 = max( SpecularDir2317 , 0.0001 );
-				float fresnelNdotV9 = dot( normalize( normalizedWorldNormal ), ase_worldViewDir );
-				float fresnelNode9 = ( 0.0 + 1.0 * pow( max( 1.0 - fresnelNdotV9 , 0.0001 ), ( ( 1.0 - ( pow( saferPower2411 , 3.0 ) + -1.0 ) ) + _InteriorSize ).x ) );
-				float3 temp_cast_13 = (fresnelNode9).xxx;
-				float3 temp_cast_14 = (fresnelNode9).xxx;
-				float3 linearToGamma2139 = LinearToGammaSpace( temp_cast_14 );
-				float4 BaseColorAtmospheres2278 = _AtmosphereColor;
-				float dotResult1708 = dot( LightSourceVector2314 , normalizedWorldNormal );
-				float smoothstepResult2379 = smoothstep( -0.4 , 1.0 , dotResult1708);
-				float AtmosphereLightMask2225 = smoothstepResult2379;
-				float clampResult1769 = clamp( AtmosphereLightMask2225 , 0.0 , 1.0 );
-				float saferPower1768 = max( clampResult1769 , 0.0001 );
-				float smoothstepResult1594 = smoothstep( 0.0 , 1.0 , pow( saferPower1768 , 1.5 ));
-				float4 clampResult702 = clamp( ( ( float4( ( ( linearToGamma2139 * ( _InteriorIntensity + ( 1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0)) ) ) ) * _InteriorIntensity ) , 0.0 ) * BaseColorAtmospheres2278 ) * smoothstepResult1594 ) , float4( 0,0,0,0 ) , float4( 1,1,1,0 ) );
-				float3 gammaToLinear2462 = GammaToLinearSpace( (( _EnableAtmosphere )?( clampResult702 ):( color1829 )).rgb );
-				float3 SubAtmosphere2241 = gammaToLinear2462;
-				float4 blendOpSrc2361 = ( ( lerpResult66 * NightDayMask2292 ) + ( Cities2297 * PolarMask2271 ) );
-				float4 blendOpDest2361 = float4( SubAtmosphere2241 , 0.0 );
-				float dotResult1867 = dot( ase_worldNormal , SpecularDir2317 );
-				float clampResult2045 = clamp( dotResult1867 , 0.0 , 1.0 );
-				float saferPower2438 = max( clampResult2045 , 0.0001 );
-				float temp_output_2438_0 = pow( saferPower2438 , 2.0 );
-				ase_worldViewDir = Unity_SafeNormalize( ase_worldViewDir );
-				float dotResult1570 = dot( LightSourceVector2314 , ase_worldViewDir );
-				float ViewDotLight2231 = dotResult1570;
-				float clampResult1903 = clamp( ( ViewDotLight2231 + 0.1 ) , 0.0 , 1.0 );
-				float lerpResult1901 = lerp( 200.0 , 2000.0 , clampResult1903);
-				float3 temp_cast_19 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 temp_cast_20 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 gammaToLinear2113 = GammaToLinearSpace( temp_cast_20 );
-				float clampResult1906 = clamp( ViewDotLight2231 , 0.0 , 1.0 );
-				float lerpResult2466 = lerp( 0.25 , _SpecularIntensity , clampResult1906);
-				float4 temp_output_2155_0 = ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * ( ( ( float4( gammaToLinear2113 , 0.0 ) * ( temp_output_2438_0 * WaterColor2302 ) ) * CloudsOcclusion2258 ) * ( lerpResult2466 * 100.0 ) ) );
-				float4 Specular2319 = temp_output_2155_0;
-				float4 lerpResult2525 = lerp( ( ( 1.0 - ( 1.0 - blendOpSrc2361 ) * ( 1.0 - blendOpDest2361 ) ) + ( Specular2319 * PolarMask2271 ) ) , _SkyblendA , _SkyblendA.a);
-				float4 SecondPassInput2324 = ( lerpResult2525 * _IlluminationBoost );
-				
-				
-				finalColor = SecondPassInput2324;
-				return finalColor;
-			}
-			ENDCG
+			vertexValue = vertexValue;
+			#if ASE_ABSOLUTE_VERTEX_POS
+			v.vertex.xyz = vertexValue;
+			#else
+			v.vertex.xyz += vertexValue;
+			#endif
+			o.vertex = UnityObjectToClipPos(v.vertex);
+			return o;
 		}
+
+		fixed4 frag(v2f i) : SV_Target
+		{
+			UNITY_SETUP_INSTANCE_ID(i);
+			UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+			fixed4 finalColor;
+			float2 uv_ColorTexture61 = i.ase_texcoord.xy;
+			float4 BaseColor2300 = (tex2D(_ColorTexture, uv_ColorTexture61) * _BaseColormodifier);
+			float4 WaterColor2302 = _WaterColor;
+			float4 blendOpSrc2099 = BaseColor2300;
+			float4 blendOpDest2099 = WaterColor2302;
+			float WaterTransparency2306 = _WaterColor.a;
+			float4 lerpResult2121 = lerp(BaseColor2300 , (saturate(((blendOpDest2099 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest2099) * (1.0 - blendOpSrc2099)) : (2.0 * blendOpDest2099 * blendOpSrc2099)))) , WaterTransparency2306);
+			float4 lerpResult2120 = lerp(lerpResult2121 , WaterColor2302 , WaterTransparency2306);
+			float4 BaseAndWater2266 = lerpResult2120;
+			float2 uv_NecessaryWaterMask82 = i.ase_texcoord.xy;
+			float clampResult2089 = clamp((((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * 10.0) , 0.0 , 1.0);
+			float ContinentalMasks2284 = clampResult2089;
+			float4 lerpResult1895 = lerp(BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
+			float3 desaturateInitialColor2417 = lerpResult1895.rgb;
+			float desaturateDot2417 = dot(desaturateInitialColor2417, float3(0.299, 0.587, 0.114));
+			float3 desaturateVar2417 = lerp(desaturateInitialColor2417, desaturateDot2417.xxx, 0.3);
+			float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
+			float2 uv0455 = i.ase_texcoord.xy * float2(1,1) + appendResult2178;
+			float temp_output_161_0 = (_CloudSpeed / 80.0);
+			float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+			float4 UVcloudShadows2246 = (float4(uv0455, 0.0 , 0.0) + (appendResult453 * _Time.x));
+			float4 tex2DNode442 = tex2Dlod(_CloudsTexture, float4(UVcloudShadows2246.xy, 0, _ShadowsSharpness));
+			float temp_output_2422_0 = ((tex2DNode442.b + tex2DNode442.b) * 5.0);
+			float CloudsAlpha2253 = _ColorA.a;
+			float clampResult2147 = clamp((((_EnableClouds) ? (1.0) : (0.0)) * temp_output_2422_0 * CloudsAlpha2253) , 0.0 , 1.0);
+			float CloudsShadows2248 = clampResult2147;
+			float2 uv_PolarMask = i.ase_texcoord.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
+			float4 PolarMask2271 = tex2D(_PolarMask, uv_PolarMask);
+			float4 lerpResult1816 = lerp(float4(desaturateVar2417 , 0.0) , _ShadowColorA , ((CloudsShadows2248 * PolarMask2271) * _ShadowColorA.a));
+			float4 CloudsColor2252 = _ColorA;
+			float2 uv032 = i.ase_texcoord.xy * float2(1,1) + float2(0,0);
+			float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+			float4 UVClouds2243 = (float4(uv032, 0.0 , 0.0) + (appendResult41 * _Time.x));
+			float lerpResult1886 = lerp(tex2D(_CloudsTexture, UVClouds2243.xy).g , _EnumFloat , 0.0);
+			float saferPower2060 = max(lerpResult1886 , 0.0001);
+			float Clouds2262 = ((0.0 + (pow(saferPower2060 , 0.5) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * ((_EnableClouds) ? (1.0) : (0.0)));
+			float4 lerpResult66 = lerp(lerpResult1816 , (0.5 * CloudsColor2252) , (PolarMask2271 * Clouds2262));
+			float4 AmbientColor2337 = _IlluminationAmbient;
+			float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
+			float2 uv02073 = i.ase_texcoord.xy * float2(1,1) + float2(0,0);
+			float3 FlatNormal2287 = float3(0,0,1);
+			float3 lerpResult2094 = lerp(UnpackScaleNormal(tex2D(_Normals, uv02073), ((0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25)) , FlatNormal2287 , ContinentalMasks2284);
+			float clampResult535 = clamp((3.0 * Clouds2262) , 0.0 , 1.0);
+			float CloudsOcclusion2258 = (1.0 - clampResult535);
+			float3 lerpResult2093 = lerp(UnpackScaleNormal(tex2Dlod(_CloudsNormals, float4(UVClouds2243.xy, 0, _ReliefSmoothness)), (_ReliefIntensity * CloudsAlpha2253)) , lerpResult2094 , CloudsOcclusion2258);
+			float3 Normals2236 = lerpResult2093;
+			float3 ase_worldTangent = i.ase_texcoord1.xyz;
+			float3 ase_worldNormal = i.ase_texcoord2.xyz;
+			float3 ase_worldBitangent = i.ase_texcoord3.xyz;
+			float3 tanToWorld0 = float3(ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x);
+			float3 tanToWorld1 = float3(ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y);
+			float3 tanToWorld2 = float3(ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z);
+			float3 tanNormal246 = Normals2236;
+			float3 worldNormal246 = normalize(float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)));
+			float3 normalizeResult1073 = normalize(_LightSource);
+			float3 LightSourceVector2314 = (normalizeResult1073 / 1.0);
+			float dotResult247 = dot(worldNormal246 , LightSourceVector2314);
+			float smoothstepResult2359 = smoothstep(0.0 , 1.0 , (dotResult247 + 0.5));
+			float BaselLightMask2332 = smoothstepResult2359;
+			float temp_output_380_0 = pow(BaselLightMask2332 , _IlluminationSmoothness);
+			float clampResult2452 = clamp((((temp_output_380_0 + -0.5) * (1.0 - BaselLightMask2332)) * 10.0) , 0.0 , 1.0);
+			float4 lerpResult2450 = lerp(AmbientColor2337 , color2445 , clampResult2452);
+			float4 temp_cast_7 = (temp_output_380_0).xxxx;
+			float4 lerpResult2409 = lerp(lerpResult2450 , temp_cast_7 , temp_output_380_0);
+			float4 NightDayMask2292 = lerpResult2409;
+			float4 temp_cast_8 = (0.0).xxxx;
+			float2 temp_cast_9 = (_CitiesDetail).xx;
+			float2 uv0175 = i.ase_texcoord.xy * temp_cast_9 + float2(0,0);
+			float2 uv02431 = i.ase_texcoord.xy * float2(1,1) + float2(0,0);
+			float clampResult1926 = clamp(ContinentalMasks2284 , 0.0 , 1.0);
+			float3 desaturateInitialColor2410 = (1.0 - (NightDayMask2292 * 5.0)).rgb;
+			float desaturateDot2410 = dot(desaturateInitialColor2410, float3(0.299, 0.587, 0.114));
+			float3 desaturateVar2410 = lerp(desaturateInitialColor2410, desaturateDot2410.xxx, 1.0);
+			float3 clampResult1716 = clamp(desaturateVar2410 , float3(0,0,0) , float3(1,1,1));
+			float3 ase_worldPos = i.ase_texcoord4.xyz;
+			float3 ase_worldViewDir = UnityWorldSpaceViewDir(ase_worldPos);
+			ase_worldViewDir = normalize(ase_worldViewDir);
+			float dotResult1665 = dot(ase_worldViewDir , ase_worldNormal);
+			float FresnelMask2228 = dotResult1665;
+			float saferPower2161 = max(FresnelMask2228 , 0.0001);
+			float4 Cities2297 = ((_EnableCities) ? (((float4((((((tex2D(_CitiesTexture, uv0175).r * (1.0 - tex2D(_CitiesTexture, uv02431).a)) * (1.0 - clampResult1926)) * clampResult1716) * pow(saferPower2161 , 4.0)) * CloudsOcclusion2258) , 0.0) * _Citiescolor) * 1.0)) : (temp_cast_8));
+			float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
+			float3 normalizedWorldNormal = normalize(ase_worldNormal);
+			float3 normalizeResult2313 = normalize((ase_worldViewDir + LightSourceVector2314));
+			float3 SpecularDir2317 = normalizeResult2313;
+			float3 saferPower2411 = max(SpecularDir2317 , 0.0001);
+			float fresnelNdotV9 = dot(normalize(normalizedWorldNormal), ase_worldViewDir);
+			float fresnelNode9 = (0.0 + 1.0 * pow(max(1.0 - fresnelNdotV9 , 0.0001), ((1.0 - (pow(saferPower2411 , 3.0) + -1.0)) + _InteriorSize).x));
+			float3 temp_cast_13 = (fresnelNode9).xxx;
+			float3 temp_cast_14 = (fresnelNode9).xxx;
+			float3 linearToGamma2139 = LinearToGammaSpace(temp_cast_14);
+			float4 BaseColorAtmospheres2278 = _AtmosphereColor;
+			float dotResult1708 = dot(LightSourceVector2314 , normalizedWorldNormal);
+			float smoothstepResult2379 = smoothstep(-0.4 , 1.0 , dotResult1708);
+			float AtmosphereLightMask2225 = smoothstepResult2379;
+			float clampResult1769 = clamp(AtmosphereLightMask2225 , 0.0 , 1.0);
+			float saferPower1768 = max(clampResult1769 , 0.0001);
+			float smoothstepResult1594 = smoothstep(0.0 , 1.0 , pow(saferPower1768 , 1.5));
+			float4 clampResult702 = clamp(((float4(((linearToGamma2139 * (_InteriorIntensity + (1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0))))) * _InteriorIntensity) , 0.0) * BaseColorAtmospheres2278) * smoothstepResult1594) , float4(0,0,0,0) , float4(1,1,1,0));
+			float3 gammaToLinear2462 = GammaToLinearSpace(((_EnableAtmosphere) ? (clampResult702) : (color1829)).rgb);
+			float3 SubAtmosphere2241 = gammaToLinear2462;
+			float4 blendOpSrc2361 = ((lerpResult66 * NightDayMask2292) + (Cities2297 * PolarMask2271));
+			float4 blendOpDest2361 = float4(SubAtmosphere2241 , 0.0);
+			float dotResult1867 = dot(ase_worldNormal , SpecularDir2317);
+			float clampResult2045 = clamp(dotResult1867 , 0.0 , 1.0);
+			float saferPower2438 = max(clampResult2045 , 0.0001);
+			float temp_output_2438_0 = pow(saferPower2438 , 2.0);
+			ase_worldViewDir = Unity_SafeNormalize(ase_worldViewDir);
+			float dotResult1570 = dot(LightSourceVector2314 , ase_worldViewDir);
+			float ViewDotLight2231 = dotResult1570;
+			float clampResult1903 = clamp((ViewDotLight2231 + 0.1) , 0.0 , 1.0);
+			float lerpResult1901 = lerp(200.0 , 2000.0 , clampResult1903);
+			float3 temp_cast_19 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+			float3 temp_cast_20 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+			float3 gammaToLinear2113 = GammaToLinearSpace(temp_cast_20);
+			float clampResult1906 = clamp(ViewDotLight2231 , 0.0 , 1.0);
+			float lerpResult2466 = lerp(0.25 , _SpecularIntensity , clampResult1906);
+			float4 temp_output_2155_0 = (((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * (((float4(gammaToLinear2113 , 0.0) * (temp_output_2438_0 * WaterColor2302)) * CloudsOcclusion2258) * (lerpResult2466 * 100.0)));
+			float4 Specular2319 = temp_output_2155_0;
+			float4 lerpResult2525 = lerp(((1.0 - (1.0 - blendOpSrc2361) * (1.0 - blendOpDest2361)) + (Specular2319 * PolarMask2271)) , _SkyblendA , _SkyblendA.a);
+			float4 SecondPassInput2324 = (lerpResult2525 * _IlluminationBoost);
+
+			finalColor = SecondPassInput2324;
+			return finalColor;
+		}
+		ENDCG
 	}
-	CustomEditor "PlanetXEditor"
-	
-	
+	}
+		CustomEditor "PlanetXEditor"
 }
 /*ASEBEGIN
 Version=17700

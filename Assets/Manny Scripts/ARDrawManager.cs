@@ -1,33 +1,27 @@
-using System.Collections;
+using ARDrawing.Core.Singletons;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
-using ARDrawing.Core.Singletons;
-
 
 [RequireComponent(typeof(ARAnchorManager))]
 public class ARDrawManager : Singleton<ARDrawManager>
 {
-
     [SerializeField]
     private LineSettings lineSettings;
 
     [SerializeField]
     private UnityEvent OnDraw;
+
     [SerializeField]
     private ARAnchorManager anchorManager;
+
     [SerializeField]
     private Camera arCamera;
 
+    private List<ARAnchor> arAnchors = new List<ARAnchor>();
+    private Dictionary<int, ARLine> Lines = new Dictionary<int, ARLine>();
 
-
-
-    
-    private List<ARAnchor> arAnchors = new List<ARAnchor> ();
-    private Dictionary<int, ARLine> Lines = new Dictionary<int, ARLine> ();
-
- 
     private bool CanDraw { get; set; }
 
     private void Update()
@@ -40,25 +34,23 @@ public class ARDrawManager : Singleton<ARDrawManager>
 #else
         if (Input.GetMouseButton(0))
             DrawOnMouse();
-      
+
 #endif
     }
-
 
     public void AllowDraw(bool isAllow)
     {
         CanDraw = isAllow;
     }
 
-   
-    void DrawOnTouch()
+    private void DrawOnTouch()
     {
-        if(!CanDraw) return;
+        if (!CanDraw) return;
 
         Touch touch = Input.GetTouch(0);
         Vector3 touchPosition = arCamera.ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, lineSettings.distanceFromCamera));
 
-        if(touch.phase == TouchPhase.Began)
+        if (touch.phase == TouchPhase.Began)
         {
             OnDraw?.Invoke();
 
@@ -73,22 +65,17 @@ public class ARDrawManager : Singleton<ARDrawManager>
             Lines.Add(touch.fingerId, line);
             line.AddNewLineRenderer(transform, anchor, touchPosition);
         }
-
         else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
         {
             Lines[touch.fingerId].AddPoint(touchPosition);
         }
-        else if(touch.phase == TouchPhase.Ended)
+        else if (touch.phase == TouchPhase.Ended)
         {
             Lines.Remove(touch.fingerId);
         }
-
     }
 
-   
-
-    
-    void DrawOnMouse()
+    private void DrawOnMouse()
     {
         if (!CanDraw) return;
 
@@ -96,7 +83,7 @@ public class ARDrawManager : Singleton<ARDrawManager>
         if (Input.GetMouseButtonDown(0))
         {
             OnDraw?.Invoke();
-            if(Lines.Keys.Count == 0)
+            if (Lines.Keys.Count == 0)
             {
                 ARLine line = new ARLine(lineSettings);
                 Lines.Add(0, line);
@@ -106,12 +93,10 @@ public class ARDrawManager : Singleton<ARDrawManager>
             {
                 Lines[0].AddPoint(mousePos);
             }
-            
         }
         else if (Input.GetMouseButtonUp(0))
         {
             Lines.Remove(0);
         }
     }
-
 }

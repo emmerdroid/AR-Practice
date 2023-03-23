@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ARDrawing.Core.Singletons
@@ -8,6 +6,7 @@ namespace ARDrawing.Core.Singletons
         where T : Component
     {
         private static T _instance;
+
         public static T Instance
         {
             get
@@ -33,7 +32,5 @@ namespace ARDrawing.Core.Singletons
                 return _instance;
             }
         }
-
     }
 }
-

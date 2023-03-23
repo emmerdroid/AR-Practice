@@ -1,42 +1,49 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Clickable : MonoBehaviour
 {
     public string NameAndType;
-    [SerializeField] WhackAMole mainGame;
+    [SerializeField] private WhackAMole mainGame;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         mainGame = FindObjectOfType<WhackAMole>();
-        
+        StartCoroutine(GoAway());
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 
     private void OnMouseDown()
     {
         Debug.Log("Clicked ON");
-        if (NameAndType == mainGame.questions_answers.ElementAt(mainGame.question_index).Value )
+        if (NameAndType == mainGame.questions_answers.ElementAt(mainGame.question_index).Value)
         {
             int index = Random.Range(0, mainGame.questions_answers.Count);
             mainGame.question.text = mainGame.questions_answers.ElementAt(index).Key;
+            //add to score
+            mainGame.scoreNum += 20;
             Destroy(transform.parent.gameObject);
             Debug.Log("CORRECT");
-
         }
-        else 
+        else
         {
+            //remove from score
+            mainGame.scoreNum -= 15;
             Destroy(transform.parent.gameObject);
-            Debug.Log("WRONG!"); 
+            Debug.Log("WRONG!");
         }
     }
 
-    //IEnumerator 
+    //make the clickables last for a few seconds
+    private IEnumerator GoAway()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(transform.parent.gameObject);
+    }
 }

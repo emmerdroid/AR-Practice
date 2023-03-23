@@ -1,40 +1,36 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "Billboard URP"
 {
 	Properties
 	{
 		_Texture("Texture", 2D) = "white" {}
 		_ColorInfos("Color ", Color) = (1,1,1,0)
-		_Size("Size", Range( -1 , 1)) = 0
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
-
+		_Size("Size", Range(-1 , 1)) = 0
+		[HideInInspector] _texcoord("", 2D) = "white" {}
 	}
 
-	SubShader
+		SubShader
 	{
 		LOD 0
 
-		
-		Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
-		
+		Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" "Queue" = "Geometry" }
+
 		Cull Back
 		HLSLINCLUDE
 		#pragma target 3.0
 		ENDHLSL
 
-		
 		Pass
 		{
 			Name "Forward"
-			Tags { "LightMode"="UniversalForward" }
-			
+			Tags { "LightMode" = "UniversalForward" }
+
 			Blend One Zero , One Zero
 			ZWrite On
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-			
 
 			HLSLPROGRAM
 			#pragma multi_compile_instancing
@@ -46,14 +42,11 @@ Shader "Billboard URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-
-			
 
 			struct VertexInput
 			{
@@ -75,15 +68,13 @@ Shader "Billboard URP"
 			};
 
 			sampler2D _Texture;
-			CBUFFER_START( UnityPerMaterial )
+			CBUFFER_START(UnityPerMaterial)
 			float _Size;
 			float4 _ColorInfos;
 			float4 _Texture_ST;
 			CBUFFER_END
 
-
-			
-			VertexOutput vert ( VertexInput v  )
+			VertexOutput vert(VertexInput v)
 			{
 				VertexOutput o = (VertexOutput)0;
 				UNITY_SETUP_INSTANCE_ID(v);
@@ -91,20 +82,20 @@ Shader "Billboard URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				//Calculate new billboard vertex position and normal;
-				float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-				float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-				float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-				float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-				v.ase_normal = normalize( mul( float4( v.ase_normal , 0 ), rotationCamMatrix )).xyz;
-				v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-				v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-				v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-				v.vertex = mul( v.vertex, rotationCamMatrix );
+				float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+				float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+				float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+				float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+				v.ase_normal = normalize(mul(float4(v.ase_normal , 0), rotationCamMatrix)).xyz;
+				v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+				v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+				v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+				v.vertex = mul(v.vertex, rotationCamMatrix);
 				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
 				//Need to nullify rotation inserted by generated surface shader;
-				v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
+				v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
 				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord1.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -112,7 +103,7 @@ Shader "Billboard URP"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );
+				float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -120,52 +111,50 @@ Shader "Billboard URP"
 				#endif
 				v.ase_normal = v.ase_normal;
 
-				o.clipPos = TransformObjectToHClip( v.vertex.xyz );
+				o.clipPos = TransformObjectToHClip(v.vertex.xyz);
 				#ifdef ASE_FOG
-				o.fogFactor = ComputeFogFactor( o.clipPos.z );
+				o.fogFactor = ComputeFogFactor(o.clipPos.z);
 				#endif
 				return o;
 			}
 
-			half4 frag ( VertexOutput IN  ) : SV_Target
+			half4 frag(VertexOutput IN) : SV_Target
 			{
-				UNITY_SETUP_INSTANCE_ID( IN );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
+				UNITY_SETUP_INSTANCE_ID(IN);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
 				float2 uv_Texture = IN.ase_texcoord1.xy * _Texture_ST.xy + _Texture_ST.zw;
 				float4 blendOpSrc7 = _ColorInfos;
-				float4 blendOpDest7 = tex2D( _Texture, uv_Texture );
-				
+				float4 blendOpDest7 = tex2D(_Texture, uv_Texture);
+
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = ( saturate( (( blendOpDest7 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest7 ) * ( 1.0 - blendOpSrc7 ) ) : ( 2.0 * blendOpDest7 * blendOpSrc7 ) ) )).rgb;
+				float3 Color = (saturate(((blendOpDest7 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest7) * (1.0 - blendOpSrc7)) : (2.0 * blendOpDest7 * blendOpSrc7)))).rgb;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
-					clip( Alpha - AlphaClipThreshold );
+					clip(Alpha - AlphaClipThreshold);
 				#endif
 
 				#ifdef ASE_FOG
-					Color = MixFog( Color, IN.fogFactor );
+					Color = MixFog(Color, IN.fogFactor);
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
+					LODDitheringTransition(IN.clipPos.xyz, unity_LODFade.x);
 				#endif
 
-				return half4( Color, Alpha );
+				return half4(Color, Alpha);
 			}
 
 			ENDHLSL
 		}
 
-		
 		Pass
 		{
-			
 			Name "ShadowCaster"
-			Tags { "LightMode"="ShadowCaster" }
+			Tags { "LightMode" = "ShadowCaster" }
 
 			ZWrite On
 			ZTest LEqual
@@ -180,66 +169,61 @@ Shader "Billboard URP"
 			#pragma vertex ShadowPassVertex
 			#pragma fragment ShadowPassFragment
 
-
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
-
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
-			CBUFFER_START( UnityPerMaterial )
+			CBUFFER_START(UnityPerMaterial)
 			float _Size;
 			float4 _ColorInfos;
 			float4 _Texture_ST;
 			CBUFFER_END
 
-
-			
 			float3 _LightDirection;
 
-			VertexOutput ShadowPassVertex( VertexInput v )
+			VertexOutput ShadowPassVertex(VertexInput v)
 			{
 				VertexOutput o;
 				UNITY_SETUP_INSTANCE_ID(v);
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				//Calculate new billboard vertex position and normal;
-				float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-				float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-				float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-				float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-				v.ase_normal = normalize( mul( float4( v.ase_normal , 0 ), rotationCamMatrix )).xyz;
-				v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-				v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-				v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-				v.vertex = mul( v.vertex, rotationCamMatrix );
+				float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+				float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+				float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+				float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+				v.ase_normal = normalize(mul(float4(v.ase_normal , 0), rotationCamMatrix)).xyz;
+				v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+				v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+				v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+				v.vertex = mul(v.vertex, rotationCamMatrix);
 				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
 				//Need to nullify rotation inserted by generated surface shader;
-				v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
+				v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );
+				float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -248,10 +232,10 @@ Shader "Billboard URP"
 
 				v.ase_normal = v.ase_normal;
 
-				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
-				float3 normalWS = TransformObjectToWorldDir( v.ase_normal );
+				float3 positionWS = TransformObjectToWorld(v.vertex.xyz);
+				float3 normalWS = TransformObjectToWorldDir(v.ase_normal);
 
-				float4 clipPos = TransformWorldToHClip( ApplyShadowBias( positionWS, normalWS, _LightDirection ) );
+				float4 clipPos = TransformWorldToHClip(ApplyShadowBias(positionWS, normalWS, _LightDirection));
 
 				#if UNITY_REVERSED_Z
 					clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
@@ -263,12 +247,11 @@ Shader "Billboard URP"
 				return o;
 			}
 
-			half4 ShadowPassFragment(VertexOutput IN  ) : SV_TARGET
+			half4 ShadowPassFragment(VertexOutput IN) : SV_TARGET
 			{
-				UNITY_SETUP_INSTANCE_ID( IN );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
+				UNITY_SETUP_INSTANCE_ID(IN);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
-				
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 
@@ -277,7 +260,7 @@ Shader "Billboard URP"
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
+					LODDitheringTransition(IN.clipPos.xyz, unity_LODFade.x);
 				#endif
 				return 0;
 			}
@@ -285,12 +268,10 @@ Shader "Billboard URP"
 			ENDHLSL
 		}
 
-		
 		Pass
 		{
-			
 			Name "DepthOnly"
-			Tags { "LightMode"="DepthOnly" }
+			Tags { "LightMode" = "DepthOnly" }
 
 			ZWrite On
 			ColorMask 0
@@ -305,39 +286,34 @@ Shader "Billboard URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
-
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
-			CBUFFER_START( UnityPerMaterial )
+			CBUFFER_START(UnityPerMaterial)
 			float _Size;
 			float4 _ColorInfos;
 			float4 _Texture_ST;
 			CBUFFER_END
 
-
-			
-			VertexOutput vert( VertexInput v  )
+			VertexOutput vert(VertexInput v)
 			{
 				VertexOutput o = (VertexOutput)0;
 				UNITY_SETUP_INSTANCE_ID(v);
@@ -345,24 +321,24 @@ Shader "Billboard URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				//Calculate new billboard vertex position and normal;
-				float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-				float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-				float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-				float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-				v.ase_normal = normalize( mul( float4( v.ase_normal , 0 ), rotationCamMatrix )).xyz;
-				v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-				v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-				v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-				v.vertex = mul( v.vertex, rotationCamMatrix );
+				float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+				float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+				float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+				float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+				v.ase_normal = normalize(mul(float4(v.ase_normal , 0), rotationCamMatrix)).xyz;
+				v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+				v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+				v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+				v.vertex = mul(v.vertex, rotationCamMatrix);
 				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
 				//Need to nullify rotation inserted by generated surface shader;
-				v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
+				v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );
+				float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -375,12 +351,11 @@ Shader "Billboard URP"
 				return o;
 			}
 
-			half4 frag(VertexOutput IN  ) : SV_TARGET
+			half4 frag(VertexOutput IN) : SV_TARGET
 			{
 				UNITY_SETUP_INSTANCE_ID(IN);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
-				
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 
@@ -389,18 +364,15 @@ Shader "Billboard URP"
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
-					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
+					LODDitheringTransition(IN.clipPos.xyz, unity_LODFade.x);
 				#endif
 				return 0;
 			}
 			ENDHLSL
 		}
-
-	
 	}
-	CustomEditor "UnityEditor.ShaderGraph.PBRMasterGUI"
-	Fallback "Hidden/InternalErrorShader"
-	
+		CustomEditor "UnityEditor.ShaderGraph.PBRMasterGUI"
+				Fallback "Hidden/InternalErrorShader"
 }
 /*ASEBEGIN
 Version=17700

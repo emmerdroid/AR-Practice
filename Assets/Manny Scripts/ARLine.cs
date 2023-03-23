@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -9,6 +7,7 @@ public class ARLine
     private Vector3 prevPointDistance = Vector3.zero;
     private LineRenderer lineRenderer { get; set; }
     private LineSettings settings;
+
     public ARLine(LineSettings settings)
     {
         this.settings = settings;
@@ -16,11 +15,11 @@ public class ARLine
 
     public void AddPoint(Vector3 position)
     {
-        if(prevPointDistance == null)
+        if (prevPointDistance == null)
         {
             prevPointDistance = position;
         }
-        if(prevPointDistance != null && Mathf.Abs(Vector3.Distance(prevPointDistance, position)) >= settings.minDistanceBeforeNewPoint)
+        if (prevPointDistance != null && Mathf.Abs(Vector3.Distance(prevPointDistance, position)) >= settings.minDistanceBeforeNewPoint)
         {
             prevPointDistance = position;
             positionCount++;
@@ -31,7 +30,7 @@ public class ARLine
             lineRenderer.SetPosition(positionCount - 1, position);
 
             //applies simplification if reminder is 0
-            if(lineRenderer.positionCount % settings.applySimplifyAfterPoints == 0 && settings.allowSimplification)
+            if (lineRenderer.positionCount % settings.applySimplifyAfterPoints == 0 && settings.allowSimplification)
             {
                 lineRenderer.Simplify(settings.tolerance);
             }
@@ -58,8 +57,5 @@ public class ARLine
         goLineRenderer.SetPosition(1, position);
 
         lineRenderer = goLineRenderer;
-
-       
     }
-        
 }

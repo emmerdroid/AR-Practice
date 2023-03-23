@@ -1,328 +1,176 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "Billboard"
 {
-    Properties
-    {
+	Properties
+	{
 		_Texture("Texture", 2D) = "white" {}
 		_ColorInfos("Color ", Color) = (1,1,1,0)
-		_Size("Size", Range( -1 , 1)) = 0
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
+		_Size("Size", Range(-1 , 1)) = 0
+		[HideInInspector] _texcoord("", 2D) = "white" {}
+	}
 
-    }
-
-    SubShader
-    {
+		SubShader
+	{
 		LOD 0
 
-		
-
-        Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="Transparent" "Queue"="Transparent" }
-        Cull Off
+		Tags { "RenderPipeline" = "LightweightPipeline" "RenderType" = "Transparent" "Queue" = "Transparent" }
+		Cull Off
 		HLSLINCLUDE
 		#pragma target 3.0
 		ENDHLSL
 
-		
-        Pass
-        {
-            Tags { "LightMode"="LightweightForward" }
-            Name "Base"
+		Pass
+		{
+			Tags { "LightMode" = "LightweightForward" }
+			Name "Base"
 
-            Blend SrcAlpha OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha
 			ZWrite On
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-			
 
-            HLSLPROGRAM
-            #define _RECEIVE_SHADOWS_OFF 1
-            #define ASE_SRP_VERSION 40100
+			HLSLPROGRAM
+			#define _RECEIVE_SHADOWS_OFF 1
+			#define ASE_SRP_VERSION 40100
 
-            // Required to compile gles 2.0 with standard srp library
-            #pragma prefer_hlslcc gles
-            #pragma exclude_renderers d3d11_9x
+		// Required to compile gles 2.0 with standard srp library
+		#pragma prefer_hlslcc gles
+		#pragma exclude_renderers d3d11_9x
 
-            // -------------------------------------
-            // Lightweight Pipeline keywords
-            #pragma shader_feature _SAMPLE_GI
+		// -------------------------------------
+		// Lightweight Pipeline keywords
+		#pragma shader_feature _SAMPLE_GI
 
-            // -------------------------------------
-            // Unity defined keywords
-            #pragma multi_compile_fog
+		// -------------------------------------
+		// Unity defined keywords
+		#pragma multi_compile_fog
 
-            //--------------------------------------
-            // GPU Instancing
-            #pragma multi_compile_instancing
-            
-            #pragma vertex vert
-            #pragma fragment frag
+		//--------------------------------------
+		// GPU Instancing
+		#pragma multi_compile_instancing
 
-            
+		#pragma vertex vert
+		#pragma fragment frag
 
-            // Lighting include is needed because of GI
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/Shaders/UnlitInput.hlsl"
+		// Lighting include is needed because of GI
+		#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
+		#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+		#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+		#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+		#include "Packages/com.unity.render-pipelines.lightweight/Shaders/UnlitInput.hlsl"
+
+		sampler2D _Texture;
+		CBUFFER_START(UnityPerMaterial)
+		float _Size;
+		float4 _ColorInfos;
+		float4 _Texture_ST;
+		CBUFFER_END
+
+		struct GraphVertexInput
+		{
+			float4 vertex : POSITION;
+			float4 ase_normal : NORMAL;
+			float4 ase_texcoord : TEXCOORD0;
+			UNITY_VERTEX_INPUT_INSTANCE_ID
+		};
+
+		struct GraphVertexOutput
+		{
+			float4 position : POSITION;
+			float4 ase_texcoord : TEXCOORD0;
+			UNITY_VERTEX_INPUT_INSTANCE_ID
+			UNITY_VERTEX_OUTPUT_STEREO
+		};
+
+		GraphVertexOutput vert(GraphVertexInput v)
+		{
+			GraphVertexOutput o = (GraphVertexOutput)0;
+			UNITY_SETUP_INSTANCE_ID(v);
+			UNITY_TRANSFER_INSTANCE_ID(v, o);
+			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+			//Calculate new billboard vertex position and normal;
+			float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+			float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+			float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+			float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+			v.ase_normal.xyz = normalize(mul(float4(v.ase_normal.xyz , 0), rotationCamMatrix)).xyz;
+			v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+			v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+			v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+			v.vertex = mul(v.vertex, rotationCamMatrix);
+			v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
+			//Need to nullify rotation inserted by generated surface shader;
+			v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
+			o.ase_texcoord.xy = v.ase_texcoord.xy;
+
+			//setting value to unused interpolator channels and avoid initialization warnings
+			o.ase_texcoord.zw = 0;
+			float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
+			#ifdef ASE_ABSOLUTE_VERTEX_POS
+			v.vertex.xyz = vertexValue;
+			#else
+			v.vertex.xyz += vertexValue;
+			#endif
+
+			v.ase_normal = v.ase_normal;
+			o.position = TransformObjectToHClip(v.vertex.xyz);
+			return o;
+		}
+
+		half4 frag(GraphVertexOutput IN) : SV_Target
+		{
+			UNITY_SETUP_INSTANCE_ID(IN);
+			float2 uv_Texture = IN.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+			float4 tex2DNode3 = tex2D(_Texture, uv_Texture);
+			float4 blendOpSrc7 = _ColorInfos;
+			float4 blendOpDest7 = tex2DNode3;
+
+			float3 Color = (saturate(((blendOpDest7 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest7) * (1.0 - blendOpSrc7)) : (2.0 * blendOpDest7 * blendOpSrc7)))).rgb;
+			float Alpha = tex2DNode3.a;
+			float AlphaClipThreshold = 0;
+	 #if _ALPHATEST_ON
+			clip(Alpha - AlphaClipThreshold);
+	#endif
+			return half4(Color, Alpha);
+		}
+		ENDHLSL
+	}
+
+	Pass
+	{
+		Name "ShadowCaster"
+		Tags { "LightMode" = "ShadowCaster" }
+		ZWrite On
+		ColorMask 0
+
+		HLSLPROGRAM
+		#define _RECEIVE_SHADOWS_OFF 1
+		#define ASE_SRP_VERSION 40100
+
+			// Required to compile gles 2.0 with standard srp library
+			#pragma prefer_hlslcc gles
+			#pragma exclude_renderers d3d11_9x
+
+			//--------------------------------------
+			// GPU Instancing
+			#pragma multi_compile_instancing
+
+			#pragma vertex ShadowPassVertex
+			#pragma fragment ShadowPassFragment
+
+			#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
 			sampler2D _Texture;
-			CBUFFER_START( UnityPerMaterial )
+			CBUFFER_START(UnityPerMaterial)
 			float _Size;
 			float4 _ColorInfos;
 			float4 _Texture_ST;
 			CBUFFER_END
-
-
-            struct GraphVertexInput
-            {
-                float4 vertex : POSITION;
-				float4 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            struct GraphVertexOutput
-            {
-                float4 position : POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-			
-            GraphVertexOutput vert (GraphVertexInput v)
-            {
-                GraphVertexOutput o = (GraphVertexOutput)0;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_TRANSFER_INSTANCE_ID(v, o);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-				//Calculate new billboard vertex position and normal;
-				float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-				float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-				float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-				float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-				v.ase_normal.xyz = normalize( mul( float4( v.ase_normal.xyz , 0 ), rotationCamMatrix )).xyz;
-				v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-				v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-				v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-				v.vertex = mul( v.vertex, rotationCamMatrix );
-				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
-				//Need to nullify rotation inserted by generated surface shader;
-				v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
-				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
-				float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue; 
-				#else
-				v.vertex.xyz += vertexValue;
-				#endif
-
-				v.ase_normal =  v.ase_normal ;
-                o.position = TransformObjectToHClip(v.vertex.xyz);
-                return o;
-            }
-
-            half4 frag (GraphVertexOutput IN ) : SV_Target
-            {
-                UNITY_SETUP_INSTANCE_ID(IN);
-				float2 uv_Texture = IN.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
-				float4 tex2DNode3 = tex2D( _Texture, uv_Texture );
-				float4 blendOpSrc7 = _ColorInfos;
-				float4 blendOpDest7 = tex2DNode3;
-				
-		        float3 Color = ( saturate( (( blendOpDest7 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest7 ) * ( 1.0 - blendOpSrc7 ) ) : ( 2.0 * blendOpDest7 * blendOpSrc7 ) ) )).rgb;
-		        float Alpha = tex2DNode3.a;
-		        float AlphaClipThreshold = 0;
-         #if _ALPHATEST_ON
-                clip(Alpha - AlphaClipThreshold);
-        #endif
-                return half4(Color, Alpha);
-            }
-            ENDHLSL
-        }
-
-		
-        Pass
-        {
-			
-            Name "ShadowCaster"
-            Tags { "LightMode"="ShadowCaster" }
-			ZWrite On
-			ColorMask 0
-
-            HLSLPROGRAM
-            #define _RECEIVE_SHADOWS_OFF 1
-            #define ASE_SRP_VERSION 40100
-
-            // Required to compile gles 2.0 with standard srp library
-            #pragma prefer_hlslcc gles
-            #pragma exclude_renderers d3d11_9x
-            
-            //--------------------------------------
-            // GPU Instancing
-            #pragma multi_compile_instancing
-
-            #pragma vertex ShadowPassVertex
-            #pragma fragment ShadowPassFragment
-
-            
-
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-
-			sampler2D _Texture;
-			CBUFFER_START( UnityPerMaterial )
-			float _Size;
-			float4 _ColorInfos;
-			float4 _Texture_ST;
-			CBUFFER_END
-
-
-            struct GraphVertexInput
-            {
-                float4 vertex : POSITION;
-                float4 ase_normal : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            struct VertexOutput
-            {
-                float4 clipPos : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            // x: global clip space bias, y: normal world space bias
-            float4 _ShadowBias;
-            float3 _LightDirection;
-
-			
-            VertexOutput ShadowPassVertex(GraphVertexInput v )
-            {
-                VertexOutput o;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_TRANSFER_INSTANCE_ID(v, o);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
-				//Calculate new billboard vertex position and normal;
-				float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-				float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-				float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-				float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-				v.ase_normal.xyz = normalize( mul( float4( v.ase_normal.xyz , 0 ), rotationCamMatrix )).xyz;
-				v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-				v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-				v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-				v.vertex = mul( v.vertex, rotationCamMatrix );
-				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
-				//Need to nullify rotation inserted by generated surface shader;
-				v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
-				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
-				float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue;
-				#else
-				v.vertex.xyz += vertexValue;
-				#endif
-
-				v.ase_normal =  v.ase_normal ;
-
-                float3 positionWS = TransformObjectToWorld(v.vertex.xyz);
-                float3 normalWS = TransformObjectToWorldDir(v.ase_normal.xyz);
-
-                float invNdotL = 1.0 - saturate(dot(_LightDirection, normalWS));
-                float scale = invNdotL * _ShadowBias.y;
-
-                // normal bias is negative since we want to apply an inset normal offset
-                positionWS = _LightDirection * _ShadowBias.xxx + positionWS;
-				positionWS = normalWS * scale.xxx + positionWS;
-                float4 clipPos = TransformWorldToHClip(positionWS);
-
-                // _ShadowBias.x sign depens on if platform has reversed z buffer
-                //clipPos.z += _ShadowBias.x; 
-
-            #if UNITY_REVERSED_Z
-                clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
-            #else
-                clipPos.z = max(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
-            #endif
-                o.clipPos = clipPos;
-
-                return o;
-            }
-
-            half4 ShadowPassFragment(VertexOutput IN  ) : SV_TARGET
-            {
-                UNITY_SETUP_INSTANCE_ID(IN);
-        		float2 uv_Texture = IN.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
-        		float4 tex2DNode3 = tex2D( _Texture, uv_Texture );
-        		
-
-				float Alpha = tex2DNode3.a;
-				float AlphaClipThreshold = AlphaClipThreshold;
-         #if _ALPHATEST_ON
-        		clip(Alpha - AlphaClipThreshold);
-        #endif
-                return 0;
-            }
-
-            ENDHLSL
-        }
-
-		
-        Pass
-        {
-			
-            Name "DepthOnly"
-            Tags { "LightMode"="DepthOnly" }
-
-            ZWrite On
-			ZTest LEqual
-			ColorMask 0
-
-            HLSLPROGRAM
-            #define _RECEIVE_SHADOWS_OFF 1
-            #define ASE_SRP_VERSION 40100
-
-            // Required to compile gles 2.0 with standard srp library
-            #pragma prefer_hlslcc gles
-            #pragma exclude_renderers d3d11_9x
-            #pragma target 2.0
-
-            //--------------------------------------
-            // GPU Instancing
-            #pragma multi_compile_instancing
-
-            #pragma vertex vert
-            #pragma fragment frag
-
-            
-
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-
-			sampler2D _Texture;
-			CBUFFER_START( UnityPerMaterial )
-			float _Size;
-			float4 _ColorInfos;
-			float4 _Texture_ST;
-			CBUFFER_END
-
 
 			struct GraphVertexInput
 			{
@@ -332,71 +180,198 @@ Shader "Billboard"
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
-            struct VertexOutput
-            {
-                float4 clipPos : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-			
-			VertexOutput vert( GraphVertexInput v  )
+			struct VertexOutput
 			{
-					VertexOutput o = (VertexOutput)0;
-					UNITY_SETUP_INSTANCE_ID(v);
-					UNITY_TRANSFER_INSTANCE_ID(v, o);
-					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-					//Calculate new billboard vertex position and normal;
-					float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 );
-					float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 );
-					float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 );
-					float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 );
-					v.ase_normal.xyz = normalize( mul( float4( v.ase_normal.xyz , 0 ), rotationCamMatrix )).xyz;
-					v.vertex.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 );
-					v.vertex.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 );
-					v.vertex.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 );
-					v.vertex = mul( v.vertex, rotationCamMatrix );
-					v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
-					//Need to nullify rotation inserted by generated surface shader;
-					v.vertex = mul( GetWorldToObjectMatrix(), v.vertex );
-					o.ase_texcoord.xy = v.ase_texcoord.xy;
-					
-					//setting value to unused interpolator channels and avoid initialization warnings
-					o.ase_texcoord.zw = 0;
-					float3 vertexValue = ( ( ( v.vertex.xyz + 0 ) * _Size ) + float3(0,0.3,0) );	
-					#ifdef ASE_ABSOLUTE_VERTEX_POS
-					v.vertex.xyz = vertexValue;
-					#else
-					v.vertex.xyz += vertexValue;
-					#endif
-					v.ase_normal =  v.ase_normal ;
-					o.clipPos = TransformObjectToHClip(v.vertex.xyz);
-					return o;
+				float4 clipPos : SV_POSITION;
+				float4 ase_texcoord : TEXCOORD0;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+
+			// x: global clip space bias, y: normal world space bias
+			float4 _ShadowBias;
+			float3 _LightDirection;
+
+			VertexOutput ShadowPassVertex(GraphVertexInput v)
+			{
+				VertexOutput o;
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+				//Calculate new billboard vertex position and normal;
+				float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+				float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+				float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+				float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+				v.ase_normal.xyz = normalize(mul(float4(v.ase_normal.xyz , 0), rotationCamMatrix)).xyz;
+				v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+				v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+				v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+				v.vertex = mul(v.vertex, rotationCamMatrix);
+				v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
+				//Need to nullify rotation inserted by generated surface shader;
+				v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
+				o.ase_texcoord.xy = v.ase_texcoord.xy;
+
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord.zw = 0;
+				float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+				v.vertex.xyz = vertexValue;
+				#else
+				v.vertex.xyz += vertexValue;
+				#endif
+
+				v.ase_normal = v.ase_normal;
+
+				float3 positionWS = TransformObjectToWorld(v.vertex.xyz);
+				float3 normalWS = TransformObjectToWorldDir(v.ase_normal.xyz);
+
+				float invNdotL = 1.0 - saturate(dot(_LightDirection, normalWS));
+				float scale = invNdotL * _ShadowBias.y;
+
+				// normal bias is negative since we want to apply an inset normal offset
+				positionWS = _LightDirection * _ShadowBias.xxx + positionWS;
+				positionWS = normalWS * scale.xxx + positionWS;
+				float4 clipPos = TransformWorldToHClip(positionWS);
+
+				// _ShadowBias.x sign depens on if platform has reversed z buffer
+				//clipPos.z += _ShadowBias.x;
+
+			#if UNITY_REVERSED_Z
+				clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
+			#else
+				clipPos.z = max(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
+			#endif
+				o.clipPos = clipPos;
+
+				return o;
 			}
 
-            half4 frag( VertexOutput IN  ) : SV_TARGET
-            {
-                UNITY_SETUP_INSTANCE_ID(IN);
+			half4 ShadowPassFragment(VertexOutput IN) : SV_TARGET
+			{
+				UNITY_SETUP_INSTANCE_ID(IN);
 				float2 uv_Texture = IN.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
-				float4 tex2DNode3 = tex2D( _Texture, uv_Texture );
-				
+				float4 tex2DNode3 = tex2D(_Texture, uv_Texture);
 
 				float Alpha = tex2DNode3.a;
 				float AlphaClipThreshold = AlphaClipThreshold;
+		 #if _ALPHATEST_ON
+				clip(Alpha - AlphaClipThreshold);
+		#endif
+				return 0;
+			}
 
-         #if _ALPHATEST_ON
-        		clip(Alpha - AlphaClipThreshold);
-        #endif
-                return 0;
-            }
-            ENDHLSL
-        }
-		
-    }
-    Fallback "Hidden/InternalErrorShader"
-	CustomEditor "ASEMaterialInspector"
-	
+			ENDHLSL
+		}
+
+		Pass
+		{
+			Name "DepthOnly"
+			Tags { "LightMode" = "DepthOnly" }
+
+			ZWrite On
+			ZTest LEqual
+			ColorMask 0
+
+			HLSLPROGRAM
+			#define _RECEIVE_SHADOWS_OFF 1
+			#define ASE_SRP_VERSION 40100
+
+				// Required to compile gles 2.0 with standard srp library
+				#pragma prefer_hlslcc gles
+				#pragma exclude_renderers d3d11_9x
+				#pragma target 2.0
+
+				//--------------------------------------
+				// GPU Instancing
+				#pragma multi_compile_instancing
+
+				#pragma vertex vert
+				#pragma fragment frag
+
+				#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
+				#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+				#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+
+				sampler2D _Texture;
+				CBUFFER_START(UnityPerMaterial)
+				float _Size;
+				float4 _ColorInfos;
+				float4 _Texture_ST;
+				CBUFFER_END
+
+				struct GraphVertexInput
+				{
+					float4 vertex : POSITION;
+					float4 ase_normal : NORMAL;
+					float4 ase_texcoord : TEXCOORD0;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 clipPos : SV_POSITION;
+					float4 ase_texcoord : TEXCOORD0;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				VertexOutput vert(GraphVertexInput v)
+				{
+						VertexOutput o = (VertexOutput)0;
+						UNITY_SETUP_INSTANCE_ID(v);
+						UNITY_TRANSFER_INSTANCE_ID(v, o);
+						UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+						//Calculate new billboard vertex position and normal;
+						float3 upCamVec = normalize(UNITY_MATRIX_V._m10_m11_m12);
+						float3 forwardCamVec = -normalize(UNITY_MATRIX_V._m20_m21_m22);
+						float3 rightCamVec = normalize(UNITY_MATRIX_V._m00_m01_m02);
+						float4x4 rotationCamMatrix = float4x4(rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1);
+						v.ase_normal.xyz = normalize(mul(float4(v.ase_normal.xyz , 0), rotationCamMatrix)).xyz;
+						v.vertex.x *= length(GetObjectToWorldMatrix()._m00_m10_m20);
+						v.vertex.y *= length(GetObjectToWorldMatrix()._m01_m11_m21);
+						v.vertex.z *= length(GetObjectToWorldMatrix()._m02_m12_m22);
+						v.vertex = mul(v.vertex, rotationCamMatrix);
+						v.vertex.xyz += GetObjectToWorldMatrix()._m03_m13_m23;
+						//Need to nullify rotation inserted by generated surface shader;
+						v.vertex = mul(GetWorldToObjectMatrix(), v.vertex);
+						o.ase_texcoord.xy = v.ase_texcoord.xy;
+
+						//setting value to unused interpolator channels and avoid initialization warnings
+						o.ase_texcoord.zw = 0;
+						float3 vertexValue = (((v.vertex.xyz + 0) * _Size) + float3(0,0.3,0));
+						#ifdef ASE_ABSOLUTE_VERTEX_POS
+						v.vertex.xyz = vertexValue;
+						#else
+						v.vertex.xyz += vertexValue;
+						#endif
+						v.ase_normal = v.ase_normal;
+						o.clipPos = TransformObjectToHClip(v.vertex.xyz);
+						return o;
+				}
+
+				half4 frag(VertexOutput IN) : SV_TARGET
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					float2 uv_Texture = IN.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+					float4 tex2DNode3 = tex2D(_Texture, uv_Texture);
+
+					float Alpha = tex2DNode3.a;
+					float AlphaClipThreshold = AlphaClipThreshold;
+
+			 #if _ALPHATEST_ON
+					clip(Alpha - AlphaClipThreshold);
+			#endif
+					return 0;
+				}
+				ENDHLSL
+			}
+	}
+		Fallback "Hidden/InternalErrorShader"
+					CustomEditor "ASEMaterialInspector"
 }
 /*ASEBEGIN
 Version=17700

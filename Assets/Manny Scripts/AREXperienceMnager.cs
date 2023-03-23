@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
 
-
 [RequireComponent(typeof(ARPlaneManager))]
-
 public class AREXperienceMnager : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent OnInitilized;
+
     [SerializeField]
     private UnityEvent OnRestarted;
 
@@ -22,14 +19,14 @@ public class AREXperienceMnager : MonoBehaviour
         planeManager = GetComponent<ARPlaneManager>();
         planeManager.planesChanged += PlanesChanged;
 
-        #if UNITY_EDITOR
-            OnInitilized?.Invoke();
-            Initilized = true;
-            planeManager.enabled = false;
-        #endif
+#if UNITY_EDITOR
+        OnInitilized?.Invoke();
+        Initilized = true;
+        planeManager.enabled = false;
+#endif
     }
 
-    void PlanesChanged(ARPlanesChangedEventArgs args)
+    private void PlanesChanged(ARPlanesChangedEventArgs args)
     {
         if (!Initilized)
         {
@@ -37,7 +34,7 @@ public class AREXperienceMnager : MonoBehaviour
         }
     }
 
-    void Activate()
+    private void Activate()
     {
         OnInitilized?.Invoke();
         Initilized = true;
@@ -50,5 +47,4 @@ public class AREXperienceMnager : MonoBehaviour
         Initilized = false;
         planeManager.enabled = true;
     }
-
 }
