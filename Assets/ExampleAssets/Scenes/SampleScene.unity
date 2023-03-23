@@ -10787,7 +10787,22 @@ PrefabInstance:
       propertyPath: layersMaterials.Array.data[5]
       value: 
       objectReference: {fileID: 2100000, guid: 932a92ef65854224d8c6dfc5d7b31a66, type: 2}
+    - target: {fileID: 1870690604637776753, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1870690604637776755, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870690604637776759, guid: 68da5ad52a3329441a02694ef5942701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870690604637776767, guid: 68da5ad52a3329441a02694ef5942701,
         type: 3}
       propertyPath: m_IsActive
       value: 1

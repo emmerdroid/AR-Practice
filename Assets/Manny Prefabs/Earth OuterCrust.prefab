@@ -92,6 +92,16 @@ PrefabInstance:
       propertyPath: selectedColor.a
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 6319942021760973419, guid: 750e0f630d6b54042b79ed5d55d9b005,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.023
+      objectReference: {fileID: 0}
+    - target: {fileID: 6319942021760973419, guid: 750e0f630d6b54042b79ed5d55d9b005,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 7301290697836706007, guid: 750e0f630d6b54042b79ed5d55d9b005,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
