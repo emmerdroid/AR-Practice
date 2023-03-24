@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class ViewChanger : MonoBehaviour
+public class ViewChangerA : MonoBehaviour
 {
     private GameObject fullearth;
     private GameObject layers;

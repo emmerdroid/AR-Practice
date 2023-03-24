@@ -35,10 +35,13 @@ public class WhackAMole : MonoBehaviour
         answer_postions = GetComponentsInChildren<Transform>();
         questions_answers = new Dictionary<string, string>()
         {
-            {"Pick the Crust", "Crust" },
-            {"Pick the Mantle" , "Mantle"},
-            {"Pick the Inner Core" ,"Inner Core"},
-            {"Pick the Outer Core", "Outer Core"}
+            {"What layer is 1.400 miles thick?", "Outer Core" },
+            {"What layer is 9,000° F?" , "Outer Core"},
+            {"What layer is 9,800° F?" ,"Inner Core"},
+            {"Which layer is sandwhiched between the crust and outer core?", "Mantle"},
+            {"Which layer is the thickest?","Mantle"},
+            {"What layer goes about 19 miles deep on average?","Crust"},
+            {"What layer has the consistency of caramel?","Mantle"}
         };
         timeRemaining = gameTime;
         timeSlide.maxValue = gameTime;
