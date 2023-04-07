@@ -11,7 +11,7 @@ public class ViewChanger : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        viewButton = FindObjectOfType<Button>();
+        viewButton = FindObjectOfType<ButtonManager>().viewButton;
         viewButton.onClick.AddListener(ChangeView);
     }
 
