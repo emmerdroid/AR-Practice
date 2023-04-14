@@ -43,7 +43,7 @@ public class Login2Lobby : MonoBehaviour
     //Code Added 8/11/2022 from Emmanuel, to go to AR scene
     public void JoinScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Marker-AR-Test");
     }
 
     public void EarthView()
@@ -53,6 +53,16 @@ public class Login2Lobby : MonoBehaviour
 
     public void Earth2Main()
     {
-        SceneManager.LoadScene("Tuffy login");
+        SceneManager.LoadScene("Marker-AR-Test");
+    }
+
+    public void Marker2Game()
+    {
+        SceneManager.LoadScene("GameTest");
+    }
+    
+    public void Game2Marker()
+    {
+        SceneManager.LoadScene("Marker-AR-Test");
     }
 }
