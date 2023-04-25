@@ -61,12 +61,10 @@ public class Clickable : MonoBehaviour
 
     void ColorChange(Color A, Color B)
     {
-        float slowChange = 0f;
-        while (slowChange <= 1)
-        {
-            mainGame.scoreText.color = Color.Lerp(A,B,  slowChange);
-            slowChange += .01f;
+        float t=0, timer;
+        t += Time.deltaTime / 3.0f;
+        timer = Time.deltaTime;
 
-        }
+        mainGame.scoreText.color = Color.Lerp(A,B, t);
     }
 }

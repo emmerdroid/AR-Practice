@@ -16,6 +16,9 @@ public class ColorChangeTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        t += Time.deltaTime/3.0f;
+        timer += Time.deltaTime;
+
         if (Input.GetKey(KeyCode.Space))
         {
             ColorChange(Color.black, Color.red);
@@ -24,6 +27,6 @@ public class ColorChangeTest : MonoBehaviour
 
     void ColorChange(Color A, Color B)
     {
-        
+        mr.material.color = Color.Lerp(A, B, t);
     }
 }
