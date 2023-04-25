@@ -32,7 +32,7 @@ public class Clickable : MonoBehaviour
         {
             int index = Random.Range(0, mainGame.questions_answers.Count);
             //change color to be yellow then back to normal
-            
+            ColorChange(Color.black, Color.yellow);
             mainGame.question.text = mainGame.questions_answers.ElementAt(index).Key;
             //add to score
             mainGame.scoreNum += 20;
@@ -45,7 +45,7 @@ public class Clickable : MonoBehaviour
             //remove from score
             mainGame.scoreNum -= 15;
             //change text color to be red then back normal
-
+            ColorChange(Color.black, Color.red);
             Destroy(transform.parent.gameObject);
             Debug.Log("WRONG!");
             Instantiate (wrongEffect);
@@ -62,6 +62,11 @@ public class Clickable : MonoBehaviour
     void ColorChange(Color A, Color B)
     {
         float slowChange = 0f;
-        mainGame.scoreText.color = Color.Lerp(A,B,slowChange);
+        while (slowChange <= 1)
+        {
+            mainGame.scoreText.color = Color.Lerp(A,B,  slowChange);
+            slowChange += .01f;
+
+        }
     }
 }
