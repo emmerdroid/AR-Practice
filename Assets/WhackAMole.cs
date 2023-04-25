@@ -87,6 +87,7 @@ public class WhackAMole : MonoBehaviour
             if (!CheckSpot(answer_postions[index]))
             {
                 GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
+                correct.GetComponentInChildren<Clickable>().spawnLoc = answer_postions[index];
             }
 
             //if (correct.CompareTag("Correct"))
@@ -102,7 +103,7 @@ public class WhackAMole : MonoBehaviour
 
     private bool CheckSpot(Transform location)
     {
-        if (Physics.CheckSphere(location.position, 1f))
+        if (Physics.CheckSphere(location.position, .005f))
         {
             return true;
         }
