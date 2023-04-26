@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Clickable : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class Clickable : MonoBehaviour
         {
             int index = Random.Range(0, mainGame.questions_answers.Count);
             //change color to be yellow then back to normal
-            ColorChange(Color.black, Color.yellow);
+            ColorChanger(Color.black, Color.yellow);
             mainGame.question.text = mainGame.questions_answers.ElementAt(index).Key;
             //add to score
             mainGame.scoreNum += 20;
@@ -45,7 +46,7 @@ public class Clickable : MonoBehaviour
             //remove from score
             mainGame.scoreNum -= 15;
             //change text color to be red then back normal
-            ColorChange(Color.black, Color.red);
+            ColorChanger(Color.black, Color.red);
             Destroy(transform.parent.gameObject);
             Debug.Log("WRONG!");
             Instantiate (wrongEffect);
@@ -59,12 +60,38 @@ public class Clickable : MonoBehaviour
         Destroy(transform.parent.gameObject);
     }
 
-    void ColorChange(Color A, Color B)
+    void ColorChanger(Color A, Color B)
     {
-        float t=0, timer;
-        t += Time.deltaTime / 3.0f;
-        timer = Time.deltaTime;
+        StopAllCoroutines();
+        StartCoroutine(SmoothColorChange(mainGame.question, A, B, 3f, 1f));
+    }
 
-        mainGame.scoreText.color = Color.Lerp(A,B, t);
+    IEnumerator SmoothColorChange(Text text, Color A, Color B, float duration, float fadeDuration)
+    {
+        float elapsedTime=0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t= Mathf.Clamp01(elapsedTime / duration);
+
+            text.color = Color.Lerp(A, B, t);
+            yield return null;
+        }
+
+        //wait for fadeDuration
+        yield return new WaitForSeconds (fadeDuration);
+        //return to original color
+        elapsedTime = 0f;
+        while (elapsedTime < duration) 
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            text.color = Color.Lerp(B, A, t);
+            yield return null;
+        }
+
+        text.color = Color.black;
+
     }
 }
