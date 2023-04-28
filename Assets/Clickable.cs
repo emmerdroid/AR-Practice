@@ -33,7 +33,7 @@ public class Clickable : MonoBehaviour
         {
             int index = Random.Range(0, mainGame.questions_answers.Count);
             //change color to be yellow then back to normal
-            ColorChanger(Color.black, Color.yellow);
+            mainGame.StartCoroutine(SmoothColorChange(mainGame.question, Color.black, Color.yellow, 1f, 1f));
             mainGame.question.text = mainGame.questions_answers.ElementAt(index).Key;
             //add to score
             mainGame.scoreNum += 20;
@@ -46,10 +46,10 @@ public class Clickable : MonoBehaviour
             //remove from score
             mainGame.scoreNum -= 15;
             //change text color to be red then back normal
-            ColorChanger(Color.black, Color.red);
+            mainGame.StartCoroutine(SmoothColorChange(mainGame.question, Color.black, Color.red, 1f, 1f));
             Destroy(transform.parent.gameObject);
             Debug.Log("WRONG!");
-            Instantiate (wrongEffect);
+            Instantiate (wrongEffect, transform.position, Quaternion.identity);
         }
     }
 
@@ -62,16 +62,18 @@ public class Clickable : MonoBehaviour
 
     void ColorChanger(Color A, Color B)
     {
-        StopAllCoroutines();
-        StartCoroutine(SmoothColorChange(mainGame.question, A, B, 3f, 1f));
+        mainGame.question.color = A;
+        StartCoroutine(SmoothColorChange(mainGame.question, A, B, 3f, 3f));
     }
 
     IEnumerator SmoothColorChange(Text text, Color A, Color B, float duration, float fadeDuration)
     {
+        Debug.Log("Color Changing starting");
         float elapsedTime=0f;
 
         while (elapsedTime < duration)
         {
+            Debug.Log("Elapsed time: {0} while Duration: {1}");
             elapsedTime += Time.deltaTime;
             float t= Mathf.Clamp01(elapsedTime / duration);
 
@@ -80,8 +82,10 @@ public class Clickable : MonoBehaviour
         }
 
         //wait for fadeDuration
+        Debug.Log("Waiting for fade duration");
         yield return new WaitForSeconds (fadeDuration);
         //return to original color
+        Debug.Log("Returning to original color");
         elapsedTime = 0f;
         while (elapsedTime < duration) 
         {
@@ -91,7 +95,8 @@ public class Clickable : MonoBehaviour
             yield return null;
         }
 
-        text.color = Color.black;
+        text.color = A;
+        Debug.Log("Color Chang finish");
 
     }
 }
