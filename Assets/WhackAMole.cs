@@ -15,6 +15,7 @@ public class WhackAMole : MonoBehaviour
     /// </summary>
     // Start is called before the first frame update
     private Transform[] answer_postions;
+    [SerializeField] GameObject answerHold;
 
     public float gameTime;
     private float timeRemaining;
@@ -23,6 +24,7 @@ public class WhackAMole : MonoBehaviour
     [SerializeField] private bool gameRunning;
 
     public Dictionary<string, string> questions_answers;
+    
 
     public Slider timeSlide;
     public Text question;
@@ -32,7 +34,7 @@ public class WhackAMole : MonoBehaviour
 
     private void Start()
     {
-        answer_postions = GetComponentsInChildren<Transform>();
+        answer_postions = answerHold.GetComponentsInChildren<Transform>();
         questions_answers = new Dictionary<string, string>()
         {
             {"What layer is 1.400 miles thick?", "Outer Core" },
@@ -43,18 +45,18 @@ public class WhackAMole : MonoBehaviour
             {"What layer goes about 19 miles deep on average?","Crust"},
             {"What layer has the consistency of caramel?","Mantle"}
         };
+        
         timeRemaining = gameTime;
         timeSlide.maxValue = gameTime;
-        gameRunning = true;
-        SliderUpdate();
-        StartCoroutine(Spawn());
+        gameRunning = false;
+        
         //Have one of the questions as the text question
         question_index = Random.Range(0, questions_answers.Count);
         question.text = questions_answers.ElementAt(question_index).Key;
 
         //keeping track of the score
         scoreNum = 0;
-        scoreText.text = "Score: " + scoreNum;
+        scoreText.text = $"Score: {scoreNum}/50";
     }
 
     // Update is called once per frame
@@ -70,11 +72,22 @@ public class WhackAMole : MonoBehaviour
 
         SliderUpdate();
         scoreText.text = "Score: " + scoreNum;
+        if (scoreNum == 50)
+        {
+            gameRunning = false;
+        }
     }
 
     private void SliderUpdate()
     {
         timeSlide.value = timeRemaining;
+    }
+
+    public void StartGame()
+    {
+        gameRunning = true;
+        SliderUpdate();
+        StartCoroutine(Spawn());
     }
 
     private IEnumerator Spawn()
@@ -89,15 +102,6 @@ public class WhackAMole : MonoBehaviour
                 GameObject correct = Instantiate(moles[mole_index], answer_postions[index].position, Quaternion.identity);
                 correct.GetComponentInChildren<Clickable>().spawnLoc = answer_postions[index];
             }
-
-            //if (correct.CompareTag("Correct"))
-            //{
-            //    Debug.Log("This is the correct answer");
-            //}
-            //else
-            //{
-            //    Debug.Log("Wrong");
-            //}
         }
     }
 
@@ -108,38 +112,5 @@ public class WhackAMole : MonoBehaviour
             return true;
         }
         return false;
-    }
-    IEnumerator SmoothColorChange(Text text, Color A, Color B, float duration, float fadeDuration)
-    {
-        Debug.Log("Color Changing starting");
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            Debug.Log("Elapsed time: {0} while Duration: {1}");
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
-
-            text.color = Color.Lerp(A, B, t);
-            yield return null;
-        }
-
-        //wait for fadeDuration
-        Debug.Log("Waiting for fade duration");
-        yield return new WaitForSeconds(fadeDuration);
-        //return to original color
-        Debug.Log("Returning to original color");
-        elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
-            text.color = Color.Lerp(B, A, t);
-            yield return null;
-        }
-
-        text.color = A;
-        Debug.Log("Color Chang finish");
-
     }
 }
