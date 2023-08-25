@@ -20,7 +20,7 @@
   </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a" />
-    <setting name="bundleId" value="com.DefaultCompany.ARStudyRoom" />
+    <setting name="bundleId" value="com.MannyMakesThings.ARAppTest" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="False" />

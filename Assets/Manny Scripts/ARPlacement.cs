@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.UI;
 
 public class ARPlacement : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class ARPlacement : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
         
@@ -33,7 +32,7 @@ public class ARPlacement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (toolM.currentTool == ToolManagement.Tool.Place)
         {
@@ -54,13 +53,12 @@ public class ARPlacement : MonoBehaviour
         //    PlaceObject();
         //}
 
-
         UpdatePlacementPose();
         UpdatePlacementIndicator();
         //Debug.Log(obj.currentObj);
-
     }
-    void UpdatePlacementIndicator()
+
+    private void UpdatePlacementIndicator()
     {
         if (spawnedObject == null && placementPoseIsValid)
         {
@@ -73,7 +71,7 @@ public class ARPlacement : MonoBehaviour
         }
     }
 
-    void UpdatePlacementPose()
+    private void UpdatePlacementPose()
     {
         var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
@@ -89,7 +87,8 @@ public class ARPlacement : MonoBehaviour
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
     }
-    void PlaceObject()
+
+    private void PlaceObject()
     {
 
         

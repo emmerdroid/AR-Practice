@@ -1,10 +1,10 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "PlanetCrust HDRP"
 {
-    Properties
-    {
-		[NoScaleOffset]_ColorTexture("Color Texture", 2D) = "gray" {}
+	Properties
+	{
+		[NoScaleOffset] _ColorTexture("Color Texture", 2D) = "gray" {}
 		[Toggle]_EnableClouds("Enable Clouds", Float) = 1
 		_PolarMask("Polar Mask", 2D) = "white" {}
 		[NoScaleOffset]_NecessaryWaterMask("Necessary Water Mask", 2D) = "black" {}
@@ -12,1857 +12,1806 @@ Shader "PlanetCrust HDRP"
 		_CitiesTexture("Cities Texture", 2D) = "black" {}
 		[HDR]_ColorA("Color + A", Color) = (4.541205,4.541205,4.541205,0.3607843)
 		_CloudSpeed("Cloud Speed", Float) = 1
-		_ShadowsYOffset("Shadows Y Offset", Range( -0.02 , 0.02)) = -0.005
-		_ShadowsXOffset("Shadows X Offset", Range( -0.02 , 0.02)) = -0.005
-		_ShadowsSharpness("Shadows Sharpness", Range( 0 , 10)) = 2.5
+		_ShadowsYOffset("Shadows Y Offset", Range(-0.02 , 0.02)) = -0.005
+		_ShadowsXOffset("Shadows X Offset", Range(-0.02 , 0.02)) = -0.005
+		_ShadowsSharpness("Shadows Sharpness", Range(0 , 10)) = 2.5
 		[Toggle]_EnableCities("Enable Cities", Float) = 1
 		[HDR]_Citiescolor("Cities color", Color) = (7.906699,2.649365,1.200494,0)
 		[HDR]_AtmosphereColor("Atmosphere Color", Color) = (0.3764706,1.027451,1.498039,0)
-		_InteriorSize("Interior Size", Range( -2 , 10)) = 0.3
+		_InteriorSize("Interior Size", Range(-2 , 10)) = 0.3
 		_IlluminationSmoothness("Illumination Smoothness", Float) = 4
-		_InteriorIntensity("Interior Intensity", Range( 0 , 1)) = 0.65
+		_InteriorIntensity("Interior Intensity", Range(0 , 1)) = 0.65
 		_IlluminationAmbient("Illumination Ambient", Color) = (0.09019608,0.06666667,0.1490196,0)
 		_LightSource("_LightSource", Vector) = (1,0,0,0)
 		[Toggle]_EnableAtmosphere("Enable Atmosphere", Float) = 1
-		_CitiesDetail("Cities Detail", Range( 1 , 20)) = 4
+		_CitiesDetail("Cities Detail", Range(1 , 20)) = 4
 		_EnumFloat("_EnumFloat", Float) = 0
 		_WaterColor("Water Color", Color) = (0.282353,0.4431373,0.5176471,0)
-		_SpecularIntensity("Specular Intensity", Range( 0 , 1)) = 1
+		_SpecularIntensity("Specular Intensity", Range(0 , 1)) = 1
 		_Normals("Normals", 2D) = "bump" {}
-		_NormalsIntensity("Normals Intensity", Range( 0 , 2)) = 1
+		_NormalsIntensity("Normals Intensity", Range(0 , 2)) = 1
 		[Toggle]_EnableWater("Enable Water", Float) = 1
 		_CloudsNormals("Clouds Normals", 2D) = "bump" {}
 		_BaseColormodifier("Base Color modifier", Color) = (1,1,1,0)
 		_ShadowColorA("Shadow Color + A", Color) = (0.09803922,0.2313726,0.4117647,1)
 		_ReliefIntensity("ReliefIntensity", Float) = 2
-		_ReliefSmoothness("Relief Smoothness", Range( 0 , 5)) = 2
+		_ReliefSmoothness("Relief Smoothness", Range(0 , 5)) = 2
 		_IlluminationBoost("Illumination Boost", Float) = 1
 		_SkyblendA("Sky blend (A)", Color) = (0.5529412,0.6845676,0.7843137,0)
-		[HideInInspector] _texcoord( "", 2D ) = "white" {}
+		[HideInInspector] _texcoord("", 2D) = "white" {}
 
 		[HideInInspector]_EmissionColor("Emission Color", Color) = (1, 1, 1, 1)
-        [HideInInspector]_RenderQueueType("Render Queue Type", Float) = 1
+		[HideInInspector]_RenderQueueType("Render Queue Type", Float) = 1
 		[HideInInspector][ToggleUI]_AddPrecomputedVelocity("Add Precomputed Velocity", Float) = 0.0
 		[HideInInspector]_ShadowMatteFilter("Shadow Matte Filter", Float) = 2.006836
-        [HideInInspector]_StencilRef("Stencil Ref", Int) = 0
-        [HideInInspector]_StencilWriteMask("StencilWrite Mask", Int) = 3
-        [HideInInspector]_StencilRefDepth("StencilRefDepth", Int) = 0
-        [HideInInspector]_StencilWriteMaskDepth("_StencilWriteMaskDepth", Int) = 32
-        [HideInInspector]_StencilRefMV("_StencilRefMV", Int) = 128
-        [HideInInspector]_StencilWriteMaskMV("_StencilWriteMaskMV", Int) = 128
-        [HideInInspector]_StencilRefDistortionVec("_StencilRefDistortionVec", Int) = 64
-        [HideInInspector]_StencilWriteMaskDistortionVec("_StencilWriteMaskDistortionVec", Int) = 64
-        [HideInInspector]_StencilWriteMaskGBuffer("_StencilWriteMaskGBuffer", Int) = 3
-        [HideInInspector]_StencilRefGBuffer("_StencilRefGBuffer", Int) = 2
-        [HideInInspector]_ZTestGBuffer("_ZTestGBuffer", Int) = 4
-        [HideInInspector][ToggleUI]_RequireSplitLighting("_RequireSplitLighting", Float) = 0
-        [HideInInspector][ToggleUI]_ReceivesSSR("_ReceivesSSR", Float) = 0
-        [HideInInspector]_SurfaceType("_SurfaceType", Float) = 0
-        [HideInInspector]_BlendMode("_BlendMode", Float) = 1
-        [HideInInspector]_SrcBlend("_SrcBlend", Float) = 1
-        [HideInInspector]_DstBlend("_DstBlend", Float) = 0
-        [HideInInspector]_AlphaSrcBlend("Vec_AlphaSrcBlendtor1", Float) = 1
-        [HideInInspector]_AlphaDstBlend("_AlphaDstBlend", Float) = 0
-        [HideInInspector][ToggleUI]_ZWrite("_ZWrite", Float) = 0
-        [HideInInspector]_CullMode("Cull Mode", Float) = 2
-        [HideInInspector]_TransparentSortPriority("_TransparentSortPriority", Int) = 0
-        [HideInInspector]_CullModeForward("_CullModeForward", Float) = 2
-        [HideInInspector][Enum(Front, 1, Back, 2)]_TransparentCullMode("_TransparentCullMode", Float) = 2
-        [HideInInspector]_ZTestDepthEqualForOpaque("_ZTestDepthEqualForOpaque", Int) = 4
-        [HideInInspector][Enum(UnityEngine.Rendering.CompareFunction)]_ZTestTransparent("_ZTestTransparent", Float) = 4
-        [HideInInspector][ToggleUI]_TransparentBackfaceEnable("_TransparentBackfaceEnable", Float) = 0
-        [HideInInspector][ToggleUI]_AlphaCutoffEnable("_AlphaCutoffEnable", Float) = 0
-        [HideInInspector]_AlphaCutoff("Alpha Cutoff", Range(0, 1)) = 0.5
-        [HideInInspector][ToggleUI]_UseShadowThreshold("_UseShadowThreshold", Float) = 0
-        [HideInInspector][ToggleUI]_DoubleSidedEnable("_DoubleSidedEnable", Float) = 0
-        [HideInInspector][Enum(Flip, 0, Mirror, 1, None, 2)]_DoubleSidedNormalMode("_DoubleSidedNormalMode", Float) = 2
-        [HideInInspector]_DoubleSidedConstants("_DoubleSidedConstants", Vector) = (1, 1, -1, 0)
-    }
+		[HideInInspector]_StencilRef("Stencil Ref", Int) = 0
+		[HideInInspector]_StencilWriteMask("StencilWrite Mask", Int) = 3
+		[HideInInspector]_StencilRefDepth("StencilRefDepth", Int) = 0
+		[HideInInspector]_StencilWriteMaskDepth("_StencilWriteMaskDepth", Int) = 32
+		[HideInInspector]_StencilRefMV("_StencilRefMV", Int) = 128
+		[HideInInspector]_StencilWriteMaskMV("_StencilWriteMaskMV", Int) = 128
+		[HideInInspector]_StencilRefDistortionVec("_StencilRefDistortionVec", Int) = 64
+		[HideInInspector]_StencilWriteMaskDistortionVec("_StencilWriteMaskDistortionVec", Int) = 64
+		[HideInInspector]_StencilWriteMaskGBuffer("_StencilWriteMaskGBuffer", Int) = 3
+		[HideInInspector]_StencilRefGBuffer("_StencilRefGBuffer", Int) = 2
+		[HideInInspector]_ZTestGBuffer("_ZTestGBuffer", Int) = 4
+		[HideInInspector][ToggleUI]_RequireSplitLighting("_RequireSplitLighting", Float) = 0
+		[HideInInspector][ToggleUI]_ReceivesSSR("_ReceivesSSR", Float) = 0
+		[HideInInspector]_SurfaceType("_SurfaceType", Float) = 0
+		[HideInInspector]_BlendMode("_BlendMode", Float) = 1
+		[HideInInspector]_SrcBlend("_SrcBlend", Float) = 1
+		[HideInInspector]_DstBlend("_DstBlend", Float) = 0
+		[HideInInspector]_AlphaSrcBlend("Vec_AlphaSrcBlendtor1", Float) = 1
+		[HideInInspector]_AlphaDstBlend("_AlphaDstBlend", Float) = 0
+		[HideInInspector][ToggleUI]_ZWrite("_ZWrite", Float) = 0
+		[HideInInspector]_CullMode("Cull Mode", Float) = 2
+		[HideInInspector]_TransparentSortPriority("_TransparentSortPriority", Int) = 0
+		[HideInInspector]_CullModeForward("_CullModeForward", Float) = 2
+		[HideInInspector][Enum(Front, 1, Back, 2)]_TransparentCullMode("_TransparentCullMode", Float) = 2
+		[HideInInspector]_ZTestDepthEqualForOpaque("_ZTestDepthEqualForOpaque", Int) = 4
+		[HideInInspector][Enum(UnityEngine.Rendering.CompareFunction)]_ZTestTransparent("_ZTestTransparent", Float) = 4
+		[HideInInspector][ToggleUI]_TransparentBackfaceEnable("_TransparentBackfaceEnable", Float) = 0
+		[HideInInspector][ToggleUI]_AlphaCutoffEnable("_AlphaCutoffEnable", Float) = 0
+		[HideInInspector]_AlphaCutoff("Alpha Cutoff", Range(0, 1)) = 0.5
+		[HideInInspector][ToggleUI]_UseShadowThreshold("_UseShadowThreshold", Float) = 0
+		[HideInInspector][ToggleUI]_DoubleSidedEnable("_DoubleSidedEnable", Float) = 0
+		[HideInInspector][Enum(Flip, 0, Mirror, 1, None, 2)]_DoubleSidedNormalMode("_DoubleSidedNormalMode", Float) = 2
+		[HideInInspector]_DoubleSidedConstants("_DoubleSidedConstants", Vector) = (1, 1, -1, 0)
+	}
 
-    SubShader
-    {
-		LOD 0
+		SubShader
+		{
+			LOD 0
 
-		
-        Tags { "RenderPipeline"="HDRenderPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
+			Tags { "RenderPipeline" = "HDRenderPipeline" "RenderType" = "Opaque" "Queue" = "Geometry" }
 
-		HLSLINCLUDE
-		#pragma target 4.5
-		#pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
-		ENDHLSL
+			HLSLINCLUDE
+			#pragma target 4.5
+			#pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
+			ENDHLSL
 
-		
-		
-        Pass
-        {
-			
-            Name "Forward Unlit"
-            Tags { "LightMode"="ForwardOnly" }
-        
-            Blend [_SrcBlend] [_DstBlend] , [_AlphaSrcBlend] [_AlphaDstBlend]
-            Cull [_CullMode]
-            ZTest [_ZTestTransparent]
-            ZWrite [_ZWrite]
-        
-			Stencil
+			Pass
 			{
-				Ref [_StencilRef]
-				WriteMask [_StencilWriteMask]
-				Comp Always
-				Pass Replace
-				Fail Keep
-				ZFail Keep
-			}
+				Name "Forward Unlit"
+				Tags { "LightMode" = "ForwardOnly" }
 
-            HLSLPROGRAM
-        
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
+				Blend[_SrcBlend][_DstBlend] ,[_AlphaSrcBlend][_AlphaDstBlend]
+				Cull[_CullMode]
+				ZTest[_ZTestTransparent]
+				ZWrite[_ZWrite]
 
-        
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
+				Stencil
+				{
+					Ref[_StencilRef]
+					WriteMask[_StencilWriteMask]
+					Comp Always
+					Pass Replace
+					Fail Keep
+					ZFail Keep
+				}
 
-			#pragma vertex Vert
-			#pragma fragment Frag
-        
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+				HLSLPROGRAM
 
-			#define SHADERPASS SHADERPASS_FORWARD_UNLIT
-			#pragma multi_compile _ DEBUG_DISPLAY
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
 
-			#if defined(_ENABLE_SHADOW_MATTE) && SHADERPASS == SHADERPASS_FORWARD_UNLIT
-				#define LIGHTLOOP_DISABLE_TILE_AND_CLUSTER
-				#define HAS_LIGHTLOOP
-				#define SHADOW_OPTIMIZE_REGISTER_USAGE 1
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
 
-				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonLighting.hlsl"
-				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/Shadow/HDShadowContext.hlsl"
-				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/HDShadow.hlsl"
-				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoopDef.hlsl"
-				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/PunctualLightCommon.hlsl"
-				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/HDShadowLoop.hlsl"
-			#endif
-                
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+				#pragma vertex Vert
+				#pragma fragment Frag
 
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
 
+				#define SHADERPASS SHADERPASS_FORWARD_UNLIT
+				#pragma multi_compile _ DEBUG_DISPLAY
 
-			struct VertexInput
-			{
-				float3 positionOS : POSITION;
-				float4 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct VertexOutput
-			{
-				float4 positionCS : SV_Position;
-				float3 positionRWS : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
-				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-			sampler2D _ColorTexture;
-			sampler2D _NecessaryWaterMask;
-			sampler2D _CloudsTexture;
-			sampler2D _PolarMask;
-			sampler2D _CloudsNormals;
-			sampler2D _Normals;
-			sampler2D _CitiesTexture;
-
-				
-					            
-			struct SurfaceDescription
-			{
-				float3 Color;
-				float3 Emission;
-				float4 ShadowTint;
-				float Alpha;
-				float AlphaClipThreshold;
-			};
-		
-			void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
-			{
-				ZERO_INITIALIZE(SurfaceData, surfaceData);
-				surfaceData.color = surfaceDescription.Color;
-			}
-        
-			void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription , FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
-			{
-				#if _ALPHATEST_ON
-				DoAlphaTest ( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
-				#endif
-				BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
-				
 				#if defined(_ENABLE_SHADOW_MATTE) && SHADERPASS == SHADERPASS_FORWARD_UNLIT
-                    HDShadowContext shadowContext = InitShadowContext();
-                    float shadow;
-                    float3 shadow3;
-                    posInput = GetPositionInput(fragInputs.positionSS.xy, _ScreenSize.zw, fragInputs.positionSS.z, UNITY_MATRIX_I_VP, UNITY_MATRIX_V);
-                    float3 normalWS = normalize(fragInputs.tangentToWorld[1]);
-                    uint renderingLayers = _EnableLightLayers ? asuint(unity_RenderingLayer.x) : DEFAULT_LIGHT_LAYERS;
-                    ShadowLoopMin(shadowContext, posInput, normalWS, asuint(_ShadowMatteFilter), renderingLayers, shadow3);
-                    shadow = dot(shadow3, float3(1.0f/3.0f, 1.0f/3.0f, 1.0f/3.0f));
-        
-                    float4 shadowColor = (1 - shadow)*surfaceDescription.ShadowTint.rgba;
-                    float  localAlpha  = saturate(shadowColor.a + surfaceDescription.Alpha);
-        
-                    // Keep the nested lerp
-                    // With no Color (bsdfData.color.rgb, bsdfData.color.a == 0.0f), just use ShadowColor*Color to avoid a ring of "white" around the shadow
-                    // And mix color to consider the Color & ShadowColor alpha (from texture or/and color picker)
-                    #ifdef _SURFACE_TYPE_TRANSPARENT
-                        surfaceData.color = lerp(shadowColor.rgb*surfaceData.color, lerp(lerp(shadowColor.rgb, surfaceData.color, 1 - surfaceDescription.ShadowTint.a), surfaceData.color, shadow), surfaceDescription.Alpha);
-                    #else
-                        surfaceData.color = lerp(lerp(shadowColor.rgb, surfaceData.color, 1 - surfaceDescription.ShadowTint.a), surfaceData.color, shadow);
-                    #endif
-                    localAlpha = ApplyBlendMode(surfaceData.color, localAlpha).a;
-        
-                    surfaceDescription.Alpha = localAlpha;
-                #endif
+					#define LIGHTLOOP_DISABLE_TILE_AND_CLUSTER
+					#define HAS_LIGHTLOOP
+					#define SHADOW_OPTIMIZE_REGISTER_USAGE 1
 
-				ZERO_INITIALIZE(BuiltinData, builtinData);
-				builtinData.opacity = surfaceDescription.Alpha;
-				builtinData.emissiveColor = surfaceDescription.Emission;
-			}
-         
-			VertexOutput Vert( VertexInput inputMesh  )
-			{
-				VertexOutput o;
-				UNITY_SETUP_INSTANCE_ID(inputMesh);
-				UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
-
-				float3 ase_worldTangent = TransformObjectToWorldDir(inputMesh.ase_tangent.xyz);
-				o.ase_texcoord2.xyz = ase_worldTangent;
-				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS.xyz);
-				o.ase_texcoord3.xyz = ase_worldNormal;
-				float ase_vertexTangentSign = inputMesh.ase_tangent.w * unity_WorldTransformParams.w;
-				float3 ase_worldBitangent = cross( ase_worldNormal, ase_worldTangent ) * ase_vertexTangentSign;
-				o.ase_texcoord4.xyz = ase_worldBitangent;
-				
-				o.ase_texcoord1.xy = inputMesh.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.zw = 0;
-				o.ase_texcoord2.w = 0;
-				o.ase_texcoord3.w = 0;
-				o.ase_texcoord4.w = 0;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue = defaultVertexValue;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
+					#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonLighting.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/Shadow/HDShadowContext.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/HDShadow.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoopDef.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/PunctualLightCommon.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/HDShadowLoop.hlsl"
 				#endif
 
-				inputMesh.normalOS = inputMesh.normalOS;
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-				float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
-				o.positionCS = TransformWorldToHClip(positionRWS);
-				o.positionRWS = positionRWS;
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				return o;
-			}
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			float4 Frag( VertexOutput packedInput ) : SV_Target
-			{
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE(FragInputs, input);
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;
-				input.positionRWS = packedInput.positionRWS;
-				
-				PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
-
-				float3 V = GetWorldSpaceNormalizeViewDir( input.positionRWS );
-
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
-				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
-				float3 temp_cast_0 = (0.0).xxx;
-				
-				float2 uv_ColorTexture61 = packedInput.ase_texcoord1.xy;
-				float4 BaseColor2300 = ( tex2D( _ColorTexture, uv_ColorTexture61 ) * _BaseColormodifier );
-				float4 WaterColor2302 = _WaterColor;
-				float4 blendOpSrc2099 = BaseColor2300;
-				float4 blendOpDest2099 = WaterColor2302;
-				float WaterTransparency2306 = _WaterColor.a;
-				float4 lerpResult2121 = lerp( BaseColor2300 , ( saturate( (( blendOpDest2099 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest2099 ) * ( 1.0 - blendOpSrc2099 ) ) : ( 2.0 * blendOpDest2099 * blendOpSrc2099 ) ) )) , WaterTransparency2306);
-				float4 lerpResult2120 = lerp( lerpResult2121 , WaterColor2302 , WaterTransparency2306);
-				float4 BaseAndWater2266 = lerpResult2120;
-				float2 uv_NecessaryWaterMask82 = packedInput.ase_texcoord1.xy;
-				float clampResult2089 = clamp( ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * 10.0 ) , 0.0 , 1.0 );
-				float ContinentalMasks2284 = clampResult2089;
-				float4 lerpResult1895 = lerp( BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
-				float3 desaturateInitialColor2417 = lerpResult1895.rgb;
-				float desaturateDot2417 = dot( desaturateInitialColor2417, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2417 = lerp( desaturateInitialColor2417, desaturateDot2417.xxx, 0.3 );
-				float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
-				float2 uv0455 = packedInput.ase_texcoord1.xy * float2( 1,1 ) + appendResult2178;
-				float temp_output_161_0 = ( _CloudSpeed / 80.0 );
-				float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVcloudShadows2246 = ( float4( uv0455, 0.0 , 0.0 ) + ( appendResult453 * ( _TimeParameters.y * 0.05 ) ) );
-				float4 tex2DNode442 = tex2Dlod( _CloudsTexture, float4( UVcloudShadows2246.xy, 0, _ShadowsSharpness) );
-				float temp_output_2422_0 = ( ( tex2DNode442.b + tex2DNode442.b ) * 5.0 );
-				float CloudsAlpha2253 = _ColorA.a;
-				float clampResult2147 = clamp( ( (( _EnableClouds )?( 1.0 ):( 0.0 )) * temp_output_2422_0 * CloudsAlpha2253 ) , 0.0 , 1.0 );
-				float CloudsShadows2248 = clampResult2147;
-				float2 uv_PolarMask = packedInput.ase_texcoord1.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
-				float4 PolarMask2271 = tex2D( _PolarMask, uv_PolarMask );
-				float4 lerpResult1816 = lerp( float4( desaturateVar2417 , 0.0 ) , _ShadowColorA , ( ( CloudsShadows2248 * PolarMask2271 ) * _ShadowColorA.a ));
-				float4 CloudsColor2252 = _ColorA;
-				float2 uv032 = packedInput.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVClouds2243 = ( float4( uv032, 0.0 , 0.0 ) + ( appendResult41 * ( _TimeParameters.y * 0.05 ) ) );
-				float lerpResult1886 = lerp( tex2D( _CloudsTexture, UVClouds2243.xy ).g , _EnumFloat , 0.0);
-				float saferPower2060 = max( lerpResult1886 , 0.0001 );
-				float Clouds2262 = ( (0.0 + (pow( saferPower2060 , 0.5 ) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * (( _EnableClouds )?( 1.0 ):( 0.0 )) );
-				float4 lerpResult66 = lerp( lerpResult1816 , ( 0.5 * CloudsColor2252 ) , ( PolarMask2271 * Clouds2262 ));
-				float4 AmbientColor2337 = _IlluminationAmbient;
-				float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
-				float2 uv02073 = packedInput.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float3 FlatNormal2287 = float3(0,0,1);
-				float3 lerpResult2094 = lerp( UnpackNormalmapRGorAG( tex2D( _Normals, uv02073 ), ( (0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25 ) ) , FlatNormal2287 , ContinentalMasks2284);
-				float clampResult535 = clamp( ( 3.0 * Clouds2262 ) , 0.0 , 1.0 );
-				float CloudsOcclusion2258 = ( 1.0 - clampResult535 );
-				float3 lerpResult2093 = lerp( UnpackNormalmapRGorAG( tex2Dlod( _CloudsNormals, float4( UVClouds2243.xy, 0, _ReliefSmoothness) ), ( _ReliefIntensity * CloudsAlpha2253 ) ) , lerpResult2094 , CloudsOcclusion2258);
-				float3 Normals2236 = lerpResult2093;
-				float3 ase_worldTangent = packedInput.ase_texcoord2.xyz;
-				float3 ase_worldNormal = packedInput.ase_texcoord3.xyz;
-				float3 ase_worldBitangent = packedInput.ase_texcoord4.xyz;
-				float3 tanToWorld0 = float3( ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x );
-				float3 tanToWorld1 = float3( ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y );
-				float3 tanToWorld2 = float3( ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z );
-				float3 tanNormal246 = Normals2236;
-				float3 worldNormal246 = normalize( float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)) );
-				float3 normalizeResult1073 = normalize( _LightSource );
-				float3 LightSourceVector2314 = ( normalizeResult1073 / 1.0 );
-				float dotResult247 = dot( worldNormal246 , LightSourceVector2314 );
-				float smoothstepResult2359 = smoothstep( 0.0 , 1.0 , ( dotResult247 + 0.5 ));
-				float BaselLightMask2332 = smoothstepResult2359;
-				float temp_output_380_0 = pow( BaselLightMask2332 , _IlluminationSmoothness );
-				float clampResult2452 = clamp( ( ( ( temp_output_380_0 + -0.5 ) * ( 1.0 - BaselLightMask2332 ) ) * 10.0 ) , 0.0 , 1.0 );
-				float4 lerpResult2450 = lerp( AmbientColor2337 , color2445 , clampResult2452);
-				float4 temp_cast_8 = (temp_output_380_0).xxxx;
-				float4 lerpResult2409 = lerp( lerpResult2450 , temp_cast_8 , temp_output_380_0);
-				float4 NightDayMask2292 = lerpResult2409;
-				float4 temp_cast_9 = (0.0).xxxx;
-				float2 temp_cast_10 = (_CitiesDetail).xx;
-				float2 uv0175 = packedInput.ase_texcoord1.xy * temp_cast_10 + float2( 0,0 );
-				float2 uv02431 = packedInput.ase_texcoord1.xy * float2( 1,1 ) + float2( 0,0 );
-				float clampResult1926 = clamp( ContinentalMasks2284 , 0.0 , 1.0 );
-				float3 desaturateInitialColor2410 = ( 1.0 - ( NightDayMask2292 * 5.0 ) ).rgb;
-				float desaturateDot2410 = dot( desaturateInitialColor2410, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2410 = lerp( desaturateInitialColor2410, desaturateDot2410.xxx, 1.0 );
-				float3 clampResult1716 = clamp( desaturateVar2410 , float3( 0,0,0 ) , float3( 1,1,1 ) );
-				float3 ase_worldPos = GetAbsolutePositionWS( packedInput.positionRWS );
-				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
-				ase_worldViewDir = normalize(ase_worldViewDir);
-				float dotResult1665 = dot( ase_worldViewDir , ase_worldNormal );
-				float FresnelMask2228 = dotResult1665;
-				float saferPower2161 = max( FresnelMask2228 , 0.0001 );
-				float4 Cities2297 = (( _EnableCities )?( ( ( float4( ( ( ( ( ( tex2D( _CitiesTexture, uv0175 ).r * ( 1.0 - tex2D( _CitiesTexture, uv02431 ).a ) ) * ( 1.0 - clampResult1926 ) ) * clampResult1716 ) * pow( saferPower2161 , 4.0 ) ) * CloudsOcclusion2258 ) , 0.0 ) * _Citiescolor ) * 1.0 ) ):( temp_cast_9 ));
-				float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float3 normalizeResult2313 = normalize( ( ase_worldViewDir + LightSourceVector2314 ) );
-				float3 SpecularDir2317 = normalizeResult2313;
-				float3 saferPower2411 = max( SpecularDir2317 , 0.0001 );
-				float fresnelNdotV9 = dot( normalize( normalizedWorldNormal ), ase_worldViewDir );
-				float fresnelNode9 = ( 0.0 + 1.0 * pow( max( 1.0 - fresnelNdotV9 , 0.0001 ), ( ( 1.0 - ( pow( saferPower2411 , 3.0 ) + -1.0 ) ) + _InteriorSize ).x ) );
-				float3 temp_cast_14 = (fresnelNode9).xxx;
-				float3 temp_cast_15 = (fresnelNode9).xxx;
-				float3 linearToGamma2139 = FastLinearToSRGB( temp_cast_15 );
-				float4 BaseColorAtmospheres2278 = _AtmosphereColor;
-				float dotResult1708 = dot( LightSourceVector2314 , normalizedWorldNormal );
-				float smoothstepResult2379 = smoothstep( -0.4 , 1.0 , dotResult1708);
-				float AtmosphereLightMask2225 = smoothstepResult2379;
-				float clampResult1769 = clamp( AtmosphereLightMask2225 , 0.0 , 1.0 );
-				float saferPower1768 = max( clampResult1769 , 0.0001 );
-				float smoothstepResult1594 = smoothstep( 0.0 , 1.0 , pow( saferPower1768 , 1.5 ));
-				float4 clampResult702 = clamp( ( ( float4( ( ( linearToGamma2139 * ( _InteriorIntensity + ( 1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0)) ) ) ) * _InteriorIntensity ) , 0.0 ) * BaseColorAtmospheres2278 ) * smoothstepResult1594 ) , float4( 0,0,0,0 ) , float4( 1,1,1,0 ) );
-				float3 gammaToLinear2462 = FastSRGBToLinear( (( _EnableAtmosphere )?( clampResult702 ):( color1829 )).rgb );
-				float3 SubAtmosphere2241 = gammaToLinear2462;
-				float4 blendOpSrc2361 = ( ( lerpResult66 * NightDayMask2292 ) + ( Cities2297 * PolarMask2271 ) );
-				float4 blendOpDest2361 = float4( SubAtmosphere2241 , 0.0 );
-				float dotResult1867 = dot( ase_worldNormal , SpecularDir2317 );
-				float clampResult2045 = clamp( dotResult1867 , 0.0 , 1.0 );
-				float saferPower2438 = max( clampResult2045 , 0.0001 );
-				float temp_output_2438_0 = pow( saferPower2438 , 2.0 );
-				ase_worldViewDir = SafeNormalize( ase_worldViewDir );
-				float dotResult1570 = dot( LightSourceVector2314 , ase_worldViewDir );
-				float ViewDotLight2231 = dotResult1570;
-				float clampResult1903 = clamp( ( ViewDotLight2231 + 0.1 ) , 0.0 , 1.0 );
-				float lerpResult1901 = lerp( 200.0 , 2000.0 , clampResult1903);
-				float3 temp_cast_20 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 temp_cast_21 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 gammaToLinear2113 = FastSRGBToLinear( temp_cast_21 );
-				float clampResult1906 = clamp( ViewDotLight2231 , 0.0 , 1.0 );
-				float lerpResult2466 = lerp( 0.25 , _SpecularIntensity , clampResult1906);
-				float4 temp_output_2155_0 = ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * ( ( ( float4( gammaToLinear2113 , 0.0 ) * ( temp_output_2438_0 * WaterColor2302 ) ) * CloudsOcclusion2258 ) * ( lerpResult2466 * 100.0 ) ) );
-				float4 Specular2319 = temp_output_2155_0;
-				float4 lerpResult2525 = lerp( ( ( 1.0 - ( 1.0 - blendOpSrc2361 ) * ( 1.0 - blendOpDest2361 ) ) + ( Specular2319 * PolarMask2271 ) ) , _SkyblendA , _SkyblendA.a);
-				float4 SecondPassInput2324 = ( lerpResult2525 * _IlluminationBoost );
-				
-				surfaceDescription.Color =  temp_cast_0;
-				surfaceDescription.Emission =  SecondPassInput2324.rgb;
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold =  0.5;
-				float2 Distortion = float2 ( 0, 0 );
-				float DistortionBlur = 0;
-
-				GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
-
-				BSDFData bsdfData = ConvertSurfaceDataToBSDFData( input.positionSS.xy, surfaceData );
-
-				float4 outColor = ApplyBlendMode( bsdfData.color + builtinData.emissiveColor * GetCurrentExposureMultiplier(), builtinData.opacity );
-				outColor = EvaluateAtmosphericScattering( posInput, V, outColor );
-
-				#ifdef DEBUG_DISPLAY
-				int bufferSize = int( _DebugViewMaterialArray[ 0 ] );
-				for( int index = 1; index <= bufferSize; index++ )
+				struct VertexInput
 				{
-					int indexMaterialProperty = int( _DebugViewMaterialArray[ index ] );
-					if( indexMaterialProperty != 0 )
+					float3 positionOS : POSITION;
+					float4 normalOS : NORMAL;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_tangent : TANGENT;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 positionCS : SV_Position;
+					float3 positionRWS : TEXCOORD0;
+					float4 ase_texcoord1 : TEXCOORD1;
+					float4 ase_texcoord2 : TEXCOORD2;
+					float4 ase_texcoord3 : TEXCOORD3;
+					float4 ase_texcoord4 : TEXCOORD4;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				float4 _BaseColormodifier;
+				float4 _WaterColor;
+				float _EnableWater;
+				float4 _ShadowColorA;
+				float _EnableClouds;
+				float _ShadowsXOffset;
+				float _ShadowsYOffset;
+				float _CloudSpeed;
+				float _ShadowsSharpness;
+				float4 _ColorA;
+				float4 _PolarMask_ST;
+				float _EnumFloat;
+				float4 _IlluminationAmbient;
+				float _ReliefIntensity;
+				float _ReliefSmoothness;
+				float _NormalsIntensity;
+				float3 _LightSource;
+				float _IlluminationSmoothness;
+				float _EnableCities;
+				float _CitiesDetail;
+				float4 _Citiescolor;
+				float _EnableAtmosphere;
+				float _InteriorSize;
+				float _InteriorIntensity;
+				float4 _AtmosphereColor;
+				float _SpecularIntensity;
+				float4 _SkyblendA;
+				float _IlluminationBoost;
+				float4 _EmissionColor;
+				float _RenderQueueType;
+				float _AddPrecomputedVelocity;
+				float _ShadowMatteFilter;
+				float _StencilRef;
+				float _StencilWriteMask;
+				float _StencilRefDepth;
+				float _StencilWriteMaskDepth;
+				float _StencilRefMV;
+				float _StencilWriteMaskMV;
+				float _StencilRefDistortionVec;
+				float _StencilWriteMaskDistortionVec;
+				float _StencilWriteMaskGBuffer;
+				float _StencilRefGBuffer;
+				float _ZTestGBuffer;
+				float _RequireSplitLighting;
+				float _ReceivesSSR;
+				float _SurfaceType;
+				float _BlendMode;
+				float _SrcBlend;
+				float _DstBlend;
+				float _AlphaSrcBlend;
+				float _AlphaDstBlend;
+				float _ZWrite;
+				float _CullMode;
+				float _TransparentSortPriority;
+				float _CullModeForward;
+				float _TransparentCullMode;
+				float _ZTestDepthEqualForOpaque;
+				float _ZTestTransparent;
+				float _TransparentBackfaceEnable;
+				float _AlphaCutoffEnable;
+				float _AlphaCutoff;
+				float _UseShadowThreshold;
+				float _DoubleSidedEnable;
+				float _DoubleSidedNormalMode;
+				float4 _DoubleSidedConstants;
+				CBUFFER_END
+				sampler2D _ColorTexture;
+				sampler2D _NecessaryWaterMask;
+				sampler2D _CloudsTexture;
+				sampler2D _PolarMask;
+				sampler2D _CloudsNormals;
+				sampler2D _Normals;
+				sampler2D _CitiesTexture;
+
+				struct SurfaceDescription
+				{
+					float3 Color;
+					float3 Emission;
+					float4 ShadowTint;
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+					surfaceData.color = surfaceDescription.Color;
+				}
+
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription , FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+
+					#if defined(_ENABLE_SHADOW_MATTE) && SHADERPASS == SHADERPASS_FORWARD_UNLIT
+						HDShadowContext shadowContext = InitShadowContext();
+						float shadow;
+						float3 shadow3;
+						posInput = GetPositionInput(fragInputs.positionSS.xy, _ScreenSize.zw, fragInputs.positionSS.z, UNITY_MATRIX_I_VP, UNITY_MATRIX_V);
+						float3 normalWS = normalize(fragInputs.tangentToWorld[1]);
+						uint renderingLayers = _EnableLightLayers ? asuint(unity_RenderingLayer.x) : DEFAULT_LIGHT_LAYERS;
+						ShadowLoopMin(shadowContext, posInput, normalWS, asuint(_ShadowMatteFilter), renderingLayers, shadow3);
+						shadow = dot(shadow3, float3(1.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f));
+
+						float4 shadowColor = (1 - shadow) * surfaceDescription.ShadowTint.rgba;
+						float  localAlpha = saturate(shadowColor.a + surfaceDescription.Alpha);
+
+						// Keep the nested lerp
+						// With no Color (bsdfData.color.rgb, bsdfData.color.a == 0.0f), just use ShadowColor*Color to avoid a ring of "white" around the shadow
+						// And mix color to consider the Color & ShadowColor alpha (from texture or/and color picker)
+						#ifdef _SURFACE_TYPE_TRANSPARENT
+							surfaceData.color = lerp(shadowColor.rgb * surfaceData.color, lerp(lerp(shadowColor.rgb, surfaceData.color, 1 - surfaceDescription.ShadowTint.a), surfaceData.color, shadow), surfaceDescription.Alpha);
+						#else
+							surfaceData.color = lerp(lerp(shadowColor.rgb, surfaceData.color, 1 - surfaceDescription.ShadowTint.a), surfaceData.color, shadow);
+						#endif
+						localAlpha = ApplyBlendMode(surfaceData.color, localAlpha).a;
+
+						surfaceDescription.Alpha = localAlpha;
+					#endif
+
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+					builtinData.emissiveColor = surfaceDescription.Emission;
+				}
+
+				VertexOutput Vert(VertexInput inputMesh)
+				{
+					VertexOutput o;
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+					float3 ase_worldTangent = TransformObjectToWorldDir(inputMesh.ase_tangent.xyz);
+					o.ase_texcoord2.xyz = ase_worldTangent;
+					float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS.xyz);
+					o.ase_texcoord3.xyz = ase_worldNormal;
+					float ase_vertexTangentSign = inputMesh.ase_tangent.w * unity_WorldTransformParams.w;
+					float3 ase_worldBitangent = cross(ase_worldNormal, ase_worldTangent) * ase_vertexTangentSign;
+					o.ase_texcoord4.xyz = ase_worldBitangent;
+
+					o.ase_texcoord1.xy = inputMesh.ase_texcoord.xy;
+
+					//setting value to unused interpolator channels and avoid initialization warnings
+					o.ase_texcoord1.zw = 0;
+					o.ase_texcoord2.w = 0;
+					o.ase_texcoord3.w = 0;
+					o.ase_texcoord4.w = 0;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = inputMesh.positionOS.xyz;
+					#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+					#endif
+					float3 vertexValue = defaultVertexValue;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					inputMesh.positionOS.xyz = vertexValue;
+					#else
+					inputMesh.positionOS.xyz += vertexValue;
+					#endif
+
+					inputMesh.normalOS = inputMesh.normalOS;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					o.positionCS = TransformWorldToHClip(positionRWS);
+					o.positionRWS = positionRWS;
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+					return o;
+				}
+
+				float4 Frag(VertexOutput packedInput) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(packedInput);
+					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.tangentToWorld = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+					input.positionRWS = packedInput.positionRWS;
+
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = GetWorldSpaceNormalizeViewDir(input.positionRWS);
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+					float3 temp_cast_0 = (0.0).xxx;
+
+					float2 uv_ColorTexture61 = packedInput.ase_texcoord1.xy;
+					float4 BaseColor2300 = (tex2D(_ColorTexture, uv_ColorTexture61) * _BaseColormodifier);
+					float4 WaterColor2302 = _WaterColor;
+					float4 blendOpSrc2099 = BaseColor2300;
+					float4 blendOpDest2099 = WaterColor2302;
+					float WaterTransparency2306 = _WaterColor.a;
+					float4 lerpResult2121 = lerp(BaseColor2300 , (saturate(((blendOpDest2099 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest2099) * (1.0 - blendOpSrc2099)) : (2.0 * blendOpDest2099 * blendOpSrc2099)))) , WaterTransparency2306);
+					float4 lerpResult2120 = lerp(lerpResult2121 , WaterColor2302 , WaterTransparency2306);
+					float4 BaseAndWater2266 = lerpResult2120;
+					float2 uv_NecessaryWaterMask82 = packedInput.ase_texcoord1.xy;
+					float clampResult2089 = clamp((((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * 10.0) , 0.0 , 1.0);
+					float ContinentalMasks2284 = clampResult2089;
+					float4 lerpResult1895 = lerp(BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
+					float3 desaturateInitialColor2417 = lerpResult1895.rgb;
+					float desaturateDot2417 = dot(desaturateInitialColor2417, float3(0.299, 0.587, 0.114));
+					float3 desaturateVar2417 = lerp(desaturateInitialColor2417, desaturateDot2417.xxx, 0.3);
+					float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
+					float2 uv0455 = packedInput.ase_texcoord1.xy * float2(1,1) + appendResult2178;
+					float temp_output_161_0 = (_CloudSpeed / 80.0);
+					float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+					float4 UVcloudShadows2246 = (float4(uv0455, 0.0 , 0.0) + (appendResult453 * (_TimeParameters.y * 0.05)));
+					float4 tex2DNode442 = tex2Dlod(_CloudsTexture, float4(UVcloudShadows2246.xy, 0, _ShadowsSharpness));
+					float temp_output_2422_0 = ((tex2DNode442.b + tex2DNode442.b) * 5.0);
+					float CloudsAlpha2253 = _ColorA.a;
+					float clampResult2147 = clamp((((_EnableClouds) ? (1.0) : (0.0)) * temp_output_2422_0 * CloudsAlpha2253) , 0.0 , 1.0);
+					float CloudsShadows2248 = clampResult2147;
+					float2 uv_PolarMask = packedInput.ase_texcoord1.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
+					float4 PolarMask2271 = tex2D(_PolarMask, uv_PolarMask);
+					float4 lerpResult1816 = lerp(float4(desaturateVar2417 , 0.0) , _ShadowColorA , ((CloudsShadows2248 * PolarMask2271) * _ShadowColorA.a));
+					float4 CloudsColor2252 = _ColorA;
+					float2 uv032 = packedInput.ase_texcoord1.xy * float2(1,1) + float2(0,0);
+					float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+					float4 UVClouds2243 = (float4(uv032, 0.0 , 0.0) + (appendResult41 * (_TimeParameters.y * 0.05)));
+					float lerpResult1886 = lerp(tex2D(_CloudsTexture, UVClouds2243.xy).g , _EnumFloat , 0.0);
+					float saferPower2060 = max(lerpResult1886 , 0.0001);
+					float Clouds2262 = ((0.0 + (pow(saferPower2060 , 0.5) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * ((_EnableClouds) ? (1.0) : (0.0)));
+					float4 lerpResult66 = lerp(lerpResult1816 , (0.5 * CloudsColor2252) , (PolarMask2271 * Clouds2262));
+					float4 AmbientColor2337 = _IlluminationAmbient;
+					float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
+					float2 uv02073 = packedInput.ase_texcoord1.xy * float2(1,1) + float2(0,0);
+					float3 FlatNormal2287 = float3(0,0,1);
+					float3 lerpResult2094 = lerp(UnpackNormalmapRGorAG(tex2D(_Normals, uv02073), ((0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25)) , FlatNormal2287 , ContinentalMasks2284);
+					float clampResult535 = clamp((3.0 * Clouds2262) , 0.0 , 1.0);
+					float CloudsOcclusion2258 = (1.0 - clampResult535);
+					float3 lerpResult2093 = lerp(UnpackNormalmapRGorAG(tex2Dlod(_CloudsNormals, float4(UVClouds2243.xy, 0, _ReliefSmoothness)), (_ReliefIntensity * CloudsAlpha2253)) , lerpResult2094 , CloudsOcclusion2258);
+					float3 Normals2236 = lerpResult2093;
+					float3 ase_worldTangent = packedInput.ase_texcoord2.xyz;
+					float3 ase_worldNormal = packedInput.ase_texcoord3.xyz;
+					float3 ase_worldBitangent = packedInput.ase_texcoord4.xyz;
+					float3 tanToWorld0 = float3(ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x);
+					float3 tanToWorld1 = float3(ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y);
+					float3 tanToWorld2 = float3(ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z);
+					float3 tanNormal246 = Normals2236;
+					float3 worldNormal246 = normalize(float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)));
+					float3 normalizeResult1073 = normalize(_LightSource);
+					float3 LightSourceVector2314 = (normalizeResult1073 / 1.0);
+					float dotResult247 = dot(worldNormal246 , LightSourceVector2314);
+					float smoothstepResult2359 = smoothstep(0.0 , 1.0 , (dotResult247 + 0.5));
+					float BaselLightMask2332 = smoothstepResult2359;
+					float temp_output_380_0 = pow(BaselLightMask2332 , _IlluminationSmoothness);
+					float clampResult2452 = clamp((((temp_output_380_0 + -0.5) * (1.0 - BaselLightMask2332)) * 10.0) , 0.0 , 1.0);
+					float4 lerpResult2450 = lerp(AmbientColor2337 , color2445 , clampResult2452);
+					float4 temp_cast_8 = (temp_output_380_0).xxxx;
+					float4 lerpResult2409 = lerp(lerpResult2450 , temp_cast_8 , temp_output_380_0);
+					float4 NightDayMask2292 = lerpResult2409;
+					float4 temp_cast_9 = (0.0).xxxx;
+					float2 temp_cast_10 = (_CitiesDetail).xx;
+					float2 uv0175 = packedInput.ase_texcoord1.xy * temp_cast_10 + float2(0,0);
+					float2 uv02431 = packedInput.ase_texcoord1.xy * float2(1,1) + float2(0,0);
+					float clampResult1926 = clamp(ContinentalMasks2284 , 0.0 , 1.0);
+					float3 desaturateInitialColor2410 = (1.0 - (NightDayMask2292 * 5.0)).rgb;
+					float desaturateDot2410 = dot(desaturateInitialColor2410, float3(0.299, 0.587, 0.114));
+					float3 desaturateVar2410 = lerp(desaturateInitialColor2410, desaturateDot2410.xxx, 1.0);
+					float3 clampResult1716 = clamp(desaturateVar2410 , float3(0,0,0) , float3(1,1,1));
+					float3 ase_worldPos = GetAbsolutePositionWS(packedInput.positionRWS);
+					float3 ase_worldViewDir = (_WorldSpaceCameraPos.xyz - ase_worldPos);
+					ase_worldViewDir = normalize(ase_worldViewDir);
+					float dotResult1665 = dot(ase_worldViewDir , ase_worldNormal);
+					float FresnelMask2228 = dotResult1665;
+					float saferPower2161 = max(FresnelMask2228 , 0.0001);
+					float4 Cities2297 = ((_EnableCities) ? (((float4((((((tex2D(_CitiesTexture, uv0175).r * (1.0 - tex2D(_CitiesTexture, uv02431).a)) * (1.0 - clampResult1926)) * clampResult1716) * pow(saferPower2161 , 4.0)) * CloudsOcclusion2258) , 0.0) * _Citiescolor) * 1.0)) : (temp_cast_9));
+					float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
+					float3 normalizedWorldNormal = normalize(ase_worldNormal);
+					float3 normalizeResult2313 = normalize((ase_worldViewDir + LightSourceVector2314));
+					float3 SpecularDir2317 = normalizeResult2313;
+					float3 saferPower2411 = max(SpecularDir2317 , 0.0001);
+					float fresnelNdotV9 = dot(normalize(normalizedWorldNormal), ase_worldViewDir);
+					float fresnelNode9 = (0.0 + 1.0 * pow(max(1.0 - fresnelNdotV9 , 0.0001), ((1.0 - (pow(saferPower2411 , 3.0) + -1.0)) + _InteriorSize).x));
+					float3 temp_cast_14 = (fresnelNode9).xxx;
+					float3 temp_cast_15 = (fresnelNode9).xxx;
+					float3 linearToGamma2139 = FastLinearToSRGB(temp_cast_15);
+					float4 BaseColorAtmospheres2278 = _AtmosphereColor;
+					float dotResult1708 = dot(LightSourceVector2314 , normalizedWorldNormal);
+					float smoothstepResult2379 = smoothstep(-0.4 , 1.0 , dotResult1708);
+					float AtmosphereLightMask2225 = smoothstepResult2379;
+					float clampResult1769 = clamp(AtmosphereLightMask2225 , 0.0 , 1.0);
+					float saferPower1768 = max(clampResult1769 , 0.0001);
+					float smoothstepResult1594 = smoothstep(0.0 , 1.0 , pow(saferPower1768 , 1.5));
+					float4 clampResult702 = clamp(((float4(((linearToGamma2139 * (_InteriorIntensity + (1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0))))) * _InteriorIntensity) , 0.0) * BaseColorAtmospheres2278) * smoothstepResult1594) , float4(0,0,0,0) , float4(1,1,1,0));
+					float3 gammaToLinear2462 = FastSRGBToLinear(((_EnableAtmosphere) ? (clampResult702) : (color1829)).rgb);
+					float3 SubAtmosphere2241 = gammaToLinear2462;
+					float4 blendOpSrc2361 = ((lerpResult66 * NightDayMask2292) + (Cities2297 * PolarMask2271));
+					float4 blendOpDest2361 = float4(SubAtmosphere2241 , 0.0);
+					float dotResult1867 = dot(ase_worldNormal , SpecularDir2317);
+					float clampResult2045 = clamp(dotResult1867 , 0.0 , 1.0);
+					float saferPower2438 = max(clampResult2045 , 0.0001);
+					float temp_output_2438_0 = pow(saferPower2438 , 2.0);
+					ase_worldViewDir = SafeNormalize(ase_worldViewDir);
+					float dotResult1570 = dot(LightSourceVector2314 , ase_worldViewDir);
+					float ViewDotLight2231 = dotResult1570;
+					float clampResult1903 = clamp((ViewDotLight2231 + 0.1) , 0.0 , 1.0);
+					float lerpResult1901 = lerp(200.0 , 2000.0 , clampResult1903);
+					float3 temp_cast_20 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+					float3 temp_cast_21 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+					float3 gammaToLinear2113 = FastSRGBToLinear(temp_cast_21);
+					float clampResult1906 = clamp(ViewDotLight2231 , 0.0 , 1.0);
+					float lerpResult2466 = lerp(0.25 , _SpecularIntensity , clampResult1906);
+					float4 temp_output_2155_0 = (((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * (((float4(gammaToLinear2113 , 0.0) * (temp_output_2438_0 * WaterColor2302)) * CloudsOcclusion2258) * (lerpResult2466 * 100.0)));
+					float4 Specular2319 = temp_output_2155_0;
+					float4 lerpResult2525 = lerp(((1.0 - (1.0 - blendOpSrc2361) * (1.0 - blendOpDest2361)) + (Specular2319 * PolarMask2271)) , _SkyblendA , _SkyblendA.a);
+					float4 SecondPassInput2324 = (lerpResult2525 * _IlluminationBoost);
+
+					surfaceDescription.Color = temp_cast_0;
+					surfaceDescription.Emission = SecondPassInput2324.rgb;
+					surfaceDescription.Alpha = 1;
+					surfaceDescription.AlphaClipThreshold = 0.5;
+					float2 Distortion = float2 (0, 0);
+					float DistortionBlur = 0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+					BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);
+
+					float4 outColor = ApplyBlendMode(bsdfData.color + builtinData.emissiveColor * GetCurrentExposureMultiplier(), builtinData.opacity);
+					outColor = EvaluateAtmosphericScattering(posInput, V, outColor);
+
+					#ifdef DEBUG_DISPLAY
+					int bufferSize = int(_DebugViewMaterialArray[0]);
+					for (int index = 1; index <= bufferSize; index++)
 					{
-						float3 result = float3( 1.0, 0.0, 1.0 );
-						bool needLinearToSRGB = false;
+						int indexMaterialProperty = int(_DebugViewMaterialArray[index]);
+						if (indexMaterialProperty != 0)
+						{
+							float3 result = float3(1.0, 0.0, 1.0);
+							bool needLinearToSRGB = false;
 
-						GetPropertiesDataDebug( indexMaterialProperty, result, needLinearToSRGB );
-						GetVaryingsDataDebug( indexMaterialProperty, input, result, needLinearToSRGB );
-						GetBuiltinDataDebug( indexMaterialProperty, builtinData, result, needLinearToSRGB );
-						GetSurfaceDataDebug( indexMaterialProperty, surfaceData, result, needLinearToSRGB );
-						GetBSDFDataDebug( indexMaterialProperty, bsdfData, result, needLinearToSRGB );
+							GetPropertiesDataDebug(indexMaterialProperty, result, needLinearToSRGB);
+							GetVaryingsDataDebug(indexMaterialProperty, input, result, needLinearToSRGB);
+							GetBuiltinDataDebug(indexMaterialProperty, builtinData, result, needLinearToSRGB);
+							GetSurfaceDataDebug(indexMaterialProperty, surfaceData, result, needLinearToSRGB);
+							GetBSDFDataDebug(indexMaterialProperty, bsdfData, result, needLinearToSRGB);
 
-						if( !needLinearToSRGB )
-							result = SRGBToLinear( max( 0, result ) );
+							if (!needLinearToSRGB)
+								result = SRGBToLinear(max(0, result));
 
-						outColor = float4( result, 1.0 );
+							outColor = float4(result, 1.0);
+						}
 					}
-				}
-				#endif
-
-				return outColor;
-			}
-
-            ENDHLSL
-        }
-
-		
-        Pass
-        {
-			
-            Name "ShadowCaster"
-            Tags { "LightMode"="ShadowCaster" }
-            
-			Cull [_CullMode]
-			ZWrite On
-			ZClip [_ZClip]
-            ColorMask 0
-        
-            HLSLPROGRAM
-			
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
-
-			
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
-
-			#pragma vertex Vert
-			#pragma fragment Frag
-
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-        
-			#define SHADERPASS SHADERPASS_SHADOWS
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
-        
-			
-        
-			struct VertexInput
-			{
-				float3 positionOS : POSITION;
-				float3 normalOS : NORMAL;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-        
-			struct VertexOutput
-			{
-				float4 positionCS : SV_Position;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-			
-				
-						    
-			struct SurfaceDescription
-            {
-                float Alpha;
-                float AlphaClipThreshold;
-            };
-            
-			void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
-			{
-				ZERO_INITIALIZE(SurfaceData, surfaceData);
-			}
-        
-			void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
-			{
-				#if _ALPHATEST_ON
-				DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
-				#endif
-        
-				BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
-				ZERO_INITIALIZE (BuiltinData, builtinData); 
-				builtinData.opacity = surfaceDescription.Alpha;
-			}
-        
-			VertexOutput Vert( VertexInput inputMesh  )
-			{
-				VertexOutput o;
-				
-				UNITY_SETUP_INSTANCE_ID(inputMesh);
-				UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
-
-				
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue =  defaultVertexValue ;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
-				#endif
-
-				inputMesh.normalOS =  inputMesh.normalOS ;
-
-				float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
-				o.positionCS = TransformWorldToHClip(positionRWS);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				return o;
-			}
-
-			void Frag( VertexOutput packedInput
-					#ifdef WRITE_NORMAL_BUFFER
-					, out float4 outNormalBuffer : SV_Target0
-					#ifdef WRITE_MSAA_DEPTH
-					, out float1 depthColor : SV_Target1
 					#endif
-					#elif defined(WRITE_MSAA_DEPTH) // When only WRITE_MSAA_DEPTH is define and not WRITE_NORMAL_BUFFER it mean we are Unlit and only need depth, but we still have normal buffer binded
-					, out float4 outNormalBuffer : SV_Target0
-					, out float1 depthColor : SV_Target1
+
+					return outColor;
+				}
+
+				ENDHLSL
+			}
+
+			Pass
+			{
+				Name "ShadowCaster"
+				Tags { "LightMode" = "ShadowCaster" }
+
+				Cull[_CullMode]
+				ZWrite On
+				ZClip[_ZClip]
+				ColorMask 0
+
+				HLSLPROGRAM
+
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
+
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
+
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+				#define SHADERPASS SHADERPASS_SHADOWS
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+				struct VertexInput
+				{
+					float3 positionOS : POSITION;
+					float3 normalOS : NORMAL;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 positionCS : SV_Position;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				float4 _BaseColormodifier;
+				float4 _WaterColor;
+				float _EnableWater;
+				float4 _ShadowColorA;
+				float _EnableClouds;
+				float _ShadowsXOffset;
+				float _ShadowsYOffset;
+				float _CloudSpeed;
+				float _ShadowsSharpness;
+				float4 _ColorA;
+				float4 _PolarMask_ST;
+				float _EnumFloat;
+				float4 _IlluminationAmbient;
+				float _ReliefIntensity;
+				float _ReliefSmoothness;
+				float _NormalsIntensity;
+				float3 _LightSource;
+				float _IlluminationSmoothness;
+				float _EnableCities;
+				float _CitiesDetail;
+				float4 _Citiescolor;
+				float _EnableAtmosphere;
+				float _InteriorSize;
+				float _InteriorIntensity;
+				float4 _AtmosphereColor;
+				float _SpecularIntensity;
+				float4 _SkyblendA;
+				float _IlluminationBoost;
+				float4 _EmissionColor;
+				float _RenderQueueType;
+				float _AddPrecomputedVelocity;
+				float _ShadowMatteFilter;
+				float _StencilRef;
+				float _StencilWriteMask;
+				float _StencilRefDepth;
+				float _StencilWriteMaskDepth;
+				float _StencilRefMV;
+				float _StencilWriteMaskMV;
+				float _StencilRefDistortionVec;
+				float _StencilWriteMaskDistortionVec;
+				float _StencilWriteMaskGBuffer;
+				float _StencilRefGBuffer;
+				float _ZTestGBuffer;
+				float _RequireSplitLighting;
+				float _ReceivesSSR;
+				float _SurfaceType;
+				float _BlendMode;
+				float _SrcBlend;
+				float _DstBlend;
+				float _AlphaSrcBlend;
+				float _AlphaDstBlend;
+				float _ZWrite;
+				float _CullMode;
+				float _TransparentSortPriority;
+				float _CullModeForward;
+				float _TransparentCullMode;
+				float _ZTestDepthEqualForOpaque;
+				float _ZTestTransparent;
+				float _TransparentBackfaceEnable;
+				float _AlphaCutoffEnable;
+				float _AlphaCutoff;
+				float _UseShadowThreshold;
+				float _DoubleSidedEnable;
+				float _DoubleSidedNormalMode;
+				float4 _DoubleSidedConstants;
+				CBUFFER_END
+
+				struct SurfaceDescription
+				{
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+				}
+
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+				}
+
+				VertexOutput Vert(VertexInput inputMesh)
+				{
+					VertexOutput o;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = inputMesh.positionOS.xyz;
 					#else
-					, out float4 outColor : SV_Target0
+					float3 defaultVertexValue = float3(0, 0, 0);
 					#endif
-
-					#ifdef _DEPTHOFFSET_ON
-					, out float outputDepth : SV_Depth
-					#endif
-					 
-					)
-			{
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE(FragInputs, input);
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;       // input.positionCS is SV_Position
-
-				// input.positionSS is SV_Position
-				PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
-
-				float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
-
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
-				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
-				
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold = 0;
-
-				GetSurfaceAndBuiltinData(surfaceDescription,input, V, posInput, surfaceData, builtinData);
-
-				#ifdef _DEPTHOFFSET_ON
-				outputDepth = posInput.deviceDepth;
-				#endif
-
-				#ifdef WRITE_NORMAL_BUFFER
-				EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
-				#ifdef WRITE_MSAA_DEPTH
-				depthColor = packedInput.positionCS.z;
-				#endif
-				#elif defined(WRITE_MSAA_DEPTH) 
-				outNormalBuffer = float4(0.0, 0.0, 0.0, 1.0);
-				depthColor = packedInput.vmesh.positionCS.z;
-				#elif defined(SCENESELECTIONPASS)
-				outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
-				#else
-				outColor = float4(0.0, 0.0, 0.0, 0.0);
-				#endif
-			}
-
-            ENDHLSL
-        }
-		
-		
-		Pass
-		{
-			
-			Name "META"
-			Tags { "LightMode"="Meta" }
-
-			Cull Off
-
-			HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
-
-
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
-
-			#pragma vertex Vert
-			#pragma fragment Frag
-
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-
-			#define SHADERPASS SHADERPASS_LIGHT_TRANSPORT
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
-
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-
-
-			struct VertexInput
-			{
-				float3 positionOS : POSITION;
-				float3 normalOS : NORMAL;
-				float4 uv1 : TEXCOORD1;
-				float4 uv2 : TEXCOORD2;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct VertexOutput
-			{
-				float4 positionCS : SV_Position;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
-				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-
-			CBUFFER_START( UnityMetaPass )
-			bool4 unity_MetaVertexControl;
-			bool4 unity_MetaFragmentControl;
-			CBUFFER_END
-
-			float unity_OneOverOutputBoost;
-			float unity_MaxOutputValue;
-			sampler2D _ColorTexture;
-			sampler2D _NecessaryWaterMask;
-			sampler2D _CloudsTexture;
-			sampler2D _PolarMask;
-			sampler2D _CloudsNormals;
-			sampler2D _Normals;
-			sampler2D _CitiesTexture;
-
-
-			
-			struct SurfaceDescription
-			{
-				float3 Color;
-				float3 Emission;
-				float Alpha;
-				float AlphaClipThreshold;
-			};
-
-			void BuildSurfaceData( FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData )
-			{
-				ZERO_INITIALIZE( SurfaceData, surfaceData );
-				surfaceData.color = surfaceDescription.Color;
-			}
-
-			void GetSurfaceAndBuiltinData( SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData )
-			{
-				#if _ALPHATEST_ON
-				DoAlphaTest( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
-				#endif
-
-				BuildSurfaceData( fragInputs, surfaceDescription, V, surfaceData );
-				ZERO_INITIALIZE( BuiltinData, builtinData );
-				builtinData.opacity = surfaceDescription.Alpha;
-				builtinData.emissiveColor = surfaceDescription.Emission;
-				builtinData.distortion = float2( 0.0, 0.0 );
-				builtinData.distortionBlur = 0.0;
-			}
-
-			VertexOutput Vert( VertexInput inputMesh  )
-			{
-				VertexOutput o;
-
-				UNITY_SETUP_INSTANCE_ID( inputMesh );
-				UNITY_TRANSFER_INSTANCE_ID( inputMesh, o );
-
-				float3 ase_worldTangent = TransformObjectToWorldDir(inputMesh.ase_tangent.xyz);
-				o.ase_texcoord1.xyz = ase_worldTangent;
-				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
-				o.ase_texcoord2.xyz = ase_worldNormal;
-				float ase_vertexTangentSign = inputMesh.ase_tangent.w * unity_WorldTransformParams.w;
-				float3 ase_worldBitangent = cross( ase_worldNormal, ase_worldTangent ) * ase_vertexTangentSign;
-				o.ase_texcoord3.xyz = ase_worldBitangent;
-				float3 ase_worldPos = GetAbsolutePositionWS( TransformObjectToWorld( (inputMesh.positionOS).xyz ) );
-				o.ase_texcoord4.xyz = ase_worldPos;
-				
-				o.ase_texcoord.xy = inputMesh.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord.zw = 0;
-				o.ase_texcoord1.w = 0;
-				o.ase_texcoord2.w = 0;
-				o.ase_texcoord3.w = 0;
-				o.ase_texcoord4.w = 0;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue =  defaultVertexValue ;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
-				#endif
-
-				inputMesh.normalOS =  inputMesh.normalOS ;
-
-				float2 uv = float2( 0.0, 0.0 );
-				if( unity_MetaVertexControl.x )
-				{
-					uv = inputMesh.uv1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-				}
-				else if( unity_MetaVertexControl.y )
-				{
-					uv = inputMesh.uv2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
-				}
-				
-				o.positionCS = float4( uv * 2.0 - 1.0, inputMesh.positionOS.z > 0 ? 1.0e-4 : 0.0, 1.0 );
-				return o;
-			}
-
-			float4 Frag( VertexOutput packedInput  ) : SV_Target
-			{
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE( FragInputs, input );
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;
-
-				PositionInputs posInput = GetPositionInput( input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS );
-
-				float3 V = float3( 1.0, 1.0, 1.0 ); // Avoid the division by 0
-
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
-				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
-				float3 temp_cast_0 = (0.0).xxx;
-				
-				float2 uv_ColorTexture61 = packedInput.ase_texcoord.xy;
-				float4 BaseColor2300 = ( tex2D( _ColorTexture, uv_ColorTexture61 ) * _BaseColormodifier );
-				float4 WaterColor2302 = _WaterColor;
-				float4 blendOpSrc2099 = BaseColor2300;
-				float4 blendOpDest2099 = WaterColor2302;
-				float WaterTransparency2306 = _WaterColor.a;
-				float4 lerpResult2121 = lerp( BaseColor2300 , ( saturate( (( blendOpDest2099 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest2099 ) * ( 1.0 - blendOpSrc2099 ) ) : ( 2.0 * blendOpDest2099 * blendOpSrc2099 ) ) )) , WaterTransparency2306);
-				float4 lerpResult2120 = lerp( lerpResult2121 , WaterColor2302 , WaterTransparency2306);
-				float4 BaseAndWater2266 = lerpResult2120;
-				float2 uv_NecessaryWaterMask82 = packedInput.ase_texcoord.xy;
-				float clampResult2089 = clamp( ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * 10.0 ) , 0.0 , 1.0 );
-				float ContinentalMasks2284 = clampResult2089;
-				float4 lerpResult1895 = lerp( BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
-				float3 desaturateInitialColor2417 = lerpResult1895.rgb;
-				float desaturateDot2417 = dot( desaturateInitialColor2417, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2417 = lerp( desaturateInitialColor2417, desaturateDot2417.xxx, 0.3 );
-				float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
-				float2 uv0455 = packedInput.ase_texcoord.xy * float2( 1,1 ) + appendResult2178;
-				float temp_output_161_0 = ( _CloudSpeed / 80.0 );
-				float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVcloudShadows2246 = ( float4( uv0455, 0.0 , 0.0 ) + ( appendResult453 * ( _TimeParameters.y * 0.05 ) ) );
-				float4 tex2DNode442 = tex2Dlod( _CloudsTexture, float4( UVcloudShadows2246.xy, 0, _ShadowsSharpness) );
-				float temp_output_2422_0 = ( ( tex2DNode442.b + tex2DNode442.b ) * 5.0 );
-				float CloudsAlpha2253 = _ColorA.a;
-				float clampResult2147 = clamp( ( (( _EnableClouds )?( 1.0 ):( 0.0 )) * temp_output_2422_0 * CloudsAlpha2253 ) , 0.0 , 1.0 );
-				float CloudsShadows2248 = clampResult2147;
-				float2 uv_PolarMask = packedInput.ase_texcoord.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
-				float4 PolarMask2271 = tex2D( _PolarMask, uv_PolarMask );
-				float4 lerpResult1816 = lerp( float4( desaturateVar2417 , 0.0 ) , _ShadowColorA , ( ( CloudsShadows2248 * PolarMask2271 ) * _ShadowColorA.a ));
-				float4 CloudsColor2252 = _ColorA;
-				float2 uv032 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
-				float4 UVClouds2243 = ( float4( uv032, 0.0 , 0.0 ) + ( appendResult41 * ( _TimeParameters.y * 0.05 ) ) );
-				float lerpResult1886 = lerp( tex2D( _CloudsTexture, UVClouds2243.xy ).g , _EnumFloat , 0.0);
-				float saferPower2060 = max( lerpResult1886 , 0.0001 );
-				float Clouds2262 = ( (0.0 + (pow( saferPower2060 , 0.5 ) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * (( _EnableClouds )?( 1.0 ):( 0.0 )) );
-				float4 lerpResult66 = lerp( lerpResult1816 , ( 0.5 * CloudsColor2252 ) , ( PolarMask2271 * Clouds2262 ));
-				float4 AmbientColor2337 = _IlluminationAmbient;
-				float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
-				float2 uv02073 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float3 FlatNormal2287 = float3(0,0,1);
-				float3 lerpResult2094 = lerp( UnpackNormalmapRGorAG( tex2D( _Normals, uv02073 ), ( (0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25 ) ) , FlatNormal2287 , ContinentalMasks2284);
-				float clampResult535 = clamp( ( 3.0 * Clouds2262 ) , 0.0 , 1.0 );
-				float CloudsOcclusion2258 = ( 1.0 - clampResult535 );
-				float3 lerpResult2093 = lerp( UnpackNormalmapRGorAG( tex2Dlod( _CloudsNormals, float4( UVClouds2243.xy, 0, _ReliefSmoothness) ), ( _ReliefIntensity * CloudsAlpha2253 ) ) , lerpResult2094 , CloudsOcclusion2258);
-				float3 Normals2236 = lerpResult2093;
-				float3 ase_worldTangent = packedInput.ase_texcoord1.xyz;
-				float3 ase_worldNormal = packedInput.ase_texcoord2.xyz;
-				float3 ase_worldBitangent = packedInput.ase_texcoord3.xyz;
-				float3 tanToWorld0 = float3( ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x );
-				float3 tanToWorld1 = float3( ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y );
-				float3 tanToWorld2 = float3( ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z );
-				float3 tanNormal246 = Normals2236;
-				float3 worldNormal246 = normalize( float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)) );
-				float3 normalizeResult1073 = normalize( _LightSource );
-				float3 LightSourceVector2314 = ( normalizeResult1073 / 1.0 );
-				float dotResult247 = dot( worldNormal246 , LightSourceVector2314 );
-				float smoothstepResult2359 = smoothstep( 0.0 , 1.0 , ( dotResult247 + 0.5 ));
-				float BaselLightMask2332 = smoothstepResult2359;
-				float temp_output_380_0 = pow( BaselLightMask2332 , _IlluminationSmoothness );
-				float clampResult2452 = clamp( ( ( ( temp_output_380_0 + -0.5 ) * ( 1.0 - BaselLightMask2332 ) ) * 10.0 ) , 0.0 , 1.0 );
-				float4 lerpResult2450 = lerp( AmbientColor2337 , color2445 , clampResult2452);
-				float4 temp_cast_8 = (temp_output_380_0).xxxx;
-				float4 lerpResult2409 = lerp( lerpResult2450 , temp_cast_8 , temp_output_380_0);
-				float4 NightDayMask2292 = lerpResult2409;
-				float4 temp_cast_9 = (0.0).xxxx;
-				float2 temp_cast_10 = (_CitiesDetail).xx;
-				float2 uv0175 = packedInput.ase_texcoord.xy * temp_cast_10 + float2( 0,0 );
-				float2 uv02431 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
-				float clampResult1926 = clamp( ContinentalMasks2284 , 0.0 , 1.0 );
-				float3 desaturateInitialColor2410 = ( 1.0 - ( NightDayMask2292 * 5.0 ) ).rgb;
-				float desaturateDot2410 = dot( desaturateInitialColor2410, float3( 0.299, 0.587, 0.114 ));
-				float3 desaturateVar2410 = lerp( desaturateInitialColor2410, desaturateDot2410.xxx, 1.0 );
-				float3 clampResult1716 = clamp( desaturateVar2410 , float3( 0,0,0 ) , float3( 1,1,1 ) );
-				float3 ase_worldPos = packedInput.ase_texcoord4.xyz;
-				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
-				ase_worldViewDir = normalize(ase_worldViewDir);
-				float dotResult1665 = dot( ase_worldViewDir , ase_worldNormal );
-				float FresnelMask2228 = dotResult1665;
-				float saferPower2161 = max( FresnelMask2228 , 0.0001 );
-				float4 Cities2297 = (( _EnableCities )?( ( ( float4( ( ( ( ( ( tex2D( _CitiesTexture, uv0175 ).r * ( 1.0 - tex2D( _CitiesTexture, uv02431 ).a ) ) * ( 1.0 - clampResult1926 ) ) * clampResult1716 ) * pow( saferPower2161 , 4.0 ) ) * CloudsOcclusion2258 ) , 0.0 ) * _Citiescolor ) * 1.0 ) ):( temp_cast_9 ));
-				float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float3 normalizeResult2313 = normalize( ( ase_worldViewDir + LightSourceVector2314 ) );
-				float3 SpecularDir2317 = normalizeResult2313;
-				float3 saferPower2411 = max( SpecularDir2317 , 0.0001 );
-				float fresnelNdotV9 = dot( normalize( normalizedWorldNormal ), ase_worldViewDir );
-				float fresnelNode9 = ( 0.0 + 1.0 * pow( max( 1.0 - fresnelNdotV9 , 0.0001 ), ( ( 1.0 - ( pow( saferPower2411 , 3.0 ) + -1.0 ) ) + _InteriorSize ).x ) );
-				float3 temp_cast_14 = (fresnelNode9).xxx;
-				float3 temp_cast_15 = (fresnelNode9).xxx;
-				float3 linearToGamma2139 = FastLinearToSRGB( temp_cast_15 );
-				float4 BaseColorAtmospheres2278 = _AtmosphereColor;
-				float dotResult1708 = dot( LightSourceVector2314 , normalizedWorldNormal );
-				float smoothstepResult2379 = smoothstep( -0.4 , 1.0 , dotResult1708);
-				float AtmosphereLightMask2225 = smoothstepResult2379;
-				float clampResult1769 = clamp( AtmosphereLightMask2225 , 0.0 , 1.0 );
-				float saferPower1768 = max( clampResult1769 , 0.0001 );
-				float smoothstepResult1594 = smoothstep( 0.0 , 1.0 , pow( saferPower1768 , 1.5 ));
-				float4 clampResult702 = clamp( ( ( float4( ( ( linearToGamma2139 * ( _InteriorIntensity + ( 1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0)) ) ) ) * _InteriorIntensity ) , 0.0 ) * BaseColorAtmospheres2278 ) * smoothstepResult1594 ) , float4( 0,0,0,0 ) , float4( 1,1,1,0 ) );
-				float3 gammaToLinear2462 = FastSRGBToLinear( (( _EnableAtmosphere )?( clampResult702 ):( color1829 )).rgb );
-				float3 SubAtmosphere2241 = gammaToLinear2462;
-				float4 blendOpSrc2361 = ( ( lerpResult66 * NightDayMask2292 ) + ( Cities2297 * PolarMask2271 ) );
-				float4 blendOpDest2361 = float4( SubAtmosphere2241 , 0.0 );
-				float dotResult1867 = dot( ase_worldNormal , SpecularDir2317 );
-				float clampResult2045 = clamp( dotResult1867 , 0.0 , 1.0 );
-				float saferPower2438 = max( clampResult2045 , 0.0001 );
-				float temp_output_2438_0 = pow( saferPower2438 , 2.0 );
-				ase_worldViewDir = SafeNormalize( ase_worldViewDir );
-				float dotResult1570 = dot( LightSourceVector2314 , ase_worldViewDir );
-				float ViewDotLight2231 = dotResult1570;
-				float clampResult1903 = clamp( ( ViewDotLight2231 + 0.1 ) , 0.0 , 1.0 );
-				float lerpResult1901 = lerp( 200.0 , 2000.0 , clampResult1903);
-				float3 temp_cast_20 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 temp_cast_21 = (( pow( temp_output_2438_0 , ( lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)) ) ) * 0.5 )).xxx;
-				float3 gammaToLinear2113 = FastSRGBToLinear( temp_cast_21 );
-				float clampResult1906 = clamp( ViewDotLight2231 , 0.0 , 1.0 );
-				float lerpResult2466 = lerp( 0.25 , _SpecularIntensity , clampResult1906);
-				float4 temp_output_2155_0 = ( (( _EnableWater )?( tex2D( _NecessaryWaterMask, uv_NecessaryWaterMask82 ).b ):( 0.0 )) * ( ( ( float4( gammaToLinear2113 , 0.0 ) * ( temp_output_2438_0 * WaterColor2302 ) ) * CloudsOcclusion2258 ) * ( lerpResult2466 * 100.0 ) ) );
-				float4 Specular2319 = temp_output_2155_0;
-				float4 lerpResult2525 = lerp( ( ( 1.0 - ( 1.0 - blendOpSrc2361 ) * ( 1.0 - blendOpDest2361 ) ) + ( Specular2319 * PolarMask2271 ) ) , _SkyblendA , _SkyblendA.a);
-				float4 SecondPassInput2324 = ( lerpResult2525 * _IlluminationBoost );
-				
-				surfaceDescription.Color = temp_cast_0;
-				surfaceDescription.Emission = SecondPassInput2324.rgb;
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold =  0;
-
-				GetSurfaceAndBuiltinData( surfaceDescription,input, V, posInput, surfaceData, builtinData );
-				BSDFData bsdfData = ConvertSurfaceDataToBSDFData( input.positionSS.xy, surfaceData );
-				LightTransportData lightTransportData = GetLightTransportData( surfaceData, builtinData, bsdfData );
-
-				float4 res = float4( 0.0, 0.0, 0.0, 1.0 );
-				if( unity_MetaFragmentControl.x )
-				{
-					res.rgb = clamp( pow( abs( lightTransportData.diffuseColor ), saturate( unity_OneOverOutputBoost ) ), 0, unity_MaxOutputValue );
-				}
-
-				if( unity_MetaFragmentControl.y )
-				{
-					res.rgb = lightTransportData.emissiveColor;
-				}
-
-				return res;
-			}
-
-			ENDHLSL
-		}
-
-		
-        Pass
-        {
-			
-			Name "SceneSelectionPass"
-			Tags { "LightMode"="SceneSelectionPass" }
-			
-			Cull [_CullMode]
-            ZWrite On
-
-			ColorMask 0
-        
-            HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
-
-
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
-
-			#pragma vertex Vert
-			#pragma fragment Frag
-        
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-        
-			#define SHADERPASS SHADERPASS_DEPTH_ONLY
-			#define SCENESELECTIONPASS
-			#pragma editor_sync_compilation
-        
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
-        
-			
-				
-			struct VertexInput 
-			{
-				float3 positionOS : POSITION;
-				float4 normalOS : NORMAL;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-        
-			struct VertexOutput 
-			{
-				float4 positionCS : SV_Position;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			int _ObjectId;
-			int _PassValue;
-
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-			
-				
-			                
-            struct SurfaceDescription
-            {
-                float Alpha;
-                float AlphaClipThreshold;
-            };
-
-			void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
-			{
-				ZERO_INITIALIZE(SurfaceData, surfaceData);
-			}
-        
-			void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
-			{ 
-				#if _ALPHATEST_ON
-				DoAlphaTest ( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
-				#endif
-
-				BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
-				ZERO_INITIALIZE(BuiltinData, builtinData);
-				builtinData.opacity =  surfaceDescription.Alpha;
-			}
-
-			VertexOutput Vert( VertexInput inputMesh  )
-			{
-				VertexOutput o;
-
-				UNITY_SETUP_INSTANCE_ID(inputMesh);
-				UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
-
-				
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue =   defaultVertexValue ;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
-				#endif
-
-				inputMesh.normalOS =  inputMesh.normalOS ;
-
-				float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
-				o.positionCS = TransformWorldToHClip(positionRWS);  
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				return o;
-			}
-
-			void Frag( VertexOutput packedInput
-					, out float4 outColor : SV_Target0
-					#ifdef _DEPTHOFFSET_ON
-					, out float outputDepth : SV_Depth
-					#endif
-					
-					)
-			{
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE(FragInputs, input);
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;
-
-				PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
-
-				float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
-
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
-				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
-				
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold =  0;
-
-				GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
-
-				#ifdef _DEPTHOFFSET_ON
-				outputDepth = posInput.deviceDepth;
-				#endif
-
-				outColor = float4( _ObjectId, _PassValue, 1.0, 1.0 );
-			}
-        
-            ENDHLSL
-        }
-
-		
-        Pass
-        {
-			
-            Name "DepthForwardOnly"
-            Tags { "LightMode"="DepthForwardOnly" }
-			
-			Cull [_CullMode]
-            ZWrite On
-			Stencil
-			{
-				Ref [_StencilRefDepth]
-				WriteMask [_StencilWriteMaskDepth]
-				Comp Always
-				Pass Replace
-				Fail Keep
-				ZFail Keep
-			}
-
-        
-            ColorMask 0 0
-        
-            HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
-
-
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
-
-			#pragma vertex Vert
-			#pragma fragment Frag
-        
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-        
-            #define SHADERPASS SHADERPASS_DEPTH_ONLY
-			#pragma multi_compile _ WRITE_MSAA_DEPTH
-        
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
-        
-			
-				
-			struct VertexInput 
-			{
-				float3 positionOS : POSITION;
-				float4 normalOS : NORMAL;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-        
-			struct VertexOutput 
-			{
-				float4 positionCS : SV_Position;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-			
-				
-			                
-            struct SurfaceDescription
-            {
-                float Alpha;
-                float AlphaClipThreshold;
-            };
-
-			void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
-			{
-				ZERO_INITIALIZE(SurfaceData, surfaceData);
-			}
-        
-			void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
-			{ 
-				#if _ALPHATEST_ON
-				DoAlphaTest ( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
-				#endif
-
-				BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
-				ZERO_INITIALIZE(BuiltinData, builtinData);
-				builtinData.opacity =  surfaceDescription.Alpha;
-			}
-
-			VertexOutput Vert( VertexInput inputMesh  )
-			{
-				VertexOutput o;
-
-				UNITY_SETUP_INSTANCE_ID(inputMesh);
-				UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
-
-				
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue =   defaultVertexValue ;
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
-				#endif
-
-				inputMesh.normalOS =  inputMesh.normalOS ;
-
-				float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
-				o.positionCS = TransformWorldToHClip(positionRWS);  
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				return o;
-			}
-
-			void Frag( VertexOutput packedInput
-					#ifdef WRITE_NORMAL_BUFFER
-					, out float4 outNormalBuffer : SV_Target0
-					#ifdef WRITE_MSAA_DEPTH
-					, out float1 depthColor : SV_Target1
-					#endif
-					#elif defined(WRITE_MSAA_DEPTH) // When only WRITE_MSAA_DEPTH is define and not WRITE_NORMAL_BUFFER it mean we are Unlit and only need depth, but we still have normal buffer binded
-					, out float4 outNormalBuffer : SV_Target0
-					, out float1 depthColor : SV_Target1
+					float3 vertexValue = defaultVertexValue;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					inputMesh.positionOS.xyz = vertexValue;
 					#else
-					, out float4 outColor : SV_Target0
+					inputMesh.positionOS.xyz += vertexValue;
 					#endif
+
+					inputMesh.normalOS = inputMesh.normalOS;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					o.positionCS = TransformWorldToHClip(positionRWS);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+					return o;
+				}
+
+				void Frag(VertexOutput packedInput
+						#ifdef WRITE_NORMAL_BUFFER
+						, out float4 outNormalBuffer : SV_Target0
+						#ifdef WRITE_MSAA_DEPTH
+						, out float1 depthColor : SV_Target1
+						#endif
+						#elif defined(WRITE_MSAA_DEPTH) // When only WRITE_MSAA_DEPTH is define and not WRITE_NORMAL_BUFFER it mean we are Unlit and only need depth, but we still have normal buffer binded
+						, out float4 outNormalBuffer : SV_Target0
+						, out float1 depthColor : SV_Target1
+						#else
+						, out float4 outColor : SV_Target0
+						#endif
+
+						#ifdef _DEPTHOFFSET_ON
+						, out float outputDepth : SV_Depth
+						#endif
+
+						)
+				{
+					UNITY_SETUP_INSTANCE_ID(packedInput);
+					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.tangentToWorld = k_identity3x3;
+					input.positionSS = packedInput.positionCS;       // input.positionCS is SV_Position
+
+					// input.positionSS is SV_Position
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+
+					surfaceDescription.Alpha = 1;
+					surfaceDescription.AlphaClipThreshold = 0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription,input, V, posInput, surfaceData, builtinData);
 
 					#ifdef _DEPTHOFFSET_ON
-					, out float outputDepth : SV_Depth
+					outputDepth = posInput.deviceDepth;
 					#endif
-					
-					)
-			{
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE(FragInputs, input);
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;
 
-				PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+					#ifdef WRITE_NORMAL_BUFFER
+					EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
+					#ifdef WRITE_MSAA_DEPTH
+					depthColor = packedInput.positionCS.z;
+					#endif
+					#elif defined(WRITE_MSAA_DEPTH)
+					outNormalBuffer = float4(0.0, 0.0, 0.0, 1.0);
+					depthColor = packedInput.vmesh.positionCS.z;
+					#elif defined(SCENESELECTIONPASS)
+					outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
+					#else
+					outColor = float4(0.0, 0.0, 0.0, 0.0);
+					#endif
+				}
 
-				float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
-
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
-				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
-				
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold =  0;
-
-				GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
-
-				#ifdef _DEPTHOFFSET_ON
-				outputDepth = posInput.deviceDepth;
-				#endif
-
-				#ifdef WRITE_NORMAL_BUFFER
-				EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
-				#ifdef WRITE_MSAA_DEPTH
-				depthColor = packedInput.positionCS.z;
-				#endif
-				#elif defined(WRITE_MSAA_DEPTH)
-				outNormalBuffer = float4(0.0, 0.0, 0.0, 1.0);
-				depthColor = packedInput.positionCS.z;
-				#elif defined(SCENESELECTIONPASS)
-				outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
-				#else
-				outColor = float4(0.0, 0.0, 0.0, 0.0);
-				#endif
-			}
-        
-            ENDHLSL
-        }
-
-		
-		Pass
-		{
-			
-			Name "DistortionVectors"
-			Tags { "LightMode"="DistortionVectors" }
-
-			Blend One One , One One
-			BlendOp Add , Add
-
-			Cull [_CullMode]
-			ZTest LEqual
-			ZWrite Off
-
-			Stencil
-			{
-				Ref [_StencilRefDistortionVec]
-				WriteMask [_StencilRefDistortionVec]
-				Comp Always
-				Pass Replace
-				Fail Keep
-				ZFail Keep
+				ENDHLSL
 			}
 
-
-			HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#define ASE_SRP_VERSION 60900
-
-
-			#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
-			#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
-
-			#pragma vertex Vert
-			#pragma fragment Frag
-
-			//#define UNITY_MATERIAL_LIT
-
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-
-			#define SHADERPASS SHADERPASS_DISTORTION
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
-
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
-
-			
-
-			struct VertexInput
+			Pass
 			{
-				float3 positionOS : POSITION;
-				float3 normalOS : NORMAL;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
+				Name "META"
+				Tags { "LightMode" = "Meta" }
 
-			struct VertexOutput
-			{
-				float4 positionCS : SV_Position;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				Cull Off
 
-			CBUFFER_START( UnityPerMaterial )
-			float4 _BaseColormodifier;
-			float4 _WaterColor;
-			float _EnableWater;
-			float4 _ShadowColorA;
-			float _EnableClouds;
-			float _ShadowsXOffset;
-			float _ShadowsYOffset;
-			float _CloudSpeed;
-			float _ShadowsSharpness;
-			float4 _ColorA;
-			float4 _PolarMask_ST;
-			float _EnumFloat;
-			float4 _IlluminationAmbient;
-			float _ReliefIntensity;
-			float _ReliefSmoothness;
-			float _NormalsIntensity;
-			float3 _LightSource;
-			float _IlluminationSmoothness;
-			float _EnableCities;
-			float _CitiesDetail;
-			float4 _Citiescolor;
-			float _EnableAtmosphere;
-			float _InteriorSize;
-			float _InteriorIntensity;
-			float4 _AtmosphereColor;
-			float _SpecularIntensity;
-			float4 _SkyblendA;
-			float _IlluminationBoost;
-			float4 _EmissionColor;
-			float _RenderQueueType;
-			float _AddPrecomputedVelocity;
-			float _ShadowMatteFilter;
-			float _StencilRef;
-			float _StencilWriteMask;
-			float _StencilRefDepth;
-			float _StencilWriteMaskDepth;
-			float _StencilRefMV;
-			float _StencilWriteMaskMV;
-			float _StencilRefDistortionVec;
-			float _StencilWriteMaskDistortionVec;
-			float _StencilWriteMaskGBuffer;
-			float _StencilRefGBuffer;
-			float _ZTestGBuffer;
-			float _RequireSplitLighting;
-			float _ReceivesSSR;
-			float _SurfaceType;
-			float _BlendMode;
-			float _SrcBlend;
-			float _DstBlend;
-			float _AlphaSrcBlend;
-			float _AlphaDstBlend;
-			float _ZWrite;
-			float _CullMode;
-			float _TransparentSortPriority;
-			float _CullModeForward;
-			float _TransparentCullMode;
-			float _ZTestDepthEqualForOpaque;
-			float _ZTestTransparent;
-			float _TransparentBackfaceEnable;
-			float _AlphaCutoffEnable;
-			float _AlphaCutoff;
-			float _UseShadowThreshold;
-			float _DoubleSidedEnable;
-			float _DoubleSidedNormalMode;
-			float4 _DoubleSidedConstants;
-			CBUFFER_END
-			
+				HLSLPROGRAM
 
-			
-			struct DistortionSurfaceDescription
-			{
-				float Alpha;
-				float AlphaClipThreshold;
-				float2 Distortion;
-				float DistortionBlur;
-			};
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
 
-			void BuildSurfaceData(FragInputs fragInputs, inout DistortionSurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
-			{
-				ZERO_INITIALIZE(SurfaceData, surfaceData);
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
+
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+				#define SHADERPASS SHADERPASS_LIGHT_TRANSPORT
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+
+				struct VertexInput
+				{
+					float3 positionOS : POSITION;
+					float3 normalOS : NORMAL;
+					float4 uv1 : TEXCOORD1;
+					float4 uv2 : TEXCOORD2;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_tangent : TANGENT;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 positionCS : SV_Position;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_texcoord1 : TEXCOORD1;
+					float4 ase_texcoord2 : TEXCOORD2;
+					float4 ase_texcoord3 : TEXCOORD3;
+					float4 ase_texcoord4 : TEXCOORD4;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				float4 _BaseColormodifier;
+				float4 _WaterColor;
+				float _EnableWater;
+				float4 _ShadowColorA;
+				float _EnableClouds;
+				float _ShadowsXOffset;
+				float _ShadowsYOffset;
+				float _CloudSpeed;
+				float _ShadowsSharpness;
+				float4 _ColorA;
+				float4 _PolarMask_ST;
+				float _EnumFloat;
+				float4 _IlluminationAmbient;
+				float _ReliefIntensity;
+				float _ReliefSmoothness;
+				float _NormalsIntensity;
+				float3 _LightSource;
+				float _IlluminationSmoothness;
+				float _EnableCities;
+				float _CitiesDetail;
+				float4 _Citiescolor;
+				float _EnableAtmosphere;
+				float _InteriorSize;
+				float _InteriorIntensity;
+				float4 _AtmosphereColor;
+				float _SpecularIntensity;
+				float4 _SkyblendA;
+				float _IlluminationBoost;
+				float4 _EmissionColor;
+				float _RenderQueueType;
+				float _AddPrecomputedVelocity;
+				float _ShadowMatteFilter;
+				float _StencilRef;
+				float _StencilWriteMask;
+				float _StencilRefDepth;
+				float _StencilWriteMaskDepth;
+				float _StencilRefMV;
+				float _StencilWriteMaskMV;
+				float _StencilRefDistortionVec;
+				float _StencilWriteMaskDistortionVec;
+				float _StencilWriteMaskGBuffer;
+				float _StencilRefGBuffer;
+				float _ZTestGBuffer;
+				float _RequireSplitLighting;
+				float _ReceivesSSR;
+				float _SurfaceType;
+				float _BlendMode;
+				float _SrcBlend;
+				float _DstBlend;
+				float _AlphaSrcBlend;
+				float _AlphaDstBlend;
+				float _ZWrite;
+				float _CullMode;
+				float _TransparentSortPriority;
+				float _CullModeForward;
+				float _TransparentCullMode;
+				float _ZTestDepthEqualForOpaque;
+				float _ZTestTransparent;
+				float _TransparentBackfaceEnable;
+				float _AlphaCutoffEnable;
+				float _AlphaCutoff;
+				float _UseShadowThreshold;
+				float _DoubleSidedEnable;
+				float _DoubleSidedNormalMode;
+				float4 _DoubleSidedConstants;
+				CBUFFER_END
+
+				CBUFFER_START(UnityMetaPass)
+				bool4 unity_MetaVertexControl;
+				bool4 unity_MetaFragmentControl;
+				CBUFFER_END
+
+				float unity_OneOverOutputBoost;
+				float unity_MaxOutputValue;
+				sampler2D _ColorTexture;
+				sampler2D _NecessaryWaterMask;
+				sampler2D _CloudsTexture;
+				sampler2D _PolarMask;
+				sampler2D _CloudsNormals;
+				sampler2D _Normals;
+				sampler2D _CitiesTexture;
+
+				struct SurfaceDescription
+				{
+					float3 Color;
+					float3 Emission;
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+					surfaceData.color = surfaceDescription.Color;
+				}
+
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+					builtinData.emissiveColor = surfaceDescription.Emission;
+					builtinData.distortion = float2(0.0, 0.0);
+					builtinData.distortionBlur = 0.0;
+				}
+
+				VertexOutput Vert(VertexInput inputMesh)
+				{
+					VertexOutput o;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+					float3 ase_worldTangent = TransformObjectToWorldDir(inputMesh.ase_tangent.xyz);
+					o.ase_texcoord1.xyz = ase_worldTangent;
+					float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+					o.ase_texcoord2.xyz = ase_worldNormal;
+					float ase_vertexTangentSign = inputMesh.ase_tangent.w * unity_WorldTransformParams.w;
+					float3 ase_worldBitangent = cross(ase_worldNormal, ase_worldTangent) * ase_vertexTangentSign;
+					o.ase_texcoord3.xyz = ase_worldBitangent;
+					float3 ase_worldPos = GetAbsolutePositionWS(TransformObjectToWorld((inputMesh.positionOS).xyz));
+					o.ase_texcoord4.xyz = ase_worldPos;
+
+					o.ase_texcoord.xy = inputMesh.ase_texcoord.xy;
+
+					//setting value to unused interpolator channels and avoid initialization warnings
+					o.ase_texcoord.zw = 0;
+					o.ase_texcoord1.w = 0;
+					o.ase_texcoord2.w = 0;
+					o.ase_texcoord3.w = 0;
+					o.ase_texcoord4.w = 0;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = inputMesh.positionOS.xyz;
+					#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+					#endif
+					float3 vertexValue = defaultVertexValue;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					inputMesh.positionOS.xyz = vertexValue;
+					#else
+					inputMesh.positionOS.xyz += vertexValue;
+					#endif
+
+					inputMesh.normalOS = inputMesh.normalOS;
+
+					float2 uv = float2(0.0, 0.0);
+					if (unity_MetaVertexControl.x)
+					{
+						uv = inputMesh.uv1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+					}
+					else if (unity_MetaVertexControl.y)
+					{
+						uv = inputMesh.uv2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
+					}
+
+					o.positionCS = float4(uv * 2.0 - 1.0, inputMesh.positionOS.z > 0 ? 1.0e-4 : 0.0, 1.0);
+					return o;
+				}
+
+				float4 Frag(VertexOutput packedInput) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(packedInput);
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.tangentToWorld = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+					float3 temp_cast_0 = (0.0).xxx;
+
+					float2 uv_ColorTexture61 = packedInput.ase_texcoord.xy;
+					float4 BaseColor2300 = (tex2D(_ColorTexture, uv_ColorTexture61) * _BaseColormodifier);
+					float4 WaterColor2302 = _WaterColor;
+					float4 blendOpSrc2099 = BaseColor2300;
+					float4 blendOpDest2099 = WaterColor2302;
+					float WaterTransparency2306 = _WaterColor.a;
+					float4 lerpResult2121 = lerp(BaseColor2300 , (saturate(((blendOpDest2099 > 0.5) ? (1.0 - 2.0 * (1.0 - blendOpDest2099) * (1.0 - blendOpSrc2099)) : (2.0 * blendOpDest2099 * blendOpSrc2099)))) , WaterTransparency2306);
+					float4 lerpResult2120 = lerp(lerpResult2121 , WaterColor2302 , WaterTransparency2306);
+					float4 BaseAndWater2266 = lerpResult2120;
+					float2 uv_NecessaryWaterMask82 = packedInput.ase_texcoord.xy;
+					float clampResult2089 = clamp((((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * 10.0) , 0.0 , 1.0);
+					float ContinentalMasks2284 = clampResult2089;
+					float4 lerpResult1895 = lerp(BaseColor2300 , BaseAndWater2266 , ContinentalMasks2284);
+					float3 desaturateInitialColor2417 = lerpResult1895.rgb;
+					float desaturateDot2417 = dot(desaturateInitialColor2417, float3(0.299, 0.587, 0.114));
+					float3 desaturateVar2417 = lerp(desaturateInitialColor2417, desaturateDot2417.xxx, 0.3);
+					float2 appendResult2178 = (float2(_ShadowsXOffset , _ShadowsYOffset));
+					float2 uv0455 = packedInput.ase_texcoord.xy * float2(1,1) + appendResult2178;
+					float temp_output_161_0 = (_CloudSpeed / 80.0);
+					float4 appendResult453 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+					float4 UVcloudShadows2246 = (float4(uv0455, 0.0 , 0.0) + (appendResult453 * (_TimeParameters.y * 0.05)));
+					float4 tex2DNode442 = tex2Dlod(_CloudsTexture, float4(UVcloudShadows2246.xy, 0, _ShadowsSharpness));
+					float temp_output_2422_0 = ((tex2DNode442.b + tex2DNode442.b) * 5.0);
+					float CloudsAlpha2253 = _ColorA.a;
+					float clampResult2147 = clamp((((_EnableClouds) ? (1.0) : (0.0)) * temp_output_2422_0 * CloudsAlpha2253) , 0.0 , 1.0);
+					float CloudsShadows2248 = clampResult2147;
+					float2 uv_PolarMask = packedInput.ase_texcoord.xy * _PolarMask_ST.xy + _PolarMask_ST.zw;
+					float4 PolarMask2271 = tex2D(_PolarMask, uv_PolarMask);
+					float4 lerpResult1816 = lerp(float4(desaturateVar2417 , 0.0) , _ShadowColorA , ((CloudsShadows2248 * PolarMask2271) * _ShadowColorA.a));
+					float4 CloudsColor2252 = _ColorA;
+					float2 uv032 = packedInput.ase_texcoord.xy * float2(1,1) + float2(0,0);
+					float4 appendResult41 = (float4(temp_output_161_0 , 0.0 , 0.0 , 0.0));
+					float4 UVClouds2243 = (float4(uv032, 0.0 , 0.0) + (appendResult41 * (_TimeParameters.y * 0.05)));
+					float lerpResult1886 = lerp(tex2D(_CloudsTexture, UVClouds2243.xy).g , _EnumFloat , 0.0);
+					float saferPower2060 = max(lerpResult1886 , 0.0001);
+					float Clouds2262 = ((0.0 + (pow(saferPower2060 , 0.5) - 0.0) * (CloudsAlpha2253 - 0.0) / (1.0 - 0.0)) * ((_EnableClouds) ? (1.0) : (0.0)));
+					float4 lerpResult66 = lerp(lerpResult1816 , (0.5 * CloudsColor2252) , (PolarMask2271 * Clouds2262));
+					float4 AmbientColor2337 = _IlluminationAmbient;
+					float4 color2445 = IsGammaSpace() ? float4(0.5294118,0.2701871,0.2038235,0) : float4(0.2422812,0.05933543,0.0343086,0);
+					float2 uv02073 = packedInput.ase_texcoord.xy * float2(1,1) + float2(0,0);
+					float3 FlatNormal2287 = float3(0,0,1);
+					float3 lerpResult2094 = lerp(UnpackNormalmapRGorAG(tex2D(_Normals, uv02073), ((0.0 + (_NormalsIntensity - 0.0) * (1.0 - 0.0) / (2.0 - 0.0)) * 0.25)) , FlatNormal2287 , ContinentalMasks2284);
+					float clampResult535 = clamp((3.0 * Clouds2262) , 0.0 , 1.0);
+					float CloudsOcclusion2258 = (1.0 - clampResult535);
+					float3 lerpResult2093 = lerp(UnpackNormalmapRGorAG(tex2Dlod(_CloudsNormals, float4(UVClouds2243.xy, 0, _ReliefSmoothness)), (_ReliefIntensity * CloudsAlpha2253)) , lerpResult2094 , CloudsOcclusion2258);
+					float3 Normals2236 = lerpResult2093;
+					float3 ase_worldTangent = packedInput.ase_texcoord1.xyz;
+					float3 ase_worldNormal = packedInput.ase_texcoord2.xyz;
+					float3 ase_worldBitangent = packedInput.ase_texcoord3.xyz;
+					float3 tanToWorld0 = float3(ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x);
+					float3 tanToWorld1 = float3(ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y);
+					float3 tanToWorld2 = float3(ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z);
+					float3 tanNormal246 = Normals2236;
+					float3 worldNormal246 = normalize(float3(dot(tanToWorld0,tanNormal246), dot(tanToWorld1,tanNormal246), dot(tanToWorld2,tanNormal246)));
+					float3 normalizeResult1073 = normalize(_LightSource);
+					float3 LightSourceVector2314 = (normalizeResult1073 / 1.0);
+					float dotResult247 = dot(worldNormal246 , LightSourceVector2314);
+					float smoothstepResult2359 = smoothstep(0.0 , 1.0 , (dotResult247 + 0.5));
+					float BaselLightMask2332 = smoothstepResult2359;
+					float temp_output_380_0 = pow(BaselLightMask2332 , _IlluminationSmoothness);
+					float clampResult2452 = clamp((((temp_output_380_0 + -0.5) * (1.0 - BaselLightMask2332)) * 10.0) , 0.0 , 1.0);
+					float4 lerpResult2450 = lerp(AmbientColor2337 , color2445 , clampResult2452);
+					float4 temp_cast_8 = (temp_output_380_0).xxxx;
+					float4 lerpResult2409 = lerp(lerpResult2450 , temp_cast_8 , temp_output_380_0);
+					float4 NightDayMask2292 = lerpResult2409;
+					float4 temp_cast_9 = (0.0).xxxx;
+					float2 temp_cast_10 = (_CitiesDetail).xx;
+					float2 uv0175 = packedInput.ase_texcoord.xy * temp_cast_10 + float2(0,0);
+					float2 uv02431 = packedInput.ase_texcoord.xy * float2(1,1) + float2(0,0);
+					float clampResult1926 = clamp(ContinentalMasks2284 , 0.0 , 1.0);
+					float3 desaturateInitialColor2410 = (1.0 - (NightDayMask2292 * 5.0)).rgb;
+					float desaturateDot2410 = dot(desaturateInitialColor2410, float3(0.299, 0.587, 0.114));
+					float3 desaturateVar2410 = lerp(desaturateInitialColor2410, desaturateDot2410.xxx, 1.0);
+					float3 clampResult1716 = clamp(desaturateVar2410 , float3(0,0,0) , float3(1,1,1));
+					float3 ase_worldPos = packedInput.ase_texcoord4.xyz;
+					float3 ase_worldViewDir = (_WorldSpaceCameraPos.xyz - ase_worldPos);
+					ase_worldViewDir = normalize(ase_worldViewDir);
+					float dotResult1665 = dot(ase_worldViewDir , ase_worldNormal);
+					float FresnelMask2228 = dotResult1665;
+					float saferPower2161 = max(FresnelMask2228 , 0.0001);
+					float4 Cities2297 = ((_EnableCities) ? (((float4((((((tex2D(_CitiesTexture, uv0175).r * (1.0 - tex2D(_CitiesTexture, uv02431).a)) * (1.0 - clampResult1926)) * clampResult1716) * pow(saferPower2161 , 4.0)) * CloudsOcclusion2258) , 0.0) * _Citiescolor) * 1.0)) : (temp_cast_9));
+					float4 color1829 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
+					float3 normalizedWorldNormal = normalize(ase_worldNormal);
+					float3 normalizeResult2313 = normalize((ase_worldViewDir + LightSourceVector2314));
+					float3 SpecularDir2317 = normalizeResult2313;
+					float3 saferPower2411 = max(SpecularDir2317 , 0.0001);
+					float fresnelNdotV9 = dot(normalize(normalizedWorldNormal), ase_worldViewDir);
+					float fresnelNode9 = (0.0 + 1.0 * pow(max(1.0 - fresnelNdotV9 , 0.0001), ((1.0 - (pow(saferPower2411 , 3.0) + -1.0)) + _InteriorSize).x));
+					float3 temp_cast_14 = (fresnelNode9).xxx;
+					float3 temp_cast_15 = (fresnelNode9).xxx;
+					float3 linearToGamma2139 = FastLinearToSRGB(temp_cast_15);
+					float4 BaseColorAtmospheres2278 = _AtmosphereColor;
+					float dotResult1708 = dot(LightSourceVector2314 , normalizedWorldNormal);
+					float smoothstepResult2379 = smoothstep(-0.4 , 1.0 , dotResult1708);
+					float AtmosphereLightMask2225 = smoothstepResult2379;
+					float clampResult1769 = clamp(AtmosphereLightMask2225 , 0.0 , 1.0);
+					float saferPower1768 = max(clampResult1769 , 0.0001);
+					float smoothstepResult1594 = smoothstep(0.0 , 1.0 , pow(saferPower1768 , 1.5));
+					float4 clampResult702 = clamp(((float4(((linearToGamma2139 * (_InteriorIntensity + (1.0 - (0.0 + (_InteriorSize - -2.0) * (1.0 - 0.0) / (10.0 - -2.0))))) * _InteriorIntensity) , 0.0) * BaseColorAtmospheres2278) * smoothstepResult1594) , float4(0,0,0,0) , float4(1,1,1,0));
+					float3 gammaToLinear2462 = FastSRGBToLinear(((_EnableAtmosphere) ? (clampResult702) : (color1829)).rgb);
+					float3 SubAtmosphere2241 = gammaToLinear2462;
+					float4 blendOpSrc2361 = ((lerpResult66 * NightDayMask2292) + (Cities2297 * PolarMask2271));
+					float4 blendOpDest2361 = float4(SubAtmosphere2241 , 0.0);
+					float dotResult1867 = dot(ase_worldNormal , SpecularDir2317);
+					float clampResult2045 = clamp(dotResult1867 , 0.0 , 1.0);
+					float saferPower2438 = max(clampResult2045 , 0.0001);
+					float temp_output_2438_0 = pow(saferPower2438 , 2.0);
+					ase_worldViewDir = SafeNormalize(ase_worldViewDir);
+					float dotResult1570 = dot(LightSourceVector2314 , ase_worldViewDir);
+					float ViewDotLight2231 = dotResult1570;
+					float clampResult1903 = clamp((ViewDotLight2231 + 0.1) , 0.0 , 1.0);
+					float lerpResult1901 = lerp(200.0 , 2000.0 , clampResult1903);
+					float3 temp_cast_20 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+					float3 temp_cast_21 = ((pow(temp_output_2438_0 , (lerpResult1901 * (0.0 + (0.5 - 0.0) * (1.0 - 0.0) / (30.0 - 0.0)))) * 0.5)).xxx;
+					float3 gammaToLinear2113 = FastSRGBToLinear(temp_cast_21);
+					float clampResult1906 = clamp(ViewDotLight2231 , 0.0 , 1.0);
+					float lerpResult2466 = lerp(0.25 , _SpecularIntensity , clampResult1906);
+					float4 temp_output_2155_0 = (((_EnableWater) ? (tex2D(_NecessaryWaterMask, uv_NecessaryWaterMask82).b) : (0.0)) * (((float4(gammaToLinear2113 , 0.0) * (temp_output_2438_0 * WaterColor2302)) * CloudsOcclusion2258) * (lerpResult2466 * 100.0)));
+					float4 Specular2319 = temp_output_2155_0;
+					float4 lerpResult2525 = lerp(((1.0 - (1.0 - blendOpSrc2361) * (1.0 - blendOpDest2361)) + (Specular2319 * PolarMask2271)) , _SkyblendA , _SkyblendA.a);
+					float4 SecondPassInput2324 = (lerpResult2525 * _IlluminationBoost);
+
+					surfaceDescription.Color = temp_cast_0;
+					surfaceDescription.Emission = SecondPassInput2324.rgb;
+					surfaceDescription.Alpha = 1;
+					surfaceDescription.AlphaClipThreshold = 0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription,input, V, posInput, surfaceData, builtinData);
+					BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);
+					LightTransportData lightTransportData = GetLightTransportData(surfaceData, builtinData, bsdfData);
+
+					float4 res = float4(0.0, 0.0, 0.0, 1.0);
+					if (unity_MetaFragmentControl.x)
+					{
+						res.rgb = clamp(pow(abs(lightTransportData.diffuseColor), saturate(unity_OneOverOutputBoost)), 0, unity_MaxOutputValue);
+					}
+
+					if (unity_MetaFragmentControl.y)
+					{
+						res.rgb = lightTransportData.emissiveColor;
+					}
+
+					return res;
+				}
+
+				ENDHLSL
 			}
 
-			void GetSurfaceAndBuiltinData(DistortionSurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+			Pass
 			{
-				#ifdef _ALPHATEST_ON
-				DoAlphaTest( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
-				#endif
+				Name "SceneSelectionPass"
+				Tags { "LightMode" = "SceneSelectionPass" }
 
-				BuildSurfaceData( fragInputs, surfaceDescription, V, surfaceData );
+				Cull[_CullMode]
+				ZWrite On
 
-				ZERO_INITIALIZE( BuiltinData, builtinData );
-				builtinData.opacity = surfaceDescription.Alpha;
-				builtinData.distortion = surfaceDescription.Distortion;
-				builtinData.distortionBlur = surfaceDescription.DistortionBlur;
+				ColorMask 0
+
+				HLSLPROGRAM
+
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
+
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
+
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+				#define SHADERPASS SHADERPASS_DEPTH_ONLY
+				#define SCENESELECTIONPASS
+				#pragma editor_sync_compilation
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+				struct VertexInput
+				{
+					float3 positionOS : POSITION;
+					float4 normalOS : NORMAL;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 positionCS : SV_Position;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				int _ObjectId;
+				int _PassValue;
+
+				CBUFFER_START(UnityPerMaterial)
+				float4 _BaseColormodifier;
+				float4 _WaterColor;
+				float _EnableWater;
+				float4 _ShadowColorA;
+				float _EnableClouds;
+				float _ShadowsXOffset;
+				float _ShadowsYOffset;
+				float _CloudSpeed;
+				float _ShadowsSharpness;
+				float4 _ColorA;
+				float4 _PolarMask_ST;
+				float _EnumFloat;
+				float4 _IlluminationAmbient;
+				float _ReliefIntensity;
+				float _ReliefSmoothness;
+				float _NormalsIntensity;
+				float3 _LightSource;
+				float _IlluminationSmoothness;
+				float _EnableCities;
+				float _CitiesDetail;
+				float4 _Citiescolor;
+				float _EnableAtmosphere;
+				float _InteriorSize;
+				float _InteriorIntensity;
+				float4 _AtmosphereColor;
+				float _SpecularIntensity;
+				float4 _SkyblendA;
+				float _IlluminationBoost;
+				float4 _EmissionColor;
+				float _RenderQueueType;
+				float _AddPrecomputedVelocity;
+				float _ShadowMatteFilter;
+				float _StencilRef;
+				float _StencilWriteMask;
+				float _StencilRefDepth;
+				float _StencilWriteMaskDepth;
+				float _StencilRefMV;
+				float _StencilWriteMaskMV;
+				float _StencilRefDistortionVec;
+				float _StencilWriteMaskDistortionVec;
+				float _StencilWriteMaskGBuffer;
+				float _StencilRefGBuffer;
+				float _ZTestGBuffer;
+				float _RequireSplitLighting;
+				float _ReceivesSSR;
+				float _SurfaceType;
+				float _BlendMode;
+				float _SrcBlend;
+				float _DstBlend;
+				float _AlphaSrcBlend;
+				float _AlphaDstBlend;
+				float _ZWrite;
+				float _CullMode;
+				float _TransparentSortPriority;
+				float _CullModeForward;
+				float _TransparentCullMode;
+				float _ZTestDepthEqualForOpaque;
+				float _ZTestTransparent;
+				float _TransparentBackfaceEnable;
+				float _AlphaCutoffEnable;
+				float _AlphaCutoff;
+				float _UseShadowThreshold;
+				float _DoubleSidedEnable;
+				float _DoubleSidedNormalMode;
+				float4 _DoubleSidedConstants;
+				CBUFFER_END
+
+				struct SurfaceDescription
+				{
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+				}
+
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+				}
+
+				VertexOutput Vert(VertexInput inputMesh)
+				{
+					VertexOutput o;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = inputMesh.positionOS.xyz;
+					#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+					#endif
+					float3 vertexValue = defaultVertexValue;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					inputMesh.positionOS.xyz = vertexValue;
+					#else
+					inputMesh.positionOS.xyz += vertexValue;
+					#endif
+
+					inputMesh.normalOS = inputMesh.normalOS;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					o.positionCS = TransformWorldToHClip(positionRWS);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+					return o;
+				}
+
+				void Frag(VertexOutput packedInput
+						, out float4 outColor : SV_Target0
+						#ifdef _DEPTHOFFSET_ON
+						, out float outputDepth : SV_Depth
+						#endif
+
+						)
+				{
+					UNITY_SETUP_INSTANCE_ID(packedInput);
+					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.tangentToWorld = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+
+					surfaceDescription.Alpha = 1;
+					surfaceDescription.AlphaClipThreshold = 0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+					#ifdef _DEPTHOFFSET_ON
+					outputDepth = posInput.deviceDepth;
+					#endif
+
+					outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
+				}
+
+				ENDHLSL
 			}
 
-			VertexOutput Vert( VertexInput inputMesh  )
+			Pass
 			{
-				VertexOutput o;
+				Name "DepthForwardOnly"
+				Tags { "LightMode" = "DepthForwardOnly" }
 
-				UNITY_SETUP_INSTANCE_ID(inputMesh);
-				UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+				Cull[_CullMode]
+				ZWrite On
+				Stencil
+				{
+					Ref[_StencilRefDepth]
+					WriteMask[_StencilWriteMaskDepth]
+					Comp Always
+					Pass Replace
+					Fail Keep
+					ZFail Keep
+				}
 
-				
+				ColorMask 0 0
 
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				float3 defaultVertexValue = inputMesh.positionOS.xyz;
-				#else
-				float3 defaultVertexValue = float3( 0, 0, 0 );
-				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				HLSLPROGRAM
 
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				inputMesh.positionOS.xyz = vertexValue;
-				#else
-				inputMesh.positionOS.xyz += vertexValue;
-				#endif
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
 
-				inputMesh.normalOS =  inputMesh.normalOS ;
-				float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
 
-				o.positionCS = TransformWorldToHClip(positionRWS);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
-				return o;
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+				#define SHADERPASS SHADERPASS_DEPTH_ONLY
+				#pragma multi_compile _ WRITE_MSAA_DEPTH
+
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+				struct VertexInput
+				{
+					float3 positionOS : POSITION;
+					float4 normalOS : NORMAL;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+				};
+
+				struct VertexOutput
+				{
+					float4 positionCS : SV_Position;
+
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				float4 _BaseColormodifier;
+				float4 _WaterColor;
+				float _EnableWater;
+				float4 _ShadowColorA;
+				float _EnableClouds;
+				float _ShadowsXOffset;
+				float _ShadowsYOffset;
+				float _CloudSpeed;
+				float _ShadowsSharpness;
+				float4 _ColorA;
+				float4 _PolarMask_ST;
+				float _EnumFloat;
+				float4 _IlluminationAmbient;
+				float _ReliefIntensity;
+				float _ReliefSmoothness;
+				float _NormalsIntensity;
+				float3 _LightSource;
+				float _IlluminationSmoothness;
+				float _EnableCities;
+				float _CitiesDetail;
+				float4 _Citiescolor;
+				float _EnableAtmosphere;
+				float _InteriorSize;
+				float _InteriorIntensity;
+				float4 _AtmosphereColor;
+				float _SpecularIntensity;
+				float4 _SkyblendA;
+				float _IlluminationBoost;
+				float4 _EmissionColor;
+				float _RenderQueueType;
+				float _AddPrecomputedVelocity;
+				float _ShadowMatteFilter;
+				float _StencilRef;
+				float _StencilWriteMask;
+				float _StencilRefDepth;
+				float _StencilWriteMaskDepth;
+				float _StencilRefMV;
+				float _StencilWriteMaskMV;
+				float _StencilRefDistortionVec;
+				float _StencilWriteMaskDistortionVec;
+				float _StencilWriteMaskGBuffer;
+				float _StencilRefGBuffer;
+				float _ZTestGBuffer;
+				float _RequireSplitLighting;
+				float _ReceivesSSR;
+				float _SurfaceType;
+				float _BlendMode;
+				float _SrcBlend;
+				float _DstBlend;
+				float _AlphaSrcBlend;
+				float _AlphaDstBlend;
+				float _ZWrite;
+				float _CullMode;
+				float _TransparentSortPriority;
+				float _CullModeForward;
+				float _TransparentCullMode;
+				float _ZTestDepthEqualForOpaque;
+				float _ZTestTransparent;
+				float _TransparentBackfaceEnable;
+				float _AlphaCutoffEnable;
+				float _AlphaCutoff;
+				float _UseShadowThreshold;
+				float _DoubleSidedEnable;
+				float _DoubleSidedNormalMode;
+				float4 _DoubleSidedConstants;
+				CBUFFER_END
+
+				struct SurfaceDescription
+				{
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+				}
+
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+				}
+
+				VertexOutput Vert(VertexInput inputMesh)
+				{
+					VertexOutput o;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = inputMesh.positionOS.xyz;
+					#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+					#endif
+					float3 vertexValue = defaultVertexValue;
+					#ifdef ASE_ABSOLUTE_VERTEX_POS
+					inputMesh.positionOS.xyz = vertexValue;
+					#else
+					inputMesh.positionOS.xyz += vertexValue;
+					#endif
+
+					inputMesh.normalOS = inputMesh.normalOS;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					o.positionCS = TransformWorldToHClip(positionRWS);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+					return o;
+				}
+
+				void Frag(VertexOutput packedInput
+						#ifdef WRITE_NORMAL_BUFFER
+						, out float4 outNormalBuffer : SV_Target0
+						#ifdef WRITE_MSAA_DEPTH
+						, out float1 depthColor : SV_Target1
+						#endif
+						#elif defined(WRITE_MSAA_DEPTH) // When only WRITE_MSAA_DEPTH is define and not WRITE_NORMAL_BUFFER it mean we are Unlit and only need depth, but we still have normal buffer binded
+						, out float4 outNormalBuffer : SV_Target0
+						, out float1 depthColor : SV_Target1
+						#else
+						, out float4 outColor : SV_Target0
+						#endif
+
+						#ifdef _DEPTHOFFSET_ON
+						, out float outputDepth : SV_Depth
+						#endif
+
+						)
+				{
+					UNITY_SETUP_INSTANCE_ID(packedInput);
+					UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.tangentToWorld = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+
+					surfaceDescription.Alpha = 1;
+					surfaceDescription.AlphaClipThreshold = 0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+					#ifdef _DEPTHOFFSET_ON
+					outputDepth = posInput.deviceDepth;
+					#endif
+
+					#ifdef WRITE_NORMAL_BUFFER
+					EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
+					#ifdef WRITE_MSAA_DEPTH
+					depthColor = packedInput.positionCS.z;
+					#endif
+					#elif defined(WRITE_MSAA_DEPTH)
+					outNormalBuffer = float4(0.0, 0.0, 0.0, 1.0);
+					depthColor = packedInput.positionCS.z;
+					#elif defined(SCENESELECTIONPASS)
+					outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
+					#else
+					outColor = float4(0.0, 0.0, 0.0, 0.0);
+					#endif
+				}
+
+				ENDHLSL
 			}
 
-			float4 Frag( VertexOutput packedInput  ) : SV_Target
+			Pass
 			{
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( packedInput );
-				UNITY_SETUP_INSTANCE_ID( packedInput );
-				FragInputs input;
-				ZERO_INITIALIZE(FragInputs, input);
-				input.tangentToWorld = k_identity3x3;
-				input.positionSS = packedInput.positionCS;
+				Name "DistortionVectors"
+				Tags { "LightMode" = "DistortionVectors" }
 
-				PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
-				float3 V = float3(1.0, 1.0, 1.0);
-				SurfaceData surfaceData;
-				BuiltinData builtinData;
+				Blend One One , One One
+				BlendOp Add , Add
 
-				DistortionSurfaceDescription surfaceDescription = (DistortionSurfaceDescription)0;
-				
-				surfaceDescription.Alpha = 1;
-				surfaceDescription.AlphaClipThreshold = 0.5;
+				Cull[_CullMode]
+				ZTest LEqual
+				ZWrite Off
 
-				surfaceDescription.Distortion = float2 (0,0);
-				surfaceDescription.DistortionBlur = 0;
+				Stencil
+				{
+					Ref[_StencilRefDistortionVec]
+					WriteMask[_StencilRefDistortionVec]
+					Comp Always
+					Pass Replace
+					Fail Keep
+					ZFail Keep
+				}
 
-				GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
-				
-				float4 outBuffer;
-				EncodeDistortion( builtinData.distortion, builtinData.distortionBlur, true, outBuffer );
-				return outBuffer;
-			}
-			ENDHLSL
+				HLSLPROGRAM
+
+				#pragma multi_compile_instancing
+				#define ASE_SRP_VERSION 60900
+
+				#pragma shader_feature _SURFACE_TYPE_TRANSPARENT
+				#pragma shader_feature_local _ _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
+
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+					//#define UNITY_MATERIAL_LIT
+
+					#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+					#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+					#define SHADERPASS SHADERPASS_DISTORTION
+
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+					struct VertexInput
+					{
+						float3 positionOS : POSITION;
+						float3 normalOS : NORMAL;
+
+						UNITY_VERTEX_INPUT_INSTANCE_ID
+					};
+
+					struct VertexOutput
+					{
+						float4 positionCS : SV_Position;
+
+						UNITY_VERTEX_INPUT_INSTANCE_ID
+						UNITY_VERTEX_OUTPUT_STEREO
+					};
+
+					CBUFFER_START(UnityPerMaterial)
+					float4 _BaseColormodifier;
+					float4 _WaterColor;
+					float _EnableWater;
+					float4 _ShadowColorA;
+					float _EnableClouds;
+					float _ShadowsXOffset;
+					float _ShadowsYOffset;
+					float _CloudSpeed;
+					float _ShadowsSharpness;
+					float4 _ColorA;
+					float4 _PolarMask_ST;
+					float _EnumFloat;
+					float4 _IlluminationAmbient;
+					float _ReliefIntensity;
+					float _ReliefSmoothness;
+					float _NormalsIntensity;
+					float3 _LightSource;
+					float _IlluminationSmoothness;
+					float _EnableCities;
+					float _CitiesDetail;
+					float4 _Citiescolor;
+					float _EnableAtmosphere;
+					float _InteriorSize;
+					float _InteriorIntensity;
+					float4 _AtmosphereColor;
+					float _SpecularIntensity;
+					float4 _SkyblendA;
+					float _IlluminationBoost;
+					float4 _EmissionColor;
+					float _RenderQueueType;
+					float _AddPrecomputedVelocity;
+					float _ShadowMatteFilter;
+					float _StencilRef;
+					float _StencilWriteMask;
+					float _StencilRefDepth;
+					float _StencilWriteMaskDepth;
+					float _StencilRefMV;
+					float _StencilWriteMaskMV;
+					float _StencilRefDistortionVec;
+					float _StencilWriteMaskDistortionVec;
+					float _StencilWriteMaskGBuffer;
+					float _StencilRefGBuffer;
+					float _ZTestGBuffer;
+					float _RequireSplitLighting;
+					float _ReceivesSSR;
+					float _SurfaceType;
+					float _BlendMode;
+					float _SrcBlend;
+					float _DstBlend;
+					float _AlphaSrcBlend;
+					float _AlphaDstBlend;
+					float _ZWrite;
+					float _CullMode;
+					float _TransparentSortPriority;
+					float _CullModeForward;
+					float _TransparentCullMode;
+					float _ZTestDepthEqualForOpaque;
+					float _ZTestTransparent;
+					float _TransparentBackfaceEnable;
+					float _AlphaCutoffEnable;
+					float _AlphaCutoff;
+					float _UseShadowThreshold;
+					float _DoubleSidedEnable;
+					float _DoubleSidedNormalMode;
+					float4 _DoubleSidedConstants;
+					CBUFFER_END
+
+					struct DistortionSurfaceDescription
+					{
+						float Alpha;
+						float AlphaClipThreshold;
+						float2 Distortion;
+						float DistortionBlur;
+					};
+
+					void BuildSurfaceData(FragInputs fragInputs, inout DistortionSurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+					{
+						ZERO_INITIALIZE(SurfaceData, surfaceData);
+					}
+
+					void GetSurfaceAndBuiltinData(DistortionSurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+					{
+						#ifdef _ALPHATEST_ON
+						DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+						#endif
+
+						BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+
+						ZERO_INITIALIZE(BuiltinData, builtinData);
+						builtinData.opacity = surfaceDescription.Alpha;
+						builtinData.distortion = surfaceDescription.Distortion;
+						builtinData.distortionBlur = surfaceDescription.DistortionBlur;
+					}
+
+					VertexOutput Vert(VertexInput inputMesh)
+					{
+						VertexOutput o;
+
+						UNITY_SETUP_INSTANCE_ID(inputMesh);
+						UNITY_TRANSFER_INSTANCE_ID(inputMesh, o);
+
+						#ifdef ASE_ABSOLUTE_VERTEX_POS
+						float3 defaultVertexValue = inputMesh.positionOS.xyz;
+						#else
+						float3 defaultVertexValue = float3(0, 0, 0);
+						#endif
+						float3 vertexValue = defaultVertexValue;
+
+						#ifdef ASE_ABSOLUTE_VERTEX_POS
+						inputMesh.positionOS.xyz = vertexValue;
+						#else
+						inputMesh.positionOS.xyz += vertexValue;
+						#endif
+
+						inputMesh.normalOS = inputMesh.normalOS;
+						float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+
+						o.positionCS = TransformWorldToHClip(positionRWS);
+						UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+						return o;
+					}
+
+					float4 Frag(VertexOutput packedInput) : SV_Target
+					{
+						UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
+						UNITY_SETUP_INSTANCE_ID(packedInput);
+						FragInputs input;
+						ZERO_INITIALIZE(FragInputs, input);
+						input.tangentToWorld = k_identity3x3;
+						input.positionSS = packedInput.positionCS;
+
+						PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+						float3 V = float3(1.0, 1.0, 1.0);
+						SurfaceData surfaceData;
+						BuiltinData builtinData;
+
+						DistortionSurfaceDescription surfaceDescription = (DistortionSurfaceDescription)0;
+
+						surfaceDescription.Alpha = 1;
+						surfaceDescription.AlphaClipThreshold = 0.5;
+
+						surfaceDescription.Distortion = float2 (0,0);
+						surfaceDescription.DistortionBlur = 0;
+
+						GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+						float4 outBuffer;
+						EncodeDistortion(builtinData.distortion, builtinData.distortionBlur, true, outBuffer);
+						return outBuffer;
+					}
+					ENDHLSL
+				}
 		}
-		
-    }
-	CustomEditor "PlanetXEditor"
-    Fallback "Hidden/InternalErrorShader"
-	
+			CustomEditor "PlanetXEditor"
+						Fallback "Hidden/InternalErrorShader"
 }
 /*ASEBEGIN
 Version=17700

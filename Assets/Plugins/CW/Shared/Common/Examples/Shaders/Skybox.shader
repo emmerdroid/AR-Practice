@@ -7,7 +7,7 @@
 		_Scale("Scale", Float) = 1.0
 	}
 
-	SubShader
+		SubShader
 	{
 		Cull Front
 		ZWrite Off

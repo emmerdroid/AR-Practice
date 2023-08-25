@@ -2,25 +2,22 @@ using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour
 {
-    bool moveAllowed;
-    Collider col;
-    
+    private bool moveAllowed;
+    private Collider col;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         col = GetComponent<Collider>();
-        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-
 
             if (touch.phase == TouchPhase.Began)
             {
@@ -29,7 +26,6 @@ public class DragAndDrop : MonoBehaviour
                 {
                     if (col == collider)
                     {
-
                         moveAllowed = true;
                     }
                 }
@@ -42,7 +38,6 @@ public class DragAndDrop : MonoBehaviour
                 {
                     transform.position = new Vector2(touchPos.x, touchPos.y);
                     //if object is touching a wall, it cannot fo through it
-                    
                 }
             }
             if (touch.phase == TouchPhase.Ended)

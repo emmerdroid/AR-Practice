@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectSelection : MonoBehaviour
 {
-    public enum Objects { Cube, Capsule, None }
+    public enum Objects
+    { Cube, Capsule, None  }
+
     public Objects currentObj;
     //Change objects to be planets vs the original tester objects
-
     public enum Layers {Crust, Core, Mantle, OuterCore, None }
     public Layers currentLayer;
 
@@ -15,10 +14,12 @@ public class ObjectSelection : MonoBehaviour
     {
         currentLayer = Layers.None;
     }
+
     public void CubeSelect()
     {
         currentObj = Objects.Cube;
     }
+
     public void CapsuleSelect()
     {
         currentObj = Objects.Capsule;

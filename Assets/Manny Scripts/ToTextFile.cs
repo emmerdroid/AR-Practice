@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
 
 public class ToTextFile : MonoBehaviour
 {
     // Start is called before the first frame update
     public InputField inputFieldChat;
-    void Start()
+
+    private void Start()
     {
         Directory.CreateDirectory(Application.streamingAssetsPath + "/Chat_Logs/");
     }
