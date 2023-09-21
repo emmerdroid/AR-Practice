@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -213,7 +213,6 @@ GameObject:
   - component: {fileID: 134402513}
   - component: {fileID: 134402512}
   - component: {fileID: 134402514}
-  - component: {fileID: 134402515}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -266,18 +265,6 @@ MonoBehaviour:
   m_MaxNumberOfMovingImages: 1
   m_TrackedImagePrefab: {fileID: 8382435659390239287, guid: b5b4c016bf206834b8e2cb957d2dfa59,
     type: 3}
---- !u!114 &134402515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134402511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6002455278cb1674ab22f50d68047345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &204634964
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +466,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1125850259}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Login2Lobby, Assembly-CSharp
         m_MethodName: Marker2Game
         m_Mode: 1
@@ -618,7 +605,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1125850257}
   - component: {fileID: 1125850258}
-  - component: {fileID: 1125850259}
   m_Layer: 0
   m_Name: ButtonManager
   m_TagString: Untagged
@@ -653,18 +639,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewButton: {fileID: 1597546057}
---- !u!114 &1125850259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125850256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4896755328eb9944d861f3bbeab8b287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1239988784
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,7 +781,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1125850259}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Login2Lobby, Assembly-CSharp
         m_MethodName: EarthView
         m_Mode: 1
