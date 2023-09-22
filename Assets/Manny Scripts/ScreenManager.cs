@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
-   public Scene scene;
+   [SerializeField] public  Scene scene;
    void ChangeScene(Scene scene)
     {
         SceneManager.LoadScene(scene.buildIndex);
