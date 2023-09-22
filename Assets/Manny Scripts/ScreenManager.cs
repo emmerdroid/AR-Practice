@@ -5,9 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
-   [SerializeField] public  Scene scene;
-   void ChangeScene(Scene scene)
+    [SerializeField] GameObject menu;
+  void ChangeToLayers()
     {
-        SceneManager.LoadScene(scene.buildIndex);
+
+    }
+
+   void ChangeToClimate()
+    {
+
+    }
+
+   void ChangeTo2D()
+    {
+
+    }
+
+   public void ChangeToQuiz()
+    {
+        SceneManager.LoadScene(1);
+    }
+   public void ShowMenu()
+    {
+        menu.SetActive(!menu.activeSelf);
     }
 }
