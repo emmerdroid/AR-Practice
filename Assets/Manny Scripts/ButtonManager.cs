@@ -5,18 +5,11 @@ using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
-    
+    ///<summary>
+    /// This script exist to be a reference for the prefab of the 
+    /// detailed view. The ViewChanger.cs looks for the viewButton on the Button Manager.
+    /// When view Button is clicked.
+    /// </summary>    
     public Button viewButton;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

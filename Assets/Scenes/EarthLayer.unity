@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -442, y: -2845}
+  m_AnchoredPosition: {x: -1108, y: -2845}
   m_SizeDelta: {x: 600.141, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &36143538
@@ -206,9 +206,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Login2Lobby, Assembly-CSharp
-        m_MethodName: Marker2Game
+      - m_Target: {fileID: 204634970}
+        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+        m_MethodName: ChangeToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 204634966}
   - component: {fileID: 204634965}
   - component: {fileID: 204634969}
+  - component: {fileID: 204634970}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -518,6 +519,18 @@ MonoBehaviour:
   Planet: {fileID: 0}
   max: 2
   min: 0.25
+--- !u!114 &204634970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204634964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26371c5e17b34db58ce7b77aa68a611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &788786904
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 348, y: -2845}
+  m_AnchoredPosition: {x: 33.000153, y: -2845}
   m_SizeDelta: {x: 600.141, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &788786906
@@ -601,9 +614,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Login2Lobby, Assembly-CSharp
-        m_MethodName: Marker2Game
+      - m_Target: {fileID: 204634970}
+        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+        m_MethodName: ChangeToQuiz
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -773,7 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a13c31ae12ab54b8a87b364e22eb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewButton: {fileID: 0}
+  viewButton: {fileID: 1597546057}
 --- !u!1 &1239988784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,7 +1280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1135, y: -2845}
+  m_AnchoredPosition: {x: 820, y: -2845}
   m_SizeDelta: {x: 594.293, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1597546057
@@ -1313,19 +1326,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1597546058}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 204634964}
-        m_TargetAssemblyTypeName: ViewChanger, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1597546058
 MonoBehaviour:
   m_ObjectHideFlags: 0
