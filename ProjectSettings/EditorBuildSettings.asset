@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Marker-AR-Test.unity
+    path: Assets/Scenes/EarthLayer.unity
     guid: 52377dbc86294cc4e9e3620b2b51d0dc
   - enabled: 1
     path: Assets/Scenes/GameTest.unity
