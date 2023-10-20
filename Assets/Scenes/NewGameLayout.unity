@@ -1037,7 +1037,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 27
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1048,7 +1048,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 'LEADER
+
+    BOARD'
 --- !u!222 &774960353
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1196,7 +1198,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -264, y: 0}
-  m_SizeDelta: {x: 231.9805, y: 71.9888}
+  m_SizeDelta: {x: 231.9805, y: 147.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &820547687
 MonoBehaviour:
@@ -2135,18 +2137,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 59
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 69
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next
 --- !u!222 &1304845085
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2374,18 +2376,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 78
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Profile
 --- !u!222 &1539206953
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2839,7 +2841,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -551, y: 0}
-  m_SizeDelta: {x: 231.9805, y: 71.9888}
+  m_SizeDelta: {x: 231.9805, y: 147.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923442125
 MonoBehaviour:
