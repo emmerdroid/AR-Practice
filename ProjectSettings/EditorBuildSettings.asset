@@ -11,18 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameTest.unity
     guid: 8acef45bd187cb04e8985891f3b712d4
-  - enabled: 0
-    path: Assets/Arturo Assets/Scenes/Tuffy login.unity
-    guid: 9ce7267b6e843c44a9e0267f118a67ed
-  - enabled: 0
-    path: Assets/Arturo Assets/Scenes/Sign up.unity
-    guid: 99ffb0bd570cc9b4a9518e12a2d6cc4d
-  - enabled: 0
-    path: Assets/Arturo Assets/Scenes/Profile.unity
-    guid: ad20c1d55c7f4f945b46afcdd5ec2f86
-  - enabled: 0
-    path: Assets/Arturo Assets/Scenes/Lobby.unity
-    guid: 45faa05511d6a174a94988b6d6ad38a6
   - enabled: 1
     path: Assets/ExampleAssets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
@@ -35,6 +23,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewMenu.unity
     guid: ae05b9ebe70c34c6088065bf14167e09
+  - enabled: 1
+    path: Assets/Arturo Assets/Scenes/Profile.unity
+    guid: ad20c1d55c7f4f945b46afcdd5ec2f86
+  - enabled: 1
+    path: Assets/Arturo Assets/Scenes/Lobby.unity
+    guid: 45faa05511d6a174a94988b6d6ad38a6
+  - enabled: 0
+    path: Assets/Arturo Assets/Scenes/Tuffy login.unity
+    guid: 9ce7267b6e843c44a9e0267f118a67ed
+  - enabled: 0
+    path: Assets/Arturo Assets/Scenes/Sign up.unity
+    guid: 99ffb0bd570cc9b4a9518e12a2d6cc4d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 89855e772135f0c4f8aa3e5b716aec4b,
       type: 2}

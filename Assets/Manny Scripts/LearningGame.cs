@@ -15,6 +15,7 @@ public class LearningGame : MonoBehaviour
     public ProgressBar progressBar;
     public TMP_Text question;
     int questionPos;
+    string[] answerList = { "Outer Core", "Inner Core", "Mantle", "Crust" };
     
 
     // Start is called before the first frame update
@@ -31,9 +32,12 @@ public class LearningGame : MonoBehaviour
             {"What layer has the consistency of caramel?","Mantle"}
         };
 
+        //Start of the quiz
+        //puts first question as question text
         questionPos = 0;
         question.text = questions_answers.ElementAt(questionPos).Key;
-
+        StartQuestion();
+      
 
 
     }
@@ -41,35 +45,137 @@ public class LearningGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //when get a correct answer,
-        // pause the timer so the user can choose to progress next.
-        //reset the timer for the next question. 
-
-        while (timer.timerRunning) 
-        {
-            //the game is going
-            //wait and listen to buttons.
-            // if the person gets it correct, pause/reset the timer
-            // if incorrect show the correct answer and allow them to move on.
-
-            foreach (Button b in answers)
-            {
-                int correct = Random.Range(0, answers.Length);
-                answers[correct].transform.GetComponentInChildren<TextMeshProUGUI>().text = questions_answers.ElementAt(questionPos).Value;
-
-
-            }
-
-        }
-
-        //randomly assign answers to the buttons
+        progressBar.current = questionPos;
     }
     
 
     //Button functionality
 
-    void Next(){
+    public void Next()
+    {
         questionPos = questionPos + 1;
         question.text = questions_answers.ElementAt(questionPos).Key;
+        timer.timer = timer.MaxTime;
+        timer.timerRunning = true;
+        foreach(Button button in answers)
+        {
+            button.interactable = true;
+        }
+        question.color = Color.gray;
+        //clear the text from the buttons
+        foreach(Button b in answers)
+        {
+            b.GetComponentInChildren<TextMeshProUGUI>().text = "Button";
+        }
+        StartQuestion();
+    }
+
+    void StartQuestion()
+    {
+        List<string> possibleAnswers = GetRandomAnswers();
+        List<Button> possibleButtons = new List<Button>(answers);
+
+        //assigns the correct answer to random button
+        int correct = Random.Range(0, 4);
+        answers[correct].transform.GetComponentInChildren<TextMeshProUGUI>().text =
+            questions_answers.ElementAt(questionPos).Value;
+
+        foreach(Button button in answers)
+        {
+            if(button.transform.GetComponentInChildren<TextMeshProUGUI>().text
+                == questions_answers.Values.ElementAt(questionPos))
+            {
+                possibleButtons.Remove(button);
+            }
+        }
+        //assign the rest of the questions
+        //checking to see that possibleAnswers is actually working
+        //foreach(var x in possibleAnswers) { Debug.Log(x.ToString()); }
+
+        for(int i = 0; i < possibleAnswers.Count; i++) 
+        {
+            possibleButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = 
+                possibleAnswers[i];
+        }
+        
+
+    }
+
+    void ShuffleAnswers(List<string> list)
+    {
+        int n = list.Count;
+
+        while (n > 1) 
+        {
+            n--;
+            int k = Random.Range(0, n+1);
+            string value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+    private List<string> GetRandomAnswers()
+    {
+        List<string> possibleAnswers = new List<string>(answerList);
+        ShuffleAnswers(possibleAnswers);
+
+        //make sure the correct one is not in List
+        string correct = questions_answers.Values.ElementAt(questionPos);
+        if (possibleAnswers.Contains(correct))
+        {
+            possibleAnswers.Remove(correct);
+        }
+
+        return possibleAnswers.GetRange(0,3);
+    }
+
+    public void CheckAnswer(Button selectedButton)
+    {
+        string selectedAnswer = selectedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+        foreach (Button b in answers)
+        {
+            ColorBlock colors = b.colors;
+            colors.normalColor = Color.white;
+            b.colors = colors;
+        }
+
+        string correctAnswer = questions_answers.Values.ElementAt(questionPos);
+        int correctIndex = System.Array.IndexOf(answers, correctAnswer);
+        if (selectedAnswer ==  correctAnswer)
+        {
+            Debug.Log("Correct!");
+            question.color = Color.green;
+            //pause the timer
+            timer.timerRunning = false;
+            //show that it is the correct answer
+            if (correctIndex >= 0 && correctIndex < answers.Length) 
+            {
+                ColorBlock colors = answers[correctIndex].colors;
+                colors.normalColor = Color.green;
+                answers[correctIndex].colors = colors;
+            }
+
+
+        }
+        else 
+        {
+            Debug.Log("Incorrect.");
+            question.color= Color.red;
+            //still pause the timer
+            timer.timerRunning=false;
+            //show the correct answer
+            if (correctIndex >= 0 && correctIndex < answers.Length)
+            {
+                ColorBlock colors = answers[correctIndex].colors;
+                colors.normalColor = Color.green;
+                answers[correctIndex].colors = colors;
+            }
+        }
+
+        foreach (Button b in answers)
+        {
+            b.interactable = false;
+        }
     }
 }

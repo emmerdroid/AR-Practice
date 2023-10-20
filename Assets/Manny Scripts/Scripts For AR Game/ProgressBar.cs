@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour
 {
     public int Max; //max for number of questions
-    [SerializeField] int current; //current question the player is on.
+    public int current; //current question the player is on.
     public Image mask;
 
 

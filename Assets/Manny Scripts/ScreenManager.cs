@@ -28,5 +28,15 @@ public class ScreenManager : MonoBehaviour
     {
         SceneManager.LoadScene(5);
     }
+
+    public void ChangeToProfile()
+    {
+        SceneManager.LoadScene(6);
+    }
+
+    public void ChangetoLeaderBoard()
+    {
+        SceneManager.LoadScene(7);
+    }
    
 }

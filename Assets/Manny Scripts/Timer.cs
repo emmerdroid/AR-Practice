@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
 
     public int  MaxTime;
-    [SerializeField] float timer;
+    public float timer;
     [SerializeField]Image timerBar;
     public bool timerRunning = false;
     // Start is called before the first frame update
