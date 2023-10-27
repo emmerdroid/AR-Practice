@@ -14,6 +14,7 @@ public class LearningGame : MonoBehaviour
                              //2 bottom left, 3 bottom right
     public ProgressBar progressBar;
     public TMP_Text question;
+    [SerializeField] GameObject Tuffy;
     int questionPos;
     string[] answerList = { "Outer Core", "Inner Core", "Mantle", "Crust" };
     
@@ -24,8 +25,8 @@ public class LearningGame : MonoBehaviour
         questions_answers = new Dictionary<string, string>()
         {
             {"What layer is 1.400 miles thick?", "Outer Core" },
-            {"What layer is 9,000� F?" , "Outer Core"},
-            {"What layer is 9,800� F?" ,"Inner Core"},
+            {"What layer is 9,000 F?" , "Outer Core"},
+            {"What layer is 9,800 F?" ,"Inner Core"},
             {"Which layer is sandwhiched between the crust and outer core?", "Mantle"},
             {"Which layer is the thickest?","Mantle"},
             {"What layer goes about 19 miles deep on average?","Crust"},
@@ -61,13 +62,14 @@ public class LearningGame : MonoBehaviour
         {
             button.interactable = true;
         }
-        question.color = Color.gray;
+        question.color = new Color(0, 17, 255);
         //clear the text from the buttons
         foreach(Button b in answers)
         {
             b.GetComponentInChildren<TextMeshProUGUI>().text = "Button";
         }
         StartQuestion();
+        Tuffy.SetActive(false);
     }
 
     void StartQuestion()
@@ -142,6 +144,7 @@ public class LearningGame : MonoBehaviour
 
         string correctAnswer = questions_answers.Values.ElementAt(questionPos);
         int correctIndex = System.Array.IndexOf(answers, correctAnswer);
+        //if answer is correct
         if (selectedAnswer ==  correctAnswer)
         {
             Debug.Log("Correct!");
@@ -149,6 +152,9 @@ public class LearningGame : MonoBehaviour
             //pause the timer
             timer.timerRunning = false;
             //show that it is the correct answer
+            //show tuffy saying "bravo"
+            Tuffy.SetActive(true);
+            Tuffy.GetComponentInChildren<TextMeshProUGUI>().text = "Bravo";
             if (correctIndex >= 0 && correctIndex < answers.Length) 
             {
                 ColorBlock colors = answers[correctIndex].colors;
@@ -165,6 +171,9 @@ public class LearningGame : MonoBehaviour
             //still pause the timer
             timer.timerRunning=false;
             //show the correct answer
+            //show tuffy correcting.
+            Tuffy.SetActive(true);
+            Tuffy.GetComponentInChildren<TextMeshProUGUI>().text = $"I am sorry, the correct answer is {correctAnswer}";
             if (correctIndex >= 0 && correctIndex < answers.Length)
             {
                 ColorBlock colors = answers[correctIndex].colors;
