@@ -54,6 +54,19 @@ public class LearningGame : MonoBehaviour
 
     public void Next()
     {
+        if(questionPos >= questions_answers.Count) 
+        {
+            //checking to see that the question is at max
+            //if so then end the game
+
+            Debug.Log("Congrats you have reached the end");
+            foreach (Button b in answers)
+            {
+                b.interactable = false;
+            }
+
+
+        }
         questionPos = questionPos + 1;
         question.text = questions_answers.ElementAt(questionPos).Key;
         timer.timer = timer.MaxTime;
