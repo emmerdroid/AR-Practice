@@ -16,12 +16,14 @@ public class LearningGame : MonoBehaviour
     public TMP_Text question;
     [SerializeField] GameObject Tuffy;
     int questionPos;
+    int numCorrect;
     string[] answerList = { "Outer Core", "Inner Core", "Mantle", "Crust" };
     
 
     // Start is called before the first frame update
     void Start()
     {
+        numCorrect = 0;
         questions_answers = new Dictionary<string, string>()
         {
             {"What layer is 1.400 miles thick?", "Outer Core" },
@@ -54,6 +56,7 @@ public class LearningGame : MonoBehaviour
 
     public void Next()
     {
+        questionPos = questionPos + 1;
         if(questionPos >= questions_answers.Count) 
         {
             //checking to see that the question is at max
@@ -65,9 +68,12 @@ public class LearningGame : MonoBehaviour
                 b.interactable = false;
             }
 
+            question.text = $"Congrats you got {numCorrect} questions right.";
+            //leave this function
+            return;
+
 
         }
-        questionPos = questionPos + 1;
         question.text = questions_answers.ElementAt(questionPos).Key;
         timer.timer = timer.MaxTime;
         timer.timerRunning = true;
@@ -162,6 +168,7 @@ public class LearningGame : MonoBehaviour
         {
             Debug.Log("Correct!");
             question.color = Color.green;
+            numCorrect++;
             //pause the timer
             timer.timerRunning = false;
             //show that it is the correct answer

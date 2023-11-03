@@ -11,32 +11,32 @@ public class ScreenManager : MonoBehaviour
     /// </summary>
   public void ChangeToLayers()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("EarthLayer");
     }
 
    public void ChangeToClimate()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("Climate Change");
     }
 
    public void ChangeToQuiz()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("NewGameLayout");
     }
 
     public void ChangeToMenu()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("NewMenu");
     }
 
     public void ChangeToProfile()
     {
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene("Profile");
     }
 
     public void ChangetoLeaderBoard()
     {
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene("LeaderBoard");
     }
    
 }
