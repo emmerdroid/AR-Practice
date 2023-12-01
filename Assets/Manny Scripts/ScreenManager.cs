@@ -38,5 +38,15 @@ public class ScreenManager : MonoBehaviour
     {
         SceneManager.LoadScene("LeaderBoard");
     }
+
+    public void ChangeToLogIn()
+    {
+        SceneManager.LoadScene("Tuffy login");
+    }
+
+    public void ChangeToSignUp()
+    {
+        SceneManager.LoadScene("Sign up");
+    }
    
 }

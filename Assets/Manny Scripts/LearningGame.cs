@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,6 +71,9 @@ public class LearningGame : MonoBehaviour
 
             question.text = $"Congrats you got {numCorrect} questions right.";
             //leave this function
+            //save the value to maybe be seen in profile
+            CreateScoreTextFile();
+
             return;
 
 
@@ -206,5 +210,23 @@ public class LearningGame : MonoBehaviour
         {
             b.interactable = false;
         }
+    }
+
+
+
+    //function for creating text file 
+    void CreateScoreTextFile()
+    {
+        //check to see if file exists
+        string path = Application.dataPath + "/UserScore.txt";
+        if(!File.Exists(path))
+        {
+            File.WriteAllText(path, "User Score \n\n");
+            Debug.Log("File Created");
+        }
+        //add text
+        string content = $"Last attempt for layer quiz: {numCorrect}" + "\n";
+        File.AppendAllText(path, content);
+        Debug.Log("File Appended");
     }
 }

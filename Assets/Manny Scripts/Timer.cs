@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Timer : MonoBehaviour
     public float timer;
     [SerializeField]Image timerBar;
     public bool timerRunning = false;
+    public TMP_Text timerText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,8 @@ public class Timer : MonoBehaviour
             {
                 timer -= Time.deltaTime;
                 timerBar.fillAmount = timer / MaxTime;
+                timerText.text = timer.ToString("F0");
+
             }
             else
             {
