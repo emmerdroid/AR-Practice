@@ -38,6 +38,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Arturo Assets/Scenes/Earth Views/Placeholder.unity
     guid: af431b3d3e1ebe44d84d3d4d367a1e03
+  - enabled: 1
+    path: Assets/Daniel_Scenes/caller_graph.unity
+    guid: e5a81ea0adb08441aaf70629493d63ef
+  - enabled: 1
+    path: Assets/Daniel_Scenes/graph1.unity
+    guid: c3f9267fb4af24f69918c3c5aea46505
+  - enabled: 1
+    path: Assets/Daniel_Scenes/randomTemp-animated.unity
+    guid: e54a34f0cf056c048b14a1c08b6b00df
+  - enabled: 1
+    path: Assets/Daniel_Scenes/treegraph2a.unity
+    guid: 1de60ee7ada1c419bbe69aa04a6ea682
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 89855e772135f0c4f8aa3e5b716aec4b,
       type: 2}
