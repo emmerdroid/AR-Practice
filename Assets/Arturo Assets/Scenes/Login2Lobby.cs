@@ -51,6 +51,11 @@ public class Login2Lobby : MonoBehaviour
         SceneManager.LoadScene("Earth Views");
     }
 
+    public void EarthShader()
+    {
+        SceneManager.LoadScene("Changing Shader");
+    }
+
     public void Earth2Main()
     {
         SceneManager.LoadScene("Marker-AR-Test");
@@ -64,5 +69,16 @@ public class Login2Lobby : MonoBehaviour
     public void Game2Marker()
     {
         SceneManager.LoadScene("Marker-AR-Test");
+    }
+    
+    public void EV2HM()
+    {
+        SceneManager.LoadScene("US Map");
+        Debug.Log("Testing");
+    }
+
+    public void HM2EV()
+    {
+        SceneManager.LoadScene("Earth Heatmap View");
     }
 }
