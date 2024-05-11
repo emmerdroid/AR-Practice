@@ -1,0 +1,4 @@
+repository "repo_geo_ar@dive_lab@cloud"
+  path "/"
+    br "/main"
+    co "/main"

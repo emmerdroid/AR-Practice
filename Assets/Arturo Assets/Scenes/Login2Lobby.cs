@@ -74,11 +74,10 @@ public class Login2Lobby : MonoBehaviour
     public void EV2HM()
     {
         SceneManager.LoadScene("US Map");
-        Debug.Log("Testing");
     }
 
     public void HM2EV()
     {
-        SceneManager.LoadScene("Earth Heatmap View");
+        SceneManager.LoadScene("Earth Views");
     }
 }

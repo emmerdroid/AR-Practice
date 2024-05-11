@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 //using System;
 
 [System.Serializable]
@@ -9,6 +10,7 @@ public class LoadData3a : MonoBehaviour
 {
     //note that this quests is build while compiling and it is a read-only file.
     public List<float> trees2 = new List<float>();
+    public Text TextBox;
 
     // Start is called before the first frame update
     void Start()
@@ -19,25 +21,7 @@ public class LoadData3a : MonoBehaviour
         Debug.Log("Retrieving data from " + StaticClass.CrossSceneInformation);
         TextAsset readdata2 = Resources.Load<TextAsset>("cities_temp");
         string[] data2 = readdata2.text.Split(new char[] { '\n' });
-
-        Debug.Log("DB total rows: " + data2.Length);
-
-        //reading data3
-/*
-        for (int k = 1; k < data2.Length -1; k++){
-            string[] row2 = SmartSplit(data2[k], ',', '"', false);
-            float q2;
-            //Debug.Log(row2[5]);
-            //only pick one of every 40 values
-            if (row2[1] == StaticClass.CrossSceneInformation && k % 40 == 0){
-                float.TryParse(row2[5], out q2);
-                if (q2 != -99)
-                    trees2.Add(q2);
-            }
-        }
-*/
-
-        //start - year average
+        Debug.Log("Read " + data2.Length + " entries from DB");
 
         // Create a dictionary to store the sum of temperatures for each year
         Dictionary<int, float> yearSum = new Dictionary<int, float>();
@@ -49,12 +33,12 @@ public class LoadData3a : MonoBehaviour
             string[] row2 = SmartSplit(data2[k], ',', '"', false);
             float q2;
 
-            //if (row2[1] == StaticClass.CrossSceneInformation && k % 40 == 0)
+            //check if the city name match
             if (row2[1] == StaticClass.CrossSceneInformation)
             {
                 if (float.TryParse(row2[5], out q2))
                 {
-                    if (q2 != -99){
+                    if (q2 != -99){     //ignore entries where temperature = -99 F.
                         int year = int.Parse(row2[4]); // Assuming the year is in the 5th column
                         if (!yearSum.ContainsKey(year))
                         {
@@ -82,14 +66,15 @@ public class LoadData3a : MonoBehaviour
 
             // Store the annual average temperature in your desired data structure (e.g., trees2)
             trees2.Add(average);
-            Debug.Log("sum: " + sum + " count: " + count + " avg: " + average);
+            // Debug.Log("sum: " + sum + " count: " + count + " avg: " + average);
         }
 
         //end - year average
 
-
-        Debug.Log("Data filtered from CSV file3: " + trees2.Count + " entries");
+        TextBox.text = StaticClass.CrossSceneInformation;
+        Debug.Log(trees2.Count + " entries is going to be plotted");
         Window_Graph3 Window_GraphScript = FindObjectOfType<Window_Graph3>();
+
         Window_GraphScript.comboListGraph(trees2);
     }
 

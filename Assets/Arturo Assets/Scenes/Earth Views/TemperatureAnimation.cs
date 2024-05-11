@@ -8,7 +8,7 @@ public class TemperatureAnimation : MonoBehaviour
 {
     public float countDuration = 1;
     Text numberText;
-    float currentValue = 79, targetValue;
+    float currentValue = 55.99f, targetValue;
     Coroutine _C2T;
 
     void Awake()

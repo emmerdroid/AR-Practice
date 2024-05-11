@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &76823439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,13 +653,14 @@ RectTransform:
   m_Children:
   - {fileID: 767144679}
   - {fileID: 1442565154}
+  - {fileID: 817373819}
   m_Father: {fileID: 1452546701}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 126}
-  m_SizeDelta: {x: 1520, y: 600}
+  m_SizeDelta: {x: 1520, y: 11734.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &361622323
 GameObject:
@@ -761,7 +762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &436676946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -777,9 +778,9 @@ RectTransform:
   m_Father: {fileID: 361622324}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -620.78015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1136.9507, y: 364.5201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &436676947
@@ -1354,18 +1355,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 817373818}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0555408, y: 2.0555408, z: 2.0555408}
   m_Children:
   - {fileID: 838568158}
   - {fileID: 361622324}
-  m_Father: {fileID: 1452546701}
-  m_RootOrder: 0
+  m_Father: {fileID: 288373803}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 2783.2021}
   m_SizeDelta: {x: 60, y: 2960}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817373820
@@ -1766,7 +1767,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1850900345}
         m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
-        m_MethodName: ChangeToClimate
+        m_MethodName: ChangeToHeatMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1831,7 +1832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1426132322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1891,7 +1892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1442565154
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2097,7 +2098,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 817373819}
   - {fileID: 1850900341}
   - {fileID: 288373803}
   m_Father: {fileID: 0}
@@ -2459,7 +2459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1828725822
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2558,7 +2558,7 @@ RectTransform:
   m_Children:
   - {fileID: 631407874}
   m_Father: {fileID: 1452546701}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

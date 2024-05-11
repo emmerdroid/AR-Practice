@@ -48,5 +48,9 @@ public class ScreenManager : MonoBehaviour
     {
         SceneManager.LoadScene("Sign up");
     }
-   
+    public void ChangeToHeatMap()
+    {
+        SceneManager.LoadScene("US Map");
+    }
+
 }

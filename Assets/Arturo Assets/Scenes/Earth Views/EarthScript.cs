@@ -10,7 +10,6 @@ public class EarthScript : MonoBehaviour
     MeshRenderer mMeshRenderer;
 
     [SerializeField]
-    private Text _weather;
     string forecast;
 
 
@@ -30,20 +29,13 @@ public class EarthScript : MonoBehaviour
         mMeshRenderer = GetComponent<MeshRenderer>();
         mMaterial = mMeshRenderer.material;
 
-        mPoints = new float[75 * 3];
+        mPoints = new float[80 * 3];
+
+        Resources.Load<Shader>("Assets/Arturo Assets/Scenes/Earth Views/Resources/HeatMapShader.shader");
+
     }
 
 
-    public void weather()
-    {
-        _weather.text = forecast;
-    }
-
-    public void Default()
-    {
-        toggle = !toggle;
-        counter = 0;
-    }
 
     public void Europe()
     {
@@ -66,8 +58,10 @@ public class EarthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Test2");
             if (isPlaying)
             {
+            Debug.Log("test1");
                 if (continent == "Europe")
                 {
 
@@ -91,9 +85,9 @@ public class EarthScript : MonoBehaviour
                         GameObject go3 = Instantiate(Resources.Load<GameObject>("Projectile")); //Seattle
                         GameObject go4 = Instantiate(Resources.Load<GameObject>("Projectile")); //Denver
                         GameObject go5 = Instantiate(Resources.Load<GameObject>("Projectile")); //Dallas
-                    //    GameObject go6 = Instantiate(Resources.Load<GameObject>("Projectile")); //Atlanta
-                    //    GameObject go7 = Instantiate(Resources.Load<GameObject>("Projectile")); //Chicago
-                    //  GameObject go8 = Instantiate(Resources.Load<GameObject>("Projectile")); //New York
+                        GameObject go6 = Instantiate(Resources.Load<GameObject>("Projectile")); //Atlanta
+                        GameObject go7 = Instantiate(Resources.Load<GameObject>("Projectile")); //Chicago
+                        GameObject go8 = Instantiate(Resources.Load<GameObject>("Projectile")); //New York
 
 
                         go.transform.position = new Vector3(Random.Range(375f, 376f), Random.Range(891f, 893f), -40);  //Los Angeles
@@ -104,22 +98,23 @@ public class EarthScript : MonoBehaviour
 
                         go4.transform.position = new Vector3(Random.Range(398f, 400f), Random.Range(907f, 908f), -40); //Denver
 
-                        go5.transform.position = new Vector3(Random.Range(411f, 413f), Random.Range(888f, 890f), -40); //Dallas
+                        go5.transform.position = new Vector3(Random.Range(411f, 414f), Random.Range(888f, 890f), -40); //Dallas
 
-                     // go6.transform.position = new Vector3(Random.Range(385f, 388f), Random.Range(899f, 902f), -40); //Atlanta
+                        go6.transform.position = new Vector3(Random.Range(433f, 436f), Random.Range(890f, 892f), -40); //Atlanta
 
-                     // go7.transform.position = new Vector3(Random.Range(380f, 383f), Random.Range(894f, 898f), -40);
+                        go7.transform.position = new Vector3(Random.Range(427f, 430f), Random.Range(912f, 915f), -40); //Chicago
 
-                     // go8.transform.position = new Vector3(Random.Range(385f, 388f), Random.Range(899f, 902f), -40);
+                        go8.transform.position = new Vector3(Random.Range(451f, 453f), Random.Range(909f, 911f), -40); //New York
 
-
+                        Waiting();
                         mDelay = .5f;
                         counter++;
                     }
                 }
                 Debug.Log(counter);
-                if (counter >= 14)
+                if (counter >= 9)
                 {
+                Debug.Log("Test3");
                     toggle = false;
                     isPlaying = false;
                     counter = 0;
@@ -166,7 +161,7 @@ public class EarthScript : MonoBehaviour
         mPoints[mHitCount * 3 + 2] = 1;
 
         mHitCount++;
-        mHitCount %= 75;
+        mHitCount %= 80;
 
         mMaterial.SetFloatArray("_Hits", mPoints);
         mMaterial.SetInt("_HitCount", mHitCount);

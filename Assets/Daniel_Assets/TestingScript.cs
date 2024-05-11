@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class TestingScript : MonoBehaviour
 {
     public Button Button_graph;
-    public string City;    
+    public string Text_city;
     //public String textValue;
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,11 @@ public class TestingScript : MonoBehaviour
     }
 
 	void TaskOnClick(){
-        //Debug.Log ("You have clicked the button!");
+		//Debug.Log ("You have clicked the button!");
 
         //Text txtCity = Text_city.GetComponent<Text>();
-        Debug.Log("Graph Loaded - City Selected: " + City);
-        StaticClass.CrossSceneInformation = City;
+        Debug.Log("City selected: " + Text_city);
+        StaticClass.CrossSceneInformation = Text_city;
         SceneManager.LoadScene("graph1");
 	}
 
